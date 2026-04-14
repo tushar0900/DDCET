@@ -1,0 +1,3634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DDCET 2026 — Physics Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --accent: #f0a500;
+    --accent2: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --teal: #39d353;
+    --ch1: #f0a500;
+    --ch2: #58a6ff;
+    --ch3: #bc8cff;
+    --ch4: #f85149;
+    --ch5: #3fb950;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:16px;
+    line-height:1.8;
+  }
+  /* ===== TOP NAV ===== */
+  .topbar{
+    position:sticky;top:0;z-index:100;
+    background:rgba(13,17,23,0.95);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:0 2rem;
+    display:flex;align-items:center;gap:0;
+    overflow-x:auto;
+  }
+  .topbar-title{
+    font-family:'Playfair Display',serif;
+    font-size:1rem;
+    color:var(--accent);
+    white-space:nowrap;
+    margin-right:2rem;
+    padding:1rem 0;
+  }
+  .nav-tab{
+    padding:0.9rem 1.4rem;
+    cursor:pointer;
+    font-family:'Source Serif 4',serif;
+    font-size:0.85rem;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+    transition:all 0.2s;
+    color:var(--text2);
+    background:none;border-top:none;border-left:none;border-right:none;
+  }
+  .nav-tab:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+  .nav-tab.active{color:var(--text);border-bottom-color:var(--accent);}
+  .nav-tab[data-ch="1"].active{border-bottom-color:var(--ch1);}
+  .nav-tab[data-ch="2"].active{border-bottom-color:var(--ch2);}
+  .nav-tab[data-ch="3"].active{border-bottom-color:var(--ch3);}
+  .nav-tab[data-ch="4"].active{border-bottom-color:var(--ch4);}
+  .nav-tab[data-ch="5"].active{border-bottom-color:var(--ch5);}
+
+  /* ===== CHAPTER PAGES ===== */
+  .chapter-page{display:none;}
+  .chapter-page.active{display:block;}
+
+  /* ===== HERO BANNER ===== */
+  .ch-hero{
+    padding:3rem 2rem 2rem;
+    border-bottom:1px solid var(--border);
+    background:linear-gradient(135deg, rgba(13,17,23,0) 0%, rgba(240,165,0,0.05) 100%);
+    position:relative;overflow:hidden;
+  }
+  .ch-hero::before{
+    content:'';position:absolute;top:-50%;right:-10%;
+    width:400px;height:400px;border-radius:50%;
+    background:radial-gradient(circle, var(--ch-color, rgba(240,165,0,0.08)) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .ch-badge{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--ch-color, var(--accent));
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    margin-bottom:0.5rem;
+  }
+  .ch-hero h1{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.8rem,4vw,3rem);
+    font-weight:700;
+    color:var(--text);
+    line-height:1.2;
+    margin-bottom:0.75rem;
+  }
+  .ch-hero p{color:var(--text2);max-width:700px;font-size:0.95rem;}
+  .ch-topics-list{
+    display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.2rem;
+  }
+  .ch-topic-pill{
+    padding:0.3rem 0.8rem;border-radius:20px;
+    font-size:0.78rem;font-family:'JetBrains Mono',monospace;
+    border:1px solid var(--border);color:var(--text2);
+    background:var(--bg2);
+  }
+
+  /* ===== LAYOUT ===== */
+  .ch-content{max-width:1100px;margin:0 auto;padding:2rem;}
+  
+  /* ===== SECTION ===== */
+  .section{
+    margin-bottom:3rem;
+    scroll-margin-top:70px;
+  }
+  .section-header{
+    display:flex;align-items:center;gap:0.75rem;
+    margin-bottom:1.25rem;
+    padding-bottom:0.75rem;
+    border-bottom:1px solid var(--border);
+  }
+  .section-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--accent);
+    background:rgba(240,165,0,0.1);
+    padding:0.2rem 0.5rem;
+    border-radius:4px;
+    border:1px solid rgba(240,165,0,0.3);
+  }
+  .section h2{
+    font-family:'Playfair Display',serif;
+    font-size:1.5rem;
+    color:var(--text);
+  }
+  .subsection{margin-bottom:2rem;}
+  .subsection h3{
+    font-family:'Playfair Display',serif;
+    font-size:1.15rem;
+    color:var(--accent);
+    margin-bottom:0.75rem;
+    padding-left:0.75rem;
+    border-left:3px solid var(--accent);
+  }
+  p{margin-bottom:0.9rem;color:var(--text);}
+
+  /* ===== FORMULA BOX ===== */
+  .formula{
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    padding:1rem 1.5rem;
+    margin:1rem 0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.9rem;
+    position:relative;
+  }
+  .formula::before{
+    content:'∫ FORMULA';
+    position:absolute;top:-0.6rem;left:1rem;
+    font-size:0.65rem;letter-spacing:0.1em;
+    background:var(--bg2);padding:0 0.4rem;
+    color:var(--accent);
+  }
+  .formula .eq{
+    font-size:1.05rem;
+    color:var(--accent);
+    margin:0.3rem 0;
+  }
+  .formula .desc{color:var(--text2);font-size:0.82rem;margin-top:0.4rem;}
+
+  /* ===== EXAMPLE BOX ===== */
+  .example{
+    background:rgba(88,166,255,0.05);
+    border:1px solid rgba(88,166,255,0.2);
+    border-radius:8px;
+    padding:1.25rem 1.5rem;
+    margin:1.25rem 0;
+  }
+  .example-head{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--accent2);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:0.6rem;
+  }
+  .example-sol{
+    background:var(--bg3);
+    border-radius:6px;
+    padding:0.75rem 1rem;
+    margin-top:0.75rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.88rem;
+    color:var(--green);
+    line-height:1.7;
+  }
+
+  /* ===== KEY POINT ===== */
+  .keypoint{
+    background:rgba(63,185,80,0.06);
+    border:1px solid rgba(63,185,80,0.25);
+    border-radius:8px;
+    padding:0.9rem 1.2rem;
+    margin:0.75rem 0;
+    color:var(--text);
+  }
+  .keypoint::before{content:'★ ';color:var(--green);}
+
+  /* ===== WARNING / NOTE ===== */
+  .note{
+    background:rgba(248,81,73,0.07);
+    border:1px solid rgba(248,81,73,0.25);
+    border-radius:8px;
+    padding:0.9rem 1.2rem;
+    margin:0.75rem 0;
+  }
+  .note::before{content:'⚠ ';color:var(--red);}
+
+  /* ===== TABLE ===== */
+  .tbl-wrap{overflow-x:auto;margin:1rem 0;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-size:0.88rem;
+  }
+  th{
+    background:var(--bg3);
+    color:var(--accent);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    padding:0.75rem 1rem;
+    border:1px solid var(--border);
+    text-align:left;
+  }
+  td{
+    padding:0.65rem 1rem;
+    border:1px solid var(--border);
+    color:var(--text);
+    vertical-align:top;
+  }
+  tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+  tr:hover td{background:rgba(240,165,0,0.04);}
+
+  /* ===== DEFINITION ===== */
+  .def{
+    background:var(--bg2);
+    border-radius:8px;
+    padding:1rem 1.25rem;
+    margin:0.75rem 0;
+    border-left:3px solid var(--purple);
+  }
+  .def strong{color:var(--purple);}
+
+  /* ===== COMPARISON GRID ===== */
+  .compare-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;
+  }
+  @media(max-width:600px){.compare-grid{grid-template-columns:1fr;}}
+  .compare-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:8px;padding:1rem;
+  }
+  .compare-card h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;text-transform:uppercase;
+    letter-spacing:0.08em;margin-bottom:0.75rem;
+    color:var(--accent2);
+  }
+  .compare-card ul{list-style:none;padding:0;}
+  .compare-card li{padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem;}
+  .compare-card li:last-child{border-bottom:none;}
+
+  /* ===== SVG DIAGRAMS ===== */
+  .diagram{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:12px;padding:1.5rem;
+    margin:1.5rem 0;text-align:center;
+  }
+  .diagram-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;text-transform:uppercase;
+    letter-spacing:0.1em;color:var(--text2);
+    margin-bottom:1rem;
+  }
+  svg text{font-family:'JetBrains Mono',monospace;}
+
+  /* ===== STEPS ===== */
+  .steps{counter-reset:step;padding-left:0;list-style:none;}
+  .steps li{
+    counter-increment:step;
+    padding:0.6rem 0 0.6rem 3rem;
+    position:relative;
+    border-left:1px dashed var(--border);
+    margin-left:1rem;
+  }
+  .steps li::before{
+    content:counter(step);
+    position:absolute;left:-1rem;top:0.5rem;
+    width:2rem;height:2rem;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--accent);
+    text-align:center;line-height:2rem;
+  }
+
+  /* ===== ACCORDION ===== */
+  .accordion{margin:1rem 0;}
+  .acc-head{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:6px;padding:0.85rem 1.2rem;
+    cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:2px;transition:background 0.2s;
+    font-size:0.95rem;
+  }
+  .acc-head:hover{background:var(--bg3);}
+  .acc-head::after{content:'▸';color:var(--text2);transition:transform 0.2s;}
+  .acc-head.open::after{transform:rotate(90deg);}
+  .acc-body{
+    display:none;background:var(--bg);
+    border:1px solid var(--border);border-top:none;
+    border-radius:0 0 6px 6px;padding:1rem 1.5rem;
+    margin-bottom:6px;font-size:0.92rem;
+  }
+  .acc-body.open{display:block;}
+
+  /* ===== QUICK FACTS BAR ===== */
+  .facts-bar{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:0.75rem;margin:1.5rem 0;
+  }
+  .fact-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:8px;padding:0.9rem 1rem;text-align:center;
+  }
+  .fact-value{
+    font-family:'JetBrains Mono',monospace;
+    font-size:1.1rem;color:var(--accent);
+    display:block;margin-bottom:0.3rem;
+  }
+  .fact-label{font-size:0.78rem;color:var(--text2);}
+
+  /* ===== REMEMBER BOX ===== */
+  .remember{
+    background:linear-gradient(135deg, rgba(240,165,0,0.08), rgba(88,166,255,0.08));
+    border:1px solid rgba(240,165,0,0.3);
+    border-radius:10px;padding:1.25rem 1.5rem;margin:1.5rem 0;
+  }
+  .remember-head{
+    font-family:'Playfair Display',serif;
+    font-size:1rem;color:var(--accent);margin-bottom:0.75rem;
+  }
+  .remember ul{padding-left:1.5rem;}
+  .remember li{margin-bottom:0.4rem;color:var(--text);}
+
+  /* ===== SCROLL TO TOP ===== */
+  .back-top{
+    position:fixed;bottom:2rem;right:2rem;
+    background:var(--accent);color:#000;
+    border:none;border-radius:50%;width:44px;height:44px;
+    font-size:1.2rem;cursor:pointer;
+    box-shadow:0 4px 20px rgba(240,165,0,0.3);
+    display:none;align-items:center;justify-content:center;
+    z-index:200;transition:transform 0.2s;
+  }
+  .back-top:hover{transform:scale(1.1);}
+  .back-top.visible{display:flex;}
+
+  /* ===== PROGRESS BAND ===== */
+  .progress-band{
+    height:3px;background:var(--bg3);position:fixed;top:60px;left:0;right:0;z-index:99;
+  }
+  .progress-fill{height:100%;background:var(--accent);width:0;transition:width 0.1s;}
+
+  /* ===== HIGHLIGHT SPANS ===== */
+  .hi-y{background:rgba(240,165,0,0.15);color:var(--accent);padding:0.1em 0.3em;border-radius:3px;}
+  .hi-b{background:rgba(88,166,255,0.15);color:var(--accent2);padding:0.1em 0.3em;border-radius:3px;}
+  .hi-g{background:rgba(63,185,80,0.15);color:var(--green);padding:0.1em 0.3em;border-radius:3px;}
+  .hi-p{background:rgba(188,140,255,0.15);color:var(--purple);padding:0.1em 0.3em;border-radius:3px;}
+  code{
+    font-family:'JetBrains Mono',monospace;
+    background:var(--bg3);color:var(--purple);
+    padding:0.1em 0.4em;border-radius:3px;font-size:0.88em;
+  }
+
+  /* Chapter color overrides */
+  #ch1 .section-num{color:var(--ch1);background:rgba(240,165,0,0.1);border-color:rgba(240,165,0,0.3);}
+  #ch1 .subsection h3{color:var(--ch1);border-color:var(--ch1);}
+  #ch2 .section-num{color:var(--ch2);background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.3);}
+  #ch2 .subsection h3{color:var(--ch2);border-color:var(--ch2);}
+  #ch2 .formula{border-left-color:var(--ch2);}
+  #ch2 .formula::before{color:var(--ch2);}
+  #ch2 .formula .eq{color:var(--ch2);}
+  #ch3 .section-num{color:var(--ch3);background:rgba(188,140,255,0.1);border-color:rgba(188,140,255,0.3);}
+  #ch3 .subsection h3{color:var(--ch3);border-color:var(--ch3);}
+  #ch3 .formula{border-left-color:var(--ch3);}
+  #ch3 .formula::before{color:var(--ch3);}
+  #ch3 .formula .eq{color:var(--ch3);}
+  #ch4 .section-num{color:var(--ch4);background:rgba(248,81,73,0.1);border-color:rgba(248,81,73,0.3);}
+  #ch4 .subsection h3{color:var(--ch4);border-color:var(--ch4);}
+  #ch4 .formula{border-left-color:var(--ch4);}
+  #ch4 .formula::before{color:var(--ch4);}
+  #ch4 .formula .eq{color:var(--ch4);}
+  #ch5 .section-num{color:var(--ch5);background:rgba(63,185,80,0.1);border-color:rgba(63,185,80,0.3);}
+  #ch5 .subsection h3{color:var(--ch5);border-color:var(--ch5);}
+  #ch5 .formula{border-left-color:var(--ch5);}
+  #ch5 .formula::before{color:var(--ch5);}
+  #ch5 .formula .eq{color:var(--ch5);}
+</style>
+
+<style id="gujlish-style">
+.gjl{
+  display:block;
+  margin-top:7px;
+  padding:4px 10px;
+  background:rgba(139,92,246,0.10);
+  border-left:3px solid #7c3aed;
+  border-radius:0 6px 6px 0;
+  font-size:12.5px;
+  color:#c4b5fd;
+  font-style:italic;
+  line-height:1.5;
+}
+.gjl::before{content:'🗣 '; font-style:normal;}
+</style>
+
+<style id="ddcet-sb-style">
+:root{--sw:248px}
+*{box-sizing:border-box}
+body{display:flex;min-height:100vh;background:#0f172a;color:#e2e8f0}
+.ddcet-sb{
+  width:var(--sw);min-width:var(--sw);background:#080f1e;
+  border-right:1px solid #1e2a3a;
+  position:fixed;top:0;left:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;z-index:200;
+  scrollbar-width:thin;scrollbar-color:#1e2a3a transparent;
+}
+.ddcet-sb::-webkit-scrollbar{width:3px}
+.ddcet-sb::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:2px}
+.ddcet-main{margin-left:var(--sw);flex:1;min-width:0;overflow-x:hidden}
+.sb-back-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 16px 10px;
+  color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;
+  border-bottom:1px solid #1e2a3a;
+  transition:color .15s;letter-spacing:.03em;
+}
+.sb-back-btn:hover{color:#e2e8f0}
+.sb-head{padding:16px 16px 8px}
+.sb-subject{font-size:1.1rem;font-weight:800;color:#f1f5f9;margin-bottom:2px}
+.sb-subject-sub{font-size:11px;color:#64748b;font-weight:500}
+.sb-label{padding:10px 16px 4px;font-size:10px;color:#475569;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.sb-ch-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;margin:2px 8px;
+  border-radius:10px;cursor:pointer;
+  transition:all .15s;
+}
+.sb-ch-btn:hover{background:rgba(79,70,229,.12)}
+.sb-ch-btn.active{background:rgba(79,70,229,.18);border-left:3px solid #6366f1;padding-left:11px}
+.sb-ch-num{
+  min-width:26px;height:26px;border-radius:6px;
+  background:#1e293b;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#94a3b8;
+}
+.sb-ch-btn.active .sb-ch-num{background:#4f46e5;color:#fff}
+.sb-ch-info{flex:1;min-width:0}
+.sb-ch-name{font-size:12.5px;font-weight:600;color:#cbd5e1;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-ch-btn.active .sb-ch-name{color:#a5b4fc}
+.sb-ch-wt{font-size:10px;color:#475569;margin-top:1px}
+.sb-chips-wrap{padding:4px 12px 10px;display:none}
+.sb-chips-wrap.open{display:flex;flex-wrap:wrap;gap:5px}
+/* chips */
+.chip{padding:5px 11px;border-radius:16px;font-size:11.5px;font-weight:500;
+  background:#1e293b;border:1px solid #334155;color:#94a3b8;
+  cursor:pointer;transition:all .18s;user-select:none;display:inline-flex;align-items:center;gap:4px}
+.chip:hover{background:rgba(79,70,229,.12);border-color:rgba(99,102,241,.5);color:#a5b4fc}
+.chip[data-target]::after{content:'↗';font-size:9px;opacity:.35}
+.chip.chip-active{background:rgba(79,70,229,.25)!important;border-color:#818cf8!important;color:#a5b4fc!important;box-shadow:0 0 0 2px rgba(79,70,229,.15)}
+.chip.chip-active::after{content:'●';color:#818cf8;opacity:1}
+.chip.chip-done{background:rgba(16,185,129,.18)!important;border-color:#10b981!important;color:#6ee7b7!important}
+.chip.chip-done::after{content:'✓';color:#10b981;font-weight:700;opacity:1}
+.sb-foot{margin-top:auto;padding:14px 16px;border-top:1px solid #1e2a3a;font-size:11px;color:#475569}
+.sb-foot strong{color:#818cf8}
+/* hide original nav elements replaced by sidebar */
+.orig-nav-hide{display:none!important}
+/* responsive */
+@media(max-width:768px){
+  /* sidebar becomes full-screen drawer */
+  .ddcet-sb{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    width:100%!important;height:100vh;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    z-index:500;overflow-y:auto;
+    padding-bottom:60px;
+  }
+  .ddcet-sb.mob-open{transform:translateX(0)!important}
+  .ddcet-main{margin-left:0!important;padding-top:54px}
+  /* hide desktop back btn in sidebar, show mob topbar */
+  .sb-back-btn{display:none!important}
+  .mob-topbar{display:flex!important}
+  /* drawer close button */
+  .mob-close-btn{display:flex!important}
+  /* backdrop */
+  .mob-backdrop{display:block!important}
+}
+/* ── Sticky top bar (mobile only) ── */
+.mob-topbar{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:400;
+  height:52px;
+  background:#080f1e;
+  border-bottom:1px solid #1e2a3a;
+  align-items:center;
+  padding:0 12px;
+  gap:10px;
+}
+.mob-topbar-back{
+  background:none;border:none;color:#94a3b8;
+  font-size:14px;font-weight:600;cursor:pointer;
+  padding:8px 10px 8px 4px;
+  white-space:nowrap;
+}
+.mob-topbar-back:active{color:#e2e8f0}
+.mob-topbar-title{
+  flex:1;font-size:13px;font-weight:700;color:#e2e8f0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.mob-topbar-chapters{
+  background:#1e293b;border:1px solid #334155;color:#a5b4fc;
+  font-size:12px;font-weight:700;cursor:pointer;
+  padding:7px 14px;border-radius:8px;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.mob-topbar-chapters:active{background:#334155}
+/* ── Drawer close button ── */
+.mob-close-btn{
+  display:none;
+  width:100%;padding:14px 16px;
+  background:#0d1526;border:none;border-bottom:1px solid #1e2a3a;
+  color:#94a3b8;font-size:14px;font-weight:700;cursor:pointer;
+  text-align:left;align-items:center;gap:8px;
+}
+.mob-close-btn:active{background:#1e293b}
+/* ── Backdrop ── */
+.mob-backdrop{
+  display:none;
+  position:fixed;inset:0;z-index:499;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(2px);
+}
+/* ── MOBILE OVERRIDES ── */
+@media(max-width:768px){
+  :root{--sw:0px}
+  .ddcet-sb{
+    position:fixed!important;
+    top:0!important;left:0!important;
+    width:85vw!important;max-width:320px;
+    height:100vh!important;
+    transform:translateX(-100%)!important;
+    transition:transform .28s ease!important;
+    z-index:600!important;
+    overflow-y:auto!important;
+    padding-bottom:80px!important;
+  }
+  .ddcet-sb.mob-open{transform:translateX(0)!important}
+  .ddcet-main{margin-left:0!important;padding-top:0!important}
+  .sb-back-btn{display:none!important}
+  .mob-topbar{display:flex!important}
+  .mob-close-btn{display:flex!important}
+  .mob-backdrop{display:block!important;opacity:1!important}
+  .mob-backdrop.hidden{display:none!important}
+  /* body padding from back-to-hub bar */
+  body{padding-top:46px!important}
+  /* make chips wrap nicely */
+  .sb-chips-wrap.open{display:flex!important}
+  /* full width content */
+  .ch-page,.chapter-page,.chapter-content{width:100%!important;padding:12px!important}
+  /* fix overflow */
+  html,body{overflow-x:hidden!important}
+}
+@media(min-width:769px){
+  .mob-topbar{display:none!important}
+  .mob-backdrop{display:none!important}
+  .mob-close-btn{display:none!important}
+}
+
+/* section highlight flash */
+.sec-flash{animation:flash-sec .7s ease}
+@keyframes flash-sec{0%,100%{background:transparent}50%{background:rgba(79,70,229,.15)}}
+</style>
+
+<style id="diagram-css">
+/* Gujlish tip box */
+.g-tip{display:flex;gap:10px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:#c4b5fd;line-height:1.5}
+.g-tip-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.g-tip-text{flex:1}
+/* viz boxes */
+.viz-box{background:#0d1829;border:1px solid #1e3a5f;border-radius:14px;padding:18px 20px;margin:16px 0;overflow:hidden}
+.viz-title{font-size:13px;font-weight:700;color:#93c5fd;margin-bottom:14px;letter-spacing:.02em}
+/* pH scale */
+.ph-bar{display:flex;border-radius:8px;overflow:hidden;height:68px;margin-bottom:6px}
+.ph-seg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:6px 3px;font-size:11px;font-weight:800;color:#fff;text-align:center;line-height:1.2}
+.ph-lbl{font-size:9px;font-weight:400;margin-top:3px;opacity:.9}
+.ph-arrows{display:flex;justify-content:space-between;font-size:11px;font-weight:600;padding:2px 4px}
+/* reactivity ladder */
+.react-ladder{display:flex;flex-direction:column;gap:3px;max-width:400px}
+.rl-item{display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:6px;font-size:12.5px}
+.rl-sym{font-weight:800;min-width:32px;font-family:'Fira Code',monospace;font-size:14px}
+.rl-name{flex:1;color:#e2e8f0}
+.rl-note{font-size:10px;color:#94a3b8;font-style:italic}
+.rl-top{background:rgba(229,62,62,.15);border-left:3px solid #e53e3e;}.rl-top .rl-sym{color:#fc8181}
+.rl-high{background:rgba(237,137,54,.12);border-left:3px solid #ed8936;}.rl-high .rl-sym{color:#fbd38d}
+.rl-mid{background:rgba(68,211,161,.1);border-left:3px solid #48bb78;}.rl-mid .rl-sym{color:#9ae6b4}
+.rl-h2{background:rgba(99,102,241,.15);border-left:3px solid #6366f1;}.rl-h2 .rl-sym{color:#a5b4fc}
+.rl-low{background:rgba(59,130,246,.1);border-left:3px solid #3b82f6;}.rl-low .rl-sym{color:#93c5fd}
+.rl-bot{background:rgba(245,158,11,.1);border-left:3px solid #f59e0b;}.rl-bot .rl-sym{color:#fcd34d}
+/* food chain */
+.food-chain{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.fc-box{padding:10px 14px;border-radius:10px;font-size:12.5px;font-weight:700;text-align:center;min-width:100px}
+.fc-sub{font-size:10px;font-weight:400;margin-top:4px;line-height:1.3}
+.fc-arrow{font-size:16px;color:#64748b;font-weight:700}
+.fc-prod{background:rgba(16,185,129,.12);border:1px solid #10b981;color:#6ee7b7}
+.fc-herb{background:rgba(251,191,36,.1);border:1px solid #f59e0b;color:#fcd34d}
+.fc-carn{background:rgba(239,68,68,.1);border:1px solid #ef4444;color:#fca5a5}
+.fc-top{background:rgba(139,92,246,.12);border:1px solid #8b5cf6;color:#c4b5fd}
+.fc-decomp{background:rgba(107,114,128,.1);border:1px solid #374151;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#9ca3af;margin-top:6px}
+/* temperature scales */
+.temp-compare{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.tc-col{display:flex;flex-direction:column;gap:6px;min-width:100px}
+.tc-head{font-weight:800;font-size:13px;text-align:center;padding:5px;border-radius:6px}
+.tc-c{background:rgba(239,68,68,.15);color:#fca5a5}
+.tc-k{background:rgba(59,130,246,.15);color:#93c5fd}
+.tc-val{padding:7px 10px;border-radius:6px;font-size:12px;font-weight:600;text-align:center;background:rgba(255,255,255,.04)}
+.tc-label{font-size:9.5px;font-weight:400;color:#94a3b8;margin-top:2px}
+.tc-hot{border:1px solid #ef4444;color:#fca5a5}
+.tc-cold{border:1px solid #60a5fa;color:#93c5fd}
+.tc-abs{border:1px solid #475569;color:#64748b}
+.tc-formula{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:10px}
+.tc-eq{font-size:12px;color:#e2e8f0;font-family:'Fira Code',monospace}
+.tc-bar{flex:1;min-height:20px;background:linear-gradient(to bottom,#ef4444,#60a5fa);border-radius:4px;margin:4px auto;width:6px}
+/* Newton's laws */
+.newton-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:600px){.newton-grid{grid-template-columns:1fr;}.food-chain{flex-direction:column;}.temp-compare{flex-direction:column}}
+.nl-card{border-radius:12px;padding:14px;border:1px solid #1e2a3a}
+.nl-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.nl-name{font-size:14px;font-weight:800;margin-bottom:8px}
+.nl-desc{font-size:12px;line-height:1.5;color:#cbd5e1;margin-bottom:8px}
+.nl-ex{font-size:11.5px;color:#94a3b8;font-style:italic}
+.nl-1{background:rgba(239,68,68,.06);border-color:#b91c1c;}.nl-1 .nl-num{color:#f87171;}.nl-1 .nl-name{color:#fca5a5}
+.nl-2{background:rgba(251,146,60,.06);border-color:#c2410c;}.nl-2 .nl-num{color:#fb923c;}.nl-2 .nl-name{color:#fed7aa}
+.nl-3{background:rgba(52,211,153,.06);border-color:#065f46;}.nl-3 .nl-num{color:#34d399;}.nl-3 .nl-name{color:#a7f3d0}
+</style>
+</head>
+<body>
+<style id="back-btn-style">
+#back-to-hub{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:#080f1e;border-bottom:1px solid #1e2a3a;
+  padding:10px 16px;
+  display:flex;align-items:center;gap:12px;
+  font-family:'Segoe UI',system-ui,sans-serif;
+}
+#back-to-hub a{
+  color:#94a3b8;text-decoration:none;font-size:13px;font-weight:700;
+  padding:6px 14px;border-radius:8px;border:1px solid #334155;
+  background:#0f172a;display:inline-flex;align-items:center;gap:6px;
+  transition:all .2s;
+}
+#back-to-hub a:hover{color:#e2e8f0;border-color:#475569;background:#1e293b}
+#back-to-hub .hub-label{
+  font-size:12px;color:#475569;font-weight:600;
+}
+/* push content down so back bar doesn't cover it */
+body{padding-top:46px!important}
+/* on desktop with sidebar, move back bar to not overlap sidebar */
+@media(min-width:769px){
+  #back-to-hub{left:var(--sw,248px)}
+  body{padding-top:46px!important}
+}
+</style>
+<div id="back-to-hub">
+  <a href="index.html">← All Subjects</a>
+  <span class="hub-label">DDCET 2026</span>
+</div>
+
+<div class="mob-topbar" id="mob-topbar">
+  <button class="mob-topbar-back" href="index.html">⬅</button>
+  <div class="mob-topbar-title">⚡ Physics</div>
+  <button class="mob-topbar-chapters" id="mob-open-btn">☰ Chapters</button>
+</div>
+<div class="mob-backdrop" id="mob-backdrop"></div>
+<div class="ddcet-sb" id="ddcet-sb">
+  <button class="mob-close-btn" id="mob-close-btn">✕ &nbsp; Close Menu</button>
+  <a class="sb-back-btn" href="index.html">← All Subjects</a>
+  <div class="sb-head">
+    <div class="sb-subject">⚡ Physics</div>
+    <div class="sb-subject-sub">5 Chapters · DDCET 2026</div>
+  </div>
+  <div class="sb-label">Chapters</div>
+  <div class="sb-ch-btn active" id="sbch1" onclick="phSwitch(1)">
+    <div class="sb-ch-num">1</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Units & Measurements</div><div class="sb-ch-wt">~8% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap open" id="sbchips1">
+    <span class="chip" data-target="ph1s1">Physical Quantities</span>
+    <span class="chip" data-target="ph1s1">Fundamental Units</span>
+    <span class="chip" data-target="ph1s2">SI System</span>
+    <span class="chip" data-target="ph1s2">Unit Conversion</span>
+    <span class="chip" data-target="ph1s3">Vernier Caliper</span>
+    <span class="chip" data-target="ph1s4">Screw Gauge</span>
+    <span class="chip" data-target="ph1s5">Errors</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch2" onclick="phSwitch(2)">
+    <div class="sb-ch-num">2</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Classical Mechanics</div><div class="sb-ch-wt">~12% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips2">
+    <span class="chip" data-target="ph2s1">Kinematics</span>
+    <span class="chip" data-target="ph2s1">Equations of Motion</span>
+    <span class="chip" data-target="ph2s2">Newton's Laws</span>
+    <span class="chip" data-target="ph2s2">F = ma</span>
+    <span class="chip" data-target="ph2s3">Momentum & Impulse</span>
+    <span class="chip" data-target="ph2s4">Circular Motion</span>
+    <span class="chip" data-target="ph2s5">Work, Energy, Power</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch3" onclick="phSwitch(3)">
+    <div class="sb-ch-num">3</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Electric Current</div><div class="sb-ch-wt">~10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips3">
+    <span class="chip" data-target="ph3s1">Electric Charge</span>
+    <span class="chip" data-target="ph3s2">Coulomb's Law</span>
+    <span class="chip" data-target="ph3s3">Electric Field</span>
+    <span class="chip" data-target="ph3s3">Electric Potential</span>
+    <span class="chip" data-target="ph3s4">Ohm's Law</span>
+    <span class="chip" data-target="ph3s4">Resistance</span>
+    <span class="chip" data-target="ph3s5">Capacitors</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch4" onclick="phSwitch(4)">
+    <div class="sb-ch-num">4</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Heat & Thermometry</div><div class="sb-ch-wt">~8% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips4">
+    <span class="chip" data-target="ph4s1">Heat vs Temperature</span>
+    <span class="chip" data-target="ph4s2">Temperature Scales</span>
+    <span class="chip" data-target="ph4s3">Heat Transfer Modes</span>
+    <span class="chip" data-target="ph4s4">Specific Heat</span>
+    <span class="chip" data-target="ph4s5">Thermal Conductivity</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch5" onclick="phSwitch(5)">
+    <div class="sb-ch-num">5</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Wave, Optics & Acoustics</div><div class="sb-ch-wt">~10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips5">
+    <span class="chip" data-target="ph5s1">Types of Waves</span>
+    <span class="chip" data-target="ph5s2">Wave Parameters</span>
+    <span class="chip" data-target="ph5s3">Refraction</span>
+    <span class="chip" data-target="ph5s4">Total Internal Reflection</span>
+    <span class="chip" data-target="ph5s5">Optical Fiber</span>
+    <span class="chip" data-target="ph5s6">LASER</span>
+    <span class="chip" data-target="ph5s7">Echo & Reverberation</span>
+  </div>
+  <div class="sb-foot"><strong>Physics</strong> = 40% of DDCET paper</div>
+</div>
+
+
+<div class="ddcet-main">
+
+
+<!-- PROGRESS -->
+<div class="progress-band"><div class="progress-fill" id="prog"></div></div>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <div class="topbar-title">⚗ DDCET Physics 2026</div>
+  <button class="nav-tab active" data-ch="1" onclick="showChapter(1)">Ch 1 · Units &amp; Measurements</button>
+  <button class="nav-tab" data-ch="2" onclick="showChapter(2)">Ch 2 · Classical Mechanics</button>
+  <button class="nav-tab" data-ch="3" onclick="showChapter(3)">Ch 3 · Electric Current</button>
+  <button class="nav-tab" data-ch="4" onclick="showChapter(4)">Ch 4 · Heat &amp; Thermometry</button>
+  <button class="nav-tab" data-ch="5" onclick="showChapter(5)">Ch 5 · Wave, Optics &amp; Acoustics</button>
+</nav>
+
+<!-- ============================================================
+     CHAPTER 1 — UNITS AND MEASUREMENTS
+     ============================================================ -->
+<div class="chapter-page active" id="ch1">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch1 = Units & Measurements — Fundamental units, SI system, Vernier caliper, screw gauge, errors. Aa chapter conceptual chhe — definitions ane conversions pakka karo. Numerical bahu aave chhe!</div></div>
+<div class="ch-hero" style="--ch-color:var(--ch1)">
+  <div class="ch-badge">Chapter 01 · Physics</div>
+  <h1>Units and Measurements</h1>
+  <p>Every measurement in science needs a <em>number</em> and a <em>unit</em>. This chapter builds the foundation of physical quantities, the SI system, unit conversions, precision instruments, and the mathematics of error analysis.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Physical Quantities</span>
+    <span class="ch-topic-pill">SI Units (7 Base)</span>
+    <span class="ch-topic-pill">Derived Quantities</span>
+    <span class="ch-topic-pill">MKS ↔ CGS Conversion</span>
+    <span class="ch-topic-pill">Vernier Caliper</span>
+    <span class="ch-topic-pill">Screw Gauge</span>
+    <span class="ch-topic-pill">Errors &amp; Estimation</span>
+    <span class="ch-topic-pill">Propagation of Errors</span>
+  </div>
+</div>
+
+<div class="ch-content">
+
+<!-- SECTION 1: Physical Quantities -->
+<div class="section" id="s1-1">
+  <div class="section-header">
+    <span class="section-num">1.1</span>
+    <h2 id="ph1s1">Physical Quantities and Units</h2>
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">7 Fundamental quantities: Length (m), Mass (kg), Time (s), Temperature (K), Current (A), Luminous intensity (cd), Amount of substance (mol). Aa 7 yaad karva nu — baki sab inathi derive thaay chhe!</div></div>
+  </div>
+
+  <div class="def">
+    <strong>Physical Quantity:</strong> Any quantity that can be measured and used to describe or explain natural phenomena through mathematical laws. It is completely expressed by its <em>magnitude</em> and <em>unit</em>.
+  </div>
+
+  <p>Examples: length, mass, time, force, temperature, electric current, pressure. <br>Non-examples (cannot be measured): happiness, love, pride, loyalty.</p>
+
+  <div class="keypoint">A physical quantity = numerical value × unit. Example: "150 metres" means the length is 150 times the unit 'metre'.</div>
+
+  <div class="subsection">
+    <h3>Fundamental (Base) Quantities</h3>
+    <p>There are <strong>7 fundamental quantities</strong> in the SI system. These are <em>independent</em> — they cannot be derived from each other. All other quantities are built from these 7.</p>
+
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Quantity</th><th>Symbol</th><th>SI Unit</th><th>Unit Symbol</th></tr>
+      <tr><td>Length</td><td>l, x, r</td><td>Metre</td><td>m</td></tr>
+      <tr><td>Mass</td><td>m</td><td>Kilogram</td><td>kg</td></tr>
+      <tr><td>Time</td><td>t</td><td>Second</td><td>s</td></tr>
+      <tr><td>Electric Current</td><td>I</td><td>Ampere</td><td>A</td></tr>
+      <tr><td>Thermodynamic Temperature</td><td>T</td><td>Kelvin</td><td>K</td></tr>
+      <tr><td>Amount of Substance</td><td>n</td><td>Mole</td><td>mol</td></tr>
+      <tr><td>Luminous Intensity</td><td>Iv</td><td>Candela</td><td>cd</td></tr>
+    </table>
+    </div>
+    <div class="note">Fundamental units <strong>cannot</strong> be derived from one another and cannot be broken down further into simpler units.<span class="gjl">Fundamental units ek-bija thi derive nathi thata. 7 fundamental quantities pakko yaad rakhvo!</span></div>
+  </div>
+
+  <div class="subsection">
+    <h3>Derived Physical Quantities</h3>
+    <p>All other physical quantities are derived from the 7 fundamental quantities by multiplication or division.</p>
+
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Quantity</th><th>Relation</th><th>MKS Unit</th><th>CGS Unit</th><th>Symbol</th></tr>
+      <tr><td>Area</td><td>length × breadth</td><td>(metre)²</td><td>(centimetre)²</td><td>m²</td></tr>
+      <tr><td>Volume</td><td>length × breadth × height</td><td>(metre)³</td><td>(centimetre)³</td><td>m³</td></tr>
+      <tr><td>Density</td><td>mass / volume</td><td>kg/m³</td><td>g/cm³</td><td>kg m⁻³</td></tr>
+      <tr><td>Speed / Velocity</td><td>distance / time</td><td>m/s</td><td>cm/s</td><td>ms⁻¹</td></tr>
+      <tr><td>Acceleration</td><td>Δvelocity / time</td><td>m/s²</td><td>cm/s²</td><td>ms⁻²</td></tr>
+      <tr><td>Force</td><td>mass × acceleration</td><td>newton (N)</td><td>dyne</td><td>N</td></tr>
+      <tr><td>Work</td><td>force × distance</td><td>joule (J)</td><td>erg</td><td>J</td></tr>
+      <tr><td>Power</td><td>work / time</td><td>J/s (watt)</td><td>erg/s</td><td>Js⁻¹</td></tr>
+      <tr><td>Pressure</td><td>force / area</td><td>N/m² (Pascal)</td><td>dyne/cm²</td><td>Pa</td></tr>
+      <tr><td>Linear Momentum</td><td>mass × velocity</td><td>kg·m/s</td><td>g·cm/s</td><td>kg ms⁻¹</td></tr>
+      <tr><td>Frequency</td><td>vibrations / second</td><td>(second)⁻¹</td><td>(second)⁻¹</td><td>Hz</td></tr>
+      <tr><td>Energy</td><td>Work</td><td>joule</td><td>erg</td><td>J</td></tr>
+      <tr><td>Impulse</td><td>force × time</td><td>N·s</td><td>dyne·s</td><td>Ns</td></tr>
+      <tr><td>Surface Tension</td><td>force / length</td><td>N/m</td><td>dyne/cm</td><td>Nm⁻¹</td></tr>
+      <tr><td>Coefficient of Viscosity</td><td>F×r / (A×v)</td><td>Pascal·second</td><td>Pascal·second</td><td>Pa·s</td></tr>
+      <tr><td>Coefficient of Elasticity</td><td>stress / strain</td><td>N/m²</td><td>dyne/cm²</td><td>Nm⁻²</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Some Important Practical Units of Length</h3>
+    <div class="facts-bar">
+      <div class="fact-card"><span class="fact-value">1 Å = 10⁻¹⁰ m</span><div class="fact-label">Angstrom</div></div>
+      <div class="fact-card"><span class="fact-value">1 nm = 10⁻⁹ m</span><div class="fact-label">Nanometre</div></div>
+      <div class="fact-card"><span class="fact-value">1 μm = 10⁻⁶ m</span><div class="fact-label">Micron</div></div>
+      <div class="fact-card"><span class="fact-value">1 fm = 10⁻¹⁵ m</span><div class="fact-label">Fermi</div></div>
+      <div class="fact-card"><span class="fact-value">1 AU = 1.496×10¹¹ m</span><div class="fact-label">Astronomical Unit</div></div>
+      <div class="fact-card"><span class="fact-value">1 ly = 9.46×10¹⁵ m</span><div class="fact-label">Light Year</div></div>
+      <div class="fact-card"><span class="fact-value">1 amu = 1.66×10⁻²⁷ kg</span><div class="fact-label">Atomic Mass Unit</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: Unit Conversion -->
+<div class="section" id="s1-2">
+  <div class="section-header">
+    <span class="section-num">1.2</span>
+    <h2 id="ph1s2">Interconversion of Units: MKS ↔ CGS</h2>
+  </div>
+
+  <p>The key relationship: <span class="hi-y">1 m = 100 cm</span> and <span class="hi-y">1 kg = 1000 g</span></p>
+
+  <div class="subsection">
+    <h3>Step-by-Step Conversions</h3>
+    <div class="example">
+      <div class="example-head">1. Area: MKS → CGS</div>
+      Area = L × L = L²<br>
+      1 m = 100 cm = 10² cm
+      <div class="example-sol">
+        (1 m)² = (100 cm)² = (10²)² cm² = 10⁴ cm²<br>
+        ∴ <strong>1 m² = 10⁴ cm²</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">2. Volume: MKS → CGS</div>
+      Volume = L³<br>
+      <div class="example-sol">
+        (1 m)³ = (100 cm)³ = 10⁶ cm³<br>
+        ∴ <strong>1 m³ = 10⁶ cm³</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">3. Density: MKS → CGS</div>
+      Density = mass/volume. Using 1 kg = 10³ g and 1 m³ = 10⁶ cm³:
+      <div class="example-sol">
+        1 kg/m³ = 10³ g / 10⁶ cm³ = 10⁻³ g/cm³<br>
+        ∴ <strong>1 kg/m³ = 10⁻³ g/cm³</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">4. Acceleration (gravity): m/s² → cm/s²</div>
+      g = 9.8 m/s²
+      <div class="example-sol">
+        9.8 m/s² = 9.8 × 100 cm/s² = <strong>980 cm/s²</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">5. Force: Newton → Dyne</div>
+      N = kg·m/s² and dyne = g·cm/s²<br>
+      1 N = 1 kg × 1 m/s²
+      <div class="example-sol">
+        1 N = 10³ g × 10² cm/s² = 10⁵ g·cm/s²<br>
+        ∴ <strong>1 N = 10⁵ dyne</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">6. Speed conversion: km/h → m/s</div>
+      <div class="example-sol">
+        36 km/h = (36 × 1000 m) / (60 × 60 s) = 36000/3600 = <strong>10 m/s</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">🔑 Conversion Quick Reference
+    <div class="gjl" style="margin-bottom:8px">Conversions pakka yaad rakhvo — DDCET ma numerical ma direct kaam aave chhe!</div></div>
+    <ul>
+      <li>1 m² = 10⁴ cm² &nbsp;|&nbsp; 1 m³ = 10⁶ cm³</li>
+      <li>1 N = 10⁵ dyne &nbsp;|&nbsp; 1 J = 10⁷ erg</li>
+      <li>1 Pa = 10 dyne/cm² &nbsp;|&nbsp; g = 9.8 m/s² = 980 cm/s²</li>
+      <li>1 km/h = (5/18) m/s &nbsp;|&nbsp; 1 m/s = (18/5) km/h = 3.6 km/h</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 3: Vernier Caliper -->
+<div class="section" id="s1-3">
+  <div class="section-header">
+    <span class="section-num">1.3</span>
+    <h2 id="ph1s3">Vernier Caliper</h2>
+  </div>
+
+  <div class="def">
+    <strong>Invented by:</strong> Pierre Vernier (French mathematician) in <strong>1631</strong>. It allows measurement of 1/10th or 1/20th of 1 mm accurately.
+  </div>
+
+  <div class="subsection">
+    <h3>Parts of Vernier Caliper</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Part</th><th>Purpose</th></tr>
+      <tr><td>Main Scale</td><td>Upper scale in inches, lower in cm. Fixed scale.</td></tr>
+      <tr><td>Vernier Scale</td><td>Small sliding scale on the main scale.</td></tr>
+      <tr><td>External Jaws (A, B)</td><td>Measure outer dimensions (length, diameter)</td></tr>
+      <tr><td>Internal Jaws (C, D)</td><td>Measure inner dimensions (bore diameter)</td></tr>
+      <tr><td>Depth Probe</td><td>Measures depth of holes/slots</td></tr>
+      <tr><td>Locking Screws</td><td>Fix the reading in place</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- SVG Diagram of Vernier Caliper — Realistic Instrument View -->
+  <div class="diagram">
+    <div class="diagram-title">Vernier Caliper — Instrument Parts &amp; Scales</div>
+    <svg viewBox="0 0 660 268" style="width:100%;max-width:660px" font-family="JetBrains Mono, monospace">
+      <defs>
+        <linearGradient id="vbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a4455"/><stop offset="100%" stop-color="#252d3a"/></linearGradient>
+        <linearGradient id="vslide" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3355"/><stop offset="100%" stop-color="#0e1c30"/></linearGradient>
+      </defs>
+
+      <!-- ====== FIXED BODY ====== -->
+      <!-- Main beam -->
+      <rect x="52" y="106" width="508" height="27" rx="2" fill="url(#vbody)" stroke="#4a5568" stroke-width="1.5"/>
+      <!-- Fixed inner jaw (above beam, tapers to a point) -->
+      <rect x="52" y="40" width="38" height="66" rx="2" fill="url(#vbody)" stroke="#4a5568" stroke-width="1.5"/>
+      <polygon points="52,40 90,40 90,50 52,50" fill="#3a4455" stroke="#4a5568" stroke-width="1"/>
+      <!-- Fixed outer jaw (below beam, large) -->
+      <rect x="52" y="133" width="58" height="90" rx="2" fill="url(#vbody)" stroke="#4a5568" stroke-width="1.5"/>
+      <!-- Fixed jaw face (measuring face) -->
+      <line x1="52" y1="223" x2="110" y2="223" stroke="#c0cce0" stroke-width="2.5"/>
+      <!-- Knurled thumb grip on beam body -->
+      <rect x="155" y="110" width="22" height="18" rx="1" fill="#2d3545" stroke="#3d4a5c" stroke-width="1"/>
+      <line x1="158" y1="110" x2="158" y2="128" stroke="#4a5568" stroke-width="1"/><line x1="162" y1="110" x2="162" y2="128" stroke="#4a5568" stroke-width="1"/>
+      <line x1="166" y1="110" x2="166" y2="128" stroke="#4a5568" stroke-width="1"/><line x1="170" y1="110" x2="170" y2="128" stroke="#4a5568" stroke-width="1"/>
+
+      <!-- ====== SLIDING PART ====== -->
+      <!-- Slide block (rides on beam) -->
+      <rect x="205" y="100" width="70" height="39" rx="2" fill="url(#vslide)" stroke="#58a6ff" stroke-width="1.5"/>
+      <!-- Sliding inner jaw (above beam) -->
+      <rect x="218" y="40" width="32" height="60" rx="2" fill="url(#vslide)" stroke="#58a6ff" stroke-width="1.5"/>
+      <polygon points="218,40 250,40 250,52 218,52" fill="#1e3355" stroke="#58a6ff" stroke-width="1"/>
+      <!-- Sliding outer jaw (below beam) -->
+      <rect x="211" y="133" width="46" height="90" rx="2" fill="url(#vslide)" stroke="#58a6ff" stroke-width="1.5"/>
+      <!-- Sliding jaw face (measuring face) -->
+      <line x1="211" y1="223" x2="257" y2="223" stroke="#58a6ff" stroke-width="2.5"/>
+      <!-- Lock screw -->
+      <rect x="227" y="90" width="30" height="12" rx="5" fill="#1c2535" stroke="#718096" stroke-width="1"/>
+      <text x="242" y="100" fill="#8b949e" font-size="7.5" text-anchor="middle">LOCK</text>
+
+      <!-- Object being measured (gap between outer jaws, shown as dashed rect) -->
+      <rect x="110" y="170" width="101" height="53" rx="3" fill="rgba(63,185,80,0.08)" stroke="#3fb950" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="160" y="199" fill="#3fb950" font-size="9" text-anchor="middle">Object</text>
+      <text x="160" y="210" fill="#3fb950" font-size="9" text-anchor="middle">(outer dia.)</text>
+
+      <!-- Internal measurement gap (between inner jaw tips) -->
+      <line x1="90" y1="44" x2="218" y2="44" stroke="#bc8cff" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="154" y="38" fill="#bc8cff" font-size="8.5" text-anchor="middle">← inner diameter gap →</text>
+
+      <!-- ====== DEPTH ROD ====== -->
+      <rect x="275" y="112" width="285" height="9" rx="1" fill="#f0a500" stroke="#c88800" stroke-width="1"/>
+      <text x="450" y="110" fill="#f0a500" font-size="8.5" text-anchor="middle">Depth Rod</text>
+
+      <!-- ====== MAIN SCALE (cm) 1cm=48px, 0cm at x=76 ====== -->
+      <!-- cm ticks: 0=76, 1=124, 2=172, 3=220, 4=268, 5=316, 6=364, 7=412, 8=460, 9=508 -->
+      <!-- Long ticks (cm) -->
+      <line x1="76" y1="106" x2="76" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="124" y1="106" x2="124" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="172" y1="106" x2="172" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="220" y1="106" x2="220" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="268" y1="106" x2="268" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="316" y1="106" x2="316" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="364" y1="106" x2="364" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="412" y1="106" x2="412" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="460" y1="106" x2="460" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <line x1="508" y1="106" x2="508" y2="123" stroke="#f0a500" stroke-width="2"/>
+      <!-- 0.5 cm mid-ticks -->
+      <line x1="100" y1="106" x2="100" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="148" y1="106" x2="148" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="196" y1="106" x2="196" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="244" y1="106" x2="244" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="292" y1="106" x2="292" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="340" y1="106" x2="340" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="388" y1="106" x2="388" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="436" y1="106" x2="436" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="484" y1="106" x2="484" y2="116" stroke="#f0a500" stroke-width="1.5"/>
+      <!-- mm ticks (1mm=4.8px, show between 0 and 1cm) -->
+      <line x1="81" y1="106" x2="81" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="86" y1="106" x2="86" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="91" y1="106" x2="91" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="96" y1="106" x2="96" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="105" y1="106" x2="105" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="110" y1="106" x2="110" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="115" y1="106" x2="115" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <line x1="120" y1="106" x2="120" y2="112" stroke="#5a6478" stroke-width="1"/>
+      <!-- cm numbers -->
+      <text x="76" y="102" fill="#f0a500" font-size="9" text-anchor="middle">0</text>
+      <text x="124" y="102" fill="#f0a500" font-size="9" text-anchor="middle">1</text>
+      <text x="172" y="102" fill="#f0a500" font-size="9" text-anchor="middle">2</text>
+      <text x="220" y="102" fill="#f0a500" font-size="9" text-anchor="middle">3</text>
+      <text x="268" y="102" fill="#f0a500" font-size="9" text-anchor="middle">4</text>
+      <text x="316" y="102" fill="#f0a500" font-size="9" text-anchor="middle">5</text>
+      <text x="364" y="102" fill="#f0a500" font-size="9" text-anchor="middle">6</text>
+      <text x="412" y="102" fill="#f0a500" font-size="9" text-anchor="middle">7</text>
+      <text x="460" y="102" fill="#f0a500" font-size="9" text-anchor="middle">8</text>
+      <text x="508" y="102" fill="#f0a500" font-size="9" text-anchor="middle">cm</text>
+
+      <!-- ====== VERNIER SCALE (on lower face of sliding block)
+           10 VSD = 9mm = 9×4.8px = 43.2px, each VSD = 4.32px
+           0 at x=205, 10 at x=248 ====== -->
+      <line x1="205" y1="133" x2="205" y2="146" stroke="#58a6ff" stroke-width="2"/>
+      <line x1="209" y1="136" x2="209" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="214" y1="136" x2="214" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="218" y1="136" x2="218" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="222" y1="136" x2="222" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="227" y1="133" x2="227" y2="146" stroke="#58a6ff" stroke-width="2"/>
+      <line x1="231" y1="136" x2="231" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="235" y1="136" x2="235" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="240" y1="136" x2="240" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="244" y1="136" x2="244" y2="146" stroke="#58a6ff" stroke-width="1"/>
+      <line x1="248" y1="133" x2="248" y2="146" stroke="#58a6ff" stroke-width="2"/>
+      <!-- Vernier numbers -->
+      <text x="205" y="155" fill="#58a6ff" font-size="8.5" text-anchor="middle">0</text>
+      <text x="227" y="155" fill="#58a6ff" font-size="8.5" text-anchor="middle">5</text>
+      <text x="248" y="155" fill="#58a6ff" font-size="8.5" text-anchor="middle">10</text>
+
+      <!-- ====== LABELS ====== -->
+      <!-- Scale label -->
+      <text x="390" y="99" fill="#f0a500" font-size="9" text-anchor="middle">← Main Scale (cm) →</text>
+      <!-- Vernier label with arrow -->
+      <text x="310" y="165" fill="#58a6ff" font-size="9">← Vernier Scale (10 div)</text>
+      <!-- Parts labels -->
+      <text x="83" y="25" fill="#8b949e" font-size="9" text-anchor="middle">Fixed</text>
+      <text x="83" y="35" fill="#8b949e" font-size="9" text-anchor="middle">Inner Jaw</text>
+      <text x="237" y="25" fill="#58a6ff" font-size="9" text-anchor="middle">Sliding</text>
+      <text x="237" y="35" fill="#58a6ff" font-size="9" text-anchor="middle">Inner Jaw</text>
+      <text x="83" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">Outer</text>
+      <text x="83" y="252" fill="#e6edf3" font-size="9" text-anchor="middle">Jaw (fixed)</text>
+      <text x="235" y="242" fill="#58a6ff" font-size="9" text-anchor="middle">Outer Jaw</text>
+      <text x="235" y="252" fill="#58a6ff" font-size="9" text-anchor="middle">(sliding)</text>
+    </svg>
+  </div>
+
+  <div class="subsection">
+    <h3>Least Count of Vernier Caliper</h3>
+    <div class="def">
+      <strong>Least Count (LC):</strong> The <em>smallest measurement</em> that can be accurately measured by an instrument.
+    </div>
+
+    <p><strong>Principle:</strong> N divisions of Vernier Scale = (N−1) divisions of Main Scale</p>
+
+    <div class="formula">
+      <div class="eq">LC = 1 MSD − 1 VSD</div>
+      <div class="eq">LC = 1 MSD − [(N−1)/N] MSD = (1/N) MSD</div>
+      <div class="eq">LC = Value of 1 main scale division / Total vernier divisions</div>
+      <div class="desc">For standard vernier: 1 MSD = 1 mm, N = 10 → LC = 1/10 mm = 0.1 mm = 0.01 cm</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Reading = Main Scale Reading + (Vernier coincidence × LC)</div>
+      <div class="desc">Where vernier coincidence = the Vernier division that exactly aligns with a main scale division</div>
+    </div>
+
+    <div class="keypoint">Normal Vernier calipers: LC = 0.1 mm or 0.05 mm or 0.02 mm. Smaller LC → Higher precision.</div>
+  </div>
+</div>
+
+<!-- SECTION 4: Micrometer Screw Gauge -->
+<div class="section" id="s1-4">
+  <div class="section-header">
+    <span class="section-num">1.4</span>
+    <h2 id="ph1s4">Micrometer Screw Gauge</h2>
+  </div>
+
+  <div class="def">
+    Used to measure thickness of <strong>thin wire, paper, sheet or blade</strong>. Measures up to 0.001 mm (more precise than Vernier caliper which measures up to 0.01 cm).
+  </div>
+
+  <div class="subsection">
+    <h3>Principle</h3>
+    <p>Based on the <strong>screw gauge principle</strong>: when a screw completes one full rotation, its flat end (spindle) moves forward or backward by one <strong>pitch distance</strong>.</p>
+    <p>The linear displacement is proportional to the angular displacement.</p>
+
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Part</th><th>Function</th></tr>
+      <tr><td>U-Frame (Body)</td><td>Structural frame holding all parts</td></tr>
+      <tr><td>Anvil</td><td>Fixed face — one end of the measurement gap</td></tr>
+      <tr><td>Spindle</td><td>Moving face — moves towards/away from anvil</td></tr>
+      <tr><td>Main Scale (Sleeve)</td><td>Linear scale on the hollow tube, reads mm</td></tr>
+      <tr><td>Thimble (Circular Scale)</td><td>Rotating drum with 50 or 100 equal divisions</td></tr>
+      <tr><td>Ratchet</td><td>Prevents over-tightening by slipping when proper pressure is reached</td></tr>
+      <tr><td>Lock Nut</td><td>Locks reading in place</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Pitch Distance</h3>
+    <div class="def">
+      <strong>Pitch:</strong> The distance between two consecutive threads on the screw = the distance the spindle moves in one complete rotation.
+    </div>
+    <p>Typical pitch = 0.5 mm or 1 mm.</p>
+  </div>
+
+  <!-- SVG Diagram of Micrometer Screw Gauge — Realistic Instrument View -->
+  <div class="diagram">
+    <div class="diagram-title">Micrometer Screw Gauge — Instrument Parts &amp; Scales</div>
+    <svg viewBox="0 0 560 195" style="width:100%;max-width:560px" font-family="JetBrains Mono, monospace">
+      <defs>
+        <linearGradient id="sg-frame" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#35404f"/><stop offset="100%" stop-color="#252d3a"/></linearGradient>
+        <linearGradient id="sg-barrel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a4555"/><stop offset="100%" stop-color="#22293a"/></linearGradient>
+        <linearGradient id="sg-thimble" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d355a"/><stop offset="100%" stop-color="#0e1d30"/></linearGradient>
+      </defs>
+
+      <!-- ====== U-FRAME (C-clamp shape) ====== -->
+      <!-- Left vertical arm -->
+      <rect x="28" y="35" width="32" height="130" rx="4" fill="url(#sg-frame)" stroke="#4a5568" stroke-width="1.5"/>
+      <!-- Bottom horizontal arm -->
+      <rect x="28" y="148" width="370" height="22" rx="4" fill="url(#sg-frame)" stroke="#4a5568" stroke-width="1.5"/>
+      <!-- Right vertical connection piece -->
+      <rect x="368" y="35" width="30" height="135" rx="4" fill="url(#sg-frame)" stroke="#4a5568" stroke-width="1.5"/>
+
+      <!-- ====== ANVIL (fixed, left side) ====== -->
+      <rect x="58" y="72" width="18" height="26" rx="1" fill="#4a5a6e" stroke="#8899aa" stroke-width="1.5"/>
+      <!-- Anvil face (measuring surface) -->
+      <line x1="76" y1="72" x2="76" y2="98" stroke="#c0d0e0" stroke-width="2.5"/>
+      <text x="55" y="68" fill="#a0aec0" font-size="8" text-anchor="middle">Anvil</text>
+
+      <!-- ====== SPINDLE (moving, rod pointing to anvil) ====== -->
+      <rect x="76" y="80" width="220" height="10" rx="1" fill="#5a6880" stroke="#8899aa" stroke-width="1"/>
+      <!-- Spindle tip face -->
+      <line x1="76" y1="80" x2="76" y2="90" stroke="#c0d0e0" stroke-width="2.5"/>
+      <!-- Gap between anvil and spindle (object being measured) -->
+      <rect x="58" y="76" width="18" height="18" rx="1" fill="rgba(63,185,80,0.1)" stroke="#3fb950" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="67" y="91" fill="#3fb950" font-size="7" text-anchor="middle">obj</text>
+
+      <!-- ====== BARREL / SLEEVE (fixed tube with linear scale) ====== -->
+      <rect x="296" y="68" width="72" height="34" rx="3" fill="url(#sg-barrel)" stroke="#4a5568" stroke-width="1.5"/>
+      <!-- Reference line (datum line) across barrel -->
+      <line x1="296" y1="85" x2="368" y2="85" stroke="#f0a500" stroke-width="1.5"/>
+      <!-- mm marks ABOVE reference line (every 12px = 1mm) -->
+      <line x1="308" y1="74" x2="308" y2="85" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="320" y1="74" x2="320" y2="85" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="332" y1="74" x2="332" y2="85" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="344" y1="74" x2="344" y2="85" stroke="#f0a500" stroke-width="1.5"/>
+      <line x1="356" y1="74" x2="356" y2="85" stroke="#f0a500" stroke-width="1.5"/>
+      <!-- 0.5mm marks BELOW reference line -->
+      <line x1="314" y1="85" x2="314" y2="93" stroke="#f0a500" stroke-width="1"/>
+      <line x1="326" y1="85" x2="326" y2="93" stroke="#f0a500" stroke-width="1"/>
+      <line x1="338" y1="85" x2="338" y2="93" stroke="#f0a500" stroke-width="1"/>
+      <line x1="350" y1="85" x2="350" y2="93" stroke="#f0a500" stroke-width="1"/>
+      <!-- mm numbers on barrel -->
+      <text x="308" y="71" fill="#f0a500" font-size="7.5" text-anchor="middle">0</text>
+      <text x="320" y="71" fill="#f0a500" font-size="7.5" text-anchor="middle">1</text>
+      <text x="332" y="71" fill="#f0a500" font-size="7.5" text-anchor="middle">2</text>
+      <text x="344" y="71" fill="#f0a500" font-size="7.5" text-anchor="middle">3</text>
+      <text x="356" y="71" fill="#f0a500" font-size="7.5" text-anchor="middle">4</text>
+
+      <!-- ====== THIMBLE (rotating cylinder with circular scale) ====== -->
+      <!-- Main thimble body -->
+      <rect x="367" y="60" width="95" height="50" rx="3" fill="url(#sg-thimble)" stroke="#58a6ff" stroke-width="1.5"/>
+      <!-- Thimble left face (the edge we read against the barrel reference line) -->
+      <line x1="367" y1="60" x2="367" y2="110" stroke="#58a6ff" stroke-width="2"/>
+      <!-- Circular scale lines on thimble body (25 visible representing 50 div on full cylinder) -->
+      <!-- Ticks at the left face of thimble going right to show circular divisions -->
+      <!-- These are the horizontal marks you see on the thimble -->
+      <line x1="367" y1="62" x2="378" y2="62" stroke="#58a6ff" stroke-width="0.8"/>
+      <line x1="367" y1="64" x2="374" y2="64" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="66" x2="374" y2="66" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="68" x2="374" y2="68" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="70" x2="378" y2="70" stroke="#58a6ff" stroke-width="0.8"/>
+      <line x1="367" y1="72" x2="374" y2="72" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="74" x2="374" y2="74" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="76" x2="374" y2="76" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="78" x2="374" y2="78" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="80" x2="382" y2="80" stroke="#58a6ff" stroke-width="1.5"/>
+      <line x1="367" y1="82" x2="374" y2="82" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="84" x2="374" y2="84" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="86" x2="374" y2="86" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="88" x2="374" y2="88" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="90" x2="378" y2="90" stroke="#58a6ff" stroke-width="0.8"/>
+      <line x1="367" y1="92" x2="374" y2="92" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="94" x2="374" y2="94" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="96" x2="374" y2="96" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="98" x2="374" y2="98" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="100" x2="378" y2="100" stroke="#58a6ff" stroke-width="0.8"/>
+      <line x1="367" y1="102" x2="374" y2="102" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="104" x2="374" y2="104" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="106" x2="374" y2="106" stroke="#4a7aaa" stroke-width="0.8"/>
+      <line x1="367" y1="108" x2="374" y2="108" stroke="#4a7aaa" stroke-width="0.8"/>
+      <!-- Thimble numbers (0, 10, 20, 30, 40 at the 5-division marks) -->
+      <text x="385" y="84" fill="#58a6ff" font-size="8">25</text>
+      <text x="385" y="64" fill="#58a6ff" font-size="8">0/50</text>
+      <text x="385" y="104" fill="#58a6ff" font-size="8">50</text>
+      <!-- Tick highlighted in gold = reading position (25th div aligned with reference line) -->
+      <circle cx="367" cy="85" r="3" fill="#f0a500" stroke="#c88800" stroke-width="1"/>
+
+      <!-- ====== RATCHET KNOB ====== -->
+      <rect x="460" y="68" width="38" height="34" rx="6" fill="#1a2535" stroke="#718096" stroke-width="1.5"/>
+      <!-- Knurling lines on ratchet -->
+      <line x1="465" y1="68" x2="465" y2="102" stroke="#2d3748" stroke-width="2"/>
+      <line x1="471" y1="68" x2="471" y2="102" stroke="#2d3748" stroke-width="2"/>
+      <line x1="477" y1="68" x2="477" y2="102" stroke="#2d3748" stroke-width="2"/>
+      <line x1="483" y1="68" x2="483" y2="102" stroke="#2d3748" stroke-width="2"/>
+      <line x1="489" y1="68" x2="489" y2="102" stroke="#2d3748" stroke-width="2"/>
+      <text x="479" y="116" fill="#8b949e" font-size="8" text-anchor="middle">Ratchet</text>
+
+      <!-- ====== LABELS &amp; ANNOTATIONS ====== -->
+      <text x="295" y="127" fill="#f0a500" font-size="8.5" text-anchor="middle">Barrel / Sleeve</text>
+      <text x="295" y="137" fill="#8b949e" font-size="8" text-anchor="middle">(linear scale, mm)</text>
+      <text x="415" y="127" fill="#58a6ff" font-size="8.5" text-anchor="middle">Thimble</text>
+      <text x="415" y="137" fill="#8b949e" font-size="8" text-anchor="middle">(circular: 50 div)</text>
+      <text x="44" y="155" fill="#8b949e" font-size="8" text-anchor="middle">U-Frame</text>
+      <text x="155" y="155" fill="#a0aec0" font-size="8.5" text-anchor="middle">Spindle (moves)</text>
+      <text x="296" y="55" fill="#f0a500" font-size="8.5">← Barrel reference line</text>
+      <text x="200" y="168" fill="#bc8cff" font-size="8.5" text-anchor="middle">1 full rotation of thimble = 1 pitch (0.5 mm)</text>
+    </svg>
+  </div>
+
+  <div class="subsection">
+    <h3>Least Count of Micrometer</h3>
+    <div class="formula">
+      <div class="eq">LC = Pitch / Total divisions on circular scale</div>
+      <div class="eq">LC = 0.5 mm / 50 = 0.01 mm = 0.001 cm</div>
+      <div class="desc">With pitch = 0.5 mm and 50 circular divisions</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Reading = Main Scale Reading + (Thimble Reading × LC)</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>Vernier Caliper</h4>
+      <ul>
+        <li>LC = 0.01 cm (0.1 mm)</li>
+        <li>Measures outer/inner dimensions and depth</li>
+        <li>Uses 2 scales: main + vernier</li>
+        <li>Invented 1631 by Pierre Vernier</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h4>Micrometer Screw Gauge</h4>
+      <ul>
+        <li>LC = 0.001 cm (0.01 mm)</li>
+        <li>Measures thickness of thin objects</li>
+        <li>Uses main scale + circular scale</li>
+        <li>More precise than Vernier</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>How to Take a Reading — Step by Step</h3>
+
+    <div class="example">
+      <div class="example-head">VERNIER CALIPER — Worked Reading Example</div>
+      Suppose: Main scale reads 2.3 cm (2.3 is the last full cm/mm mark before the vernier 0). The 7th vernier division coincides with a main scale division. LC = 0.01 cm.
+      <div class="example-sol">
+        Step 1: Note Main Scale Reading (MSR) = 2.3 cm<br>
+        Step 2: Note Vernier Coincidence (VC) = 7th division<br>
+        Step 3: Reading = MSR + (VC × LC) = 2.3 + (7 × 0.01) = 2.3 + 0.07 = <strong>2.37 cm</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">MICROMETER SCREW GAUGE — Worked Reading Example</div>
+      Suppose: Barrel (sleeve) main scale reads 7.5 mm (7 full mm marks + 0.5 mm visible below datum). Thimble circular scale reads 24 (24th division aligned with datum line). Pitch = 0.5 mm, 50 divisions → LC = 0.01 mm.
+      <div class="example-sol">
+        Step 1: Main Scale Reading (MSR) = 7.5 mm (7 mm + visible 0.5 mm below line)<br>
+        Step 2: Thimble reading = 24 divisions<br>
+        Step 3: Reading = MSR + (thimble × LC) = 7.5 + (24 × 0.01) = 7.5 + 0.24 = <strong>7.74 mm</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Zero Error</h3>
+    <div class="def">
+      <strong>Zero Error:</strong> When the jaws of Vernier caliper (or faces of micrometer) are fully closed and the zero of the vernier scale does NOT coincide with the zero of the main scale, there is a zero error.
+    </div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Condition</th><th>Correction</th></tr>
+      <tr><td>No zero error</td><td>Vernier 0 coincides exactly with main scale 0</td><td>No correction needed</td></tr>
+      <tr><td>Positive zero error</td><td>Vernier 0 is to the RIGHT of main scale 0</td><td>Subtract zero error from reading</td></tr>
+      <tr><td>Negative zero error</td><td>Vernier 0 is to the LEFT of main scale 0</td><td>Add the magnitude of zero error to reading</td></tr>
+    </table>
+    </div>
+    <div class="formula">
+      <div class="eq">Correct Reading = Observed Reading − Zero Error</div>
+      <div class="desc">Zero error is positive (+) if the reading is MORE than true value, negative (−) if LESS. Always subtract zero error (with sign) from observed reading.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: Errors -->
+<div class="section" id="s1-5">
+  <div class="section-header">
+    <span class="section-num">1.5</span>
+    <h2 id="ph1s5">Errors in Measurement</h2>
+  </div>
+
+  <div class="def">
+    <strong>Error of Measurement:</strong> The difference between the <em>true value</em> and the <em>measured value</em> of a quantity. No measurement is ever perfect.
+  </div>
+
+  <div class="subsection">
+    <h3>Types of Errors</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Systematic Errors</h4>
+        <ul>
+          <li>Always in one direction (always + or always −)</li>
+          <li>Causes are known → can be minimized</li>
+          <li>Sources: instrument defects, wrong technique, personal habits, external conditions</li>
+          <li>Example: worn metre scale, thermometer under armpit</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <h4>Random Errors</h4>
+        <ul>
+          <li>Occur irregularly — sometimes +, sometimes −</li>
+          <li>Causes: unpredictable variations (temperature, pressure, voltage)</li>
+          <li>Minimized by: taking many readings and finding arithmetic mean</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Sources of Systematic Errors</h3>
+      <ol class="steps">
+        <li><strong>Instrumental errors</strong> — imperfect design/calibration (e.g., metre scale worn at one end)</li>
+        <li><strong>Technique errors</strong> — wrong experimental procedure (e.g., thermometer in armpit gives lower reading than actual body temperature)</li>
+        <li><strong>Personal errors</strong> — observer's inexperience, parallax, misreading</li>
+        <li><strong>External causes</strong> — changes in temperature, pressure, humidity, wind</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Estimation of Errors — Step by Step</h3>
+
+    <p>Let a quantity be measured <em>n</em> times, giving values: a₁, a₂, a₃, … aₙ</p>
+
+    <div class="formula">
+      <div class="eq">Mean Value: ā = (a₁ + a₂ + … + aₙ) / n</div>
+      <div class="desc">The arithmetic mean is taken as the best (true) value of the quantity.</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Absolute Error in each reading: Δaᵢ = ā − aᵢ</div>
+      <div class="desc">Can be positive or negative. Some readings overestimate, some underestimate.</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Mean Absolute Error: Δā = (|Δa₁| + |Δa₂| + … + |Δaₙ|) / n</div>
+      <div class="desc">Always positive — we take magnitudes</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Final Result: a = ā ± Δā</div>
+      <div class="desc">The true value lies between (ā − Δā) and (ā + Δā)</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Relative Error = Δā / ā</div>
+      <div class="eq">Percentage Error (δa) = (Δā / ā) × 100 %</div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Worked Example — Refractive Index</div>
+      Values: 1.29, 1.33, 1.34, 1.35, 1.32, 1.36, 1.30, 1.33
+      <div class="example-sol">
+        Mean: ā = (1.29+1.33+1.34+1.35+1.32+1.36+1.30+1.33)/8 = 10.62/8 = 1.3275 ≈ <strong>1.33</strong><br><br>
+        Absolute errors: |0.04|, |0.00|, |0.01|, |0.02|, |0.01|, |0.03|, |0.03|, |0.00|<br>
+        Sum = 0.14<br><br>
+        Mean Absolute Error: Δā = 0.14/8 = 0.0175 ≈ <strong>0.02</strong><br><br>
+        Relative Error = 0.02/1.33 = ±0.015<br>
+        Percentage Error = 0.015 × 100 = <strong>±1.5%</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Propagation of Errors</h3>
+    <p>When a derived quantity depends on measured quantities, how do errors combine?</p>
+
+    <div class="formula">
+      <div class="eq">If Z = A + B or Z = A − B: ΔZ = ±(ΔA + ΔB)</div>
+      <div class="desc">For addition AND subtraction — absolute errors ADD</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">If Z = A × B or Z = A/B: ΔZ/Z = ±(ΔA/A + ΔB/B)</div>
+      <div class="desc">For multiplication AND division — relative errors ADD</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">If Z = Aⁿ: ΔZ/Z = n × (ΔA/A)</div>
+      <div class="desc">For powers — relative error multiplied by the power</div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example: Two capacitors in parallel</div>
+      C₁ = (1.3 ± 0.1) μF, C₂ = (2.4 ± 0.2) μF
+      <div class="example-sol">
+        Cp = C₁ + C₂ = 1.3 + 2.4 = <strong>3.7 μF</strong><br>
+        ΔCp = ±(ΔC₁ + ΔC₂) = ±(0.1 + 0.2) = ±0.3 μF<br>
+        % error = (0.3/3.7) × 100 = <strong>±8.1%</strong><br>
+        Result: Cp = (3.7 ± 0.3) μF ≡ 3.7 μF ± 8.1%
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example: Difference of lengths</div>
+      l₁ = (5.62 ± 0.01) cm, l₂ = (4.34 ± 0.02) cm
+      <div class="example-sol">
+        l = l₁ − l₂ = 5.62 − 4.34 = <strong>1.28 cm</strong><br>
+        Δl = ±(0.01 + 0.02) = ±0.03 cm<br>
+        % error = (0.03/1.28) × 100 = <strong>±2.34%</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example: g = 4π²L/T² — percentage error in g</div>
+      Error in T = 2%, error in L = 1%
+      <div class="example-sol">
+        Δg/g = ΔL/L + 2(ΔT/T) = 1% + 2×2% = <strong>5%</strong>
+        (L appears to power 1, T appears to power 2 — each contributes)
+      </div>
+    </div>
+
+    <div class="keypoint">For surface area of sphere (S = 4πr²): if error in volume is 9%, then error in surface area = (2/3) × 9% = 6%. Because V ∝ r³ and S ∝ r², so ΔS/S = (2/3) × ΔV/V.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Significant Figures</h3>
+    <p>Significant figures indicate precision of a measurement.</p>
+    <div class="def">Rules: All non-zero digits are significant. Zeros between non-zero digits are significant. Leading zeros are NOT significant. Trailing zeros after decimal are significant.</div>
+    <div class="example">
+      <div class="example-head">Example: Significant digits in 0.005308</div>
+      <div class="example-sol">0.005308 → digits 5, 3, 0, 8 are significant = <strong>4 significant digits</strong><br>Leading zeros (0.00) are not significant.</div>
+    </div>
+    <div class="example">
+      <div class="example-head">Example: Round 18.854 to 3 significant digits</div>
+      <div class="example-sol">18.854 → 3 sig figs → <strong>18.9</strong> (the 4th digit is 5, so round up)</div>
+    </div>
+  </div>
+</div>
+
+<div class="remember">
+  <div class="remember-head">Chapter 1 — Key Formulas to Remember
+    <div class="gjl" style="margin-bottom:8px">Aa formulas last-day ek vaar zaroor repeat karo — kinematics ma direct formula aave chhe!</div></div>
+  <ul>
+    <li>LC (Vernier) = 1 MSD / N = 0.01 cm (for N=10, 1MSD=1mm)</li>
+    <li>LC (Micrometer) = Pitch / Circular divisions = 0.01 mm (pitch=0.5, n=50)</li>
+    <li>Mean absolute error Δā = Σ|Δaᵢ| / n</li>
+    <li>Relative error = Δā / ā &nbsp;|&nbsp; % error = (Δā/ā) × 100</li>
+    <li>Error in A+B or A−B: ΔZ = ΔA + ΔB</li>
+    <li>Error in A×B or A/B: ΔZ/Z = ΔA/A + ΔB/B</li>
+    <li>Error in Aⁿ: ΔZ/Z = n × ΔA/A</li>
+    <li>1 N = 10⁵ dyne &nbsp;|&nbsp; 1 J = 10⁷ erg &nbsp;|&nbsp; g = 9.8 m/s² = 980 cm/s²</li>
+  </ul>
+</div>
+
+</div><!-- end ch-content -->
+</div><!-- end chapter 1 -->
+
+<!-- ============================================================
+     CHAPTER 2 — CLASSICAL MECHANICS
+     ============================================================ -->
+<div class="chapter-page" id="ch2">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch2 = Classical Mechanics — HIGHEST weightage! Kinematics (v, u, a, s, t), Newton's 3 laws, F=ma, momentum, circular motion, work/energy. Formulas + numericals dono practice karo. v² = u² + 2as PAKKO yaad karo!</div></div>
+<div class="ch-hero" style="--ch-color:var(--ch2)">
+  <div class="ch-badge">Chapter 02 · Physics</div>
+  <h1>Classical Mechanics</h1>
+  <p>The study of motion, forces, and energy — from Newton's laws to circular motion, and from work to power. This chapter covers linear and rotational dynamics completely.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Linear Motion &amp; Kinematics</span>
+    <span class="ch-topic-pill">Force &amp; Newton's Laws</span>
+    <span class="ch-topic-pill">Linear Momentum</span>
+    <span class="ch-topic-pill">Impulse</span>
+    <span class="ch-topic-pill">Circular Motion</span>
+    <span class="ch-topic-pill">Angular Velocity</span>
+    <span class="ch-topic-pill">Centripetal &amp; Centrifugal</span>
+    <span class="ch-topic-pill">Work &amp; Energy</span>
+    <span class="ch-topic-pill">Power</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<!-- SECTION: LINEAR MOTION & KINEMATICS — ADDED -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2.0</span>
+    <h2 id="ph2s1">Linear Motion — Velocity, Acceleration and Equations of Motion</h2>
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">3 equations of motion: (1) v = u + at, (2) s = ut + ½at², (3) v² = u² + 2as. Free fall ma a = g = 9.8 m/s². Aa 3 equations thi koi pun kinematics numerical solve thashe!</div></div>
+  </div>
+
+  <div class="def">
+    <strong>Motion:</strong> Change in position of an object with time. Linear (rectilinear) motion means motion along a straight line.
+  </div>
+
+  <div class="subsection">
+    <h3>Key Terms</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Term</th><th>Symbol</th><th>Definition</th><th>Unit</th></tr>
+      <tr><td>Distance</td><td>d</td><td>Total path length covered (scalar)</td><td>m</td></tr>
+      <tr><td>Displacement</td><td>s</td><td>Shortest straight-line distance from start to end, with direction (vector)</td><td>m</td></tr>
+      <tr><td>Speed</td><td>v</td><td>Distance covered per unit time (scalar)</td><td>m/s</td></tr>
+      <tr><td>Velocity</td><td>v</td><td>Displacement per unit time (vector) = rate of change of displacement</td><td>m/s or ms⁻¹</td></tr>
+      <tr><td>Acceleration</td><td>a</td><td>Rate of change of velocity (vector)</td><td>m/s² or ms⁻²</td></tr>
+      <tr><td>Initial velocity</td><td>u</td><td>Velocity at the start (t=0)</td><td>m/s</td></tr>
+      <tr><td>Final velocity</td><td>v</td><td>Velocity after time t</td><td>m/s</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">If a body moves with uniform velocity → acceleration = 0. If velocity changes → acceleration ≠ 0.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Equations of Motion (Kinematics) — Uniform Acceleration</h3>
+    <p>These 3 equations apply when acceleration <em>a</em> is <strong>constant</strong> and the body moves in a straight line.</p>
+
+    <div class="formula">
+      <div class="eq">1st Equation: v = u + at</div>
+      <div class="desc">v = final velocity, u = initial velocity, a = acceleration, t = time</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">2nd Equation: s = ut + ½at²</div>
+      <div class="desc">s = displacement covered in time t</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">3rd Equation: v² = u² + 2as</div>
+      <div class="desc">Relates velocity, acceleration and displacement — no time needed</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">4th (derived): s = (u + v)t / 2</div>
+      <div class="desc">Average velocity × time. Useful when both u and v are known.</div>
+    </div>
+
+    <div class="note">These equations are valid ONLY for: (1) constant acceleration, (2) straight-line motion, (3) uniform initial/final conditions.<span class="gjl">Equations of motion maatra constant acceleration ane straight-line motion mate j valid chhe — exam ma condition check karo!</span> For free-falling bodies, use a = g = 9.8 m/s² (downward).</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Free Fall Under Gravity</h3>
+    <p>When a body falls freely under gravity (no air resistance), it has uniform acceleration <strong>a = g = 9.8 m/s²</strong> downward.</p>
+    <div class="formula">
+      <div class="eq">v = u + gt &nbsp;|&nbsp; h = ut + ½gt² &nbsp;|&nbsp; v² = u² + 2gh</div>
+      <div class="desc">h = height, g = 9.8 m/s². For a body dropped from rest: u = 0</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Solved Examples — Kinematics</h3>
+
+    <div class="example">
+      <div class="example-head">Example 1: A car starts from rest and reaches 72 km/h in 10 s. Find acceleration and distance.</div>
+      Given: u = 0 (starts from rest), v = 72 km/h = 72×(5/18) = 20 m/s, t = 10 s
+      <div class="example-sol">
+        a = (v − u)/t = (20 − 0)/10 = <strong>2 m/s²</strong><br>
+        s = ut + ½at² = 0×10 + ½×2×100 = <strong>100 m</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example 2: A ball is thrown upward with 20 m/s. Find: (a) time to reach top, (b) max height.</div>
+      At highest point v = 0. u = 20 m/s, a = −g = −9.8 m/s²
+      <div class="example-sol">
+        (a) v = u + at → 0 = 20 − 9.8t → t = 20/9.8 ≈ <strong>2.04 s</strong><br>
+        (b) v² = u² + 2as → 0 = 400 − 2×9.8×h → h = 400/19.6 ≈ <strong>20.4 m</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example 3: Brakes applied to a car moving at 30 m/s; stops in 100 m. Find retardation.</div>
+      v = 0, u = 30 m/s, s = 100 m
+      <div class="example-sol">
+        v² = u² + 2as → 0 = 900 + 2a×100 → a = −900/200 = <strong>−4.5 m/s²</strong><br>
+        (Retardation = 4.5 m/s² opposite to direction of motion)
+      </div>
+    </div>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Kinematics — Quick Reference
+    <div class="gjl" style="margin-bottom:8px">v-t ane s-t graphs bahu important chhe — graphs thi equation match karva practice karo!</div></div>
+    <ul>
+      <li>v = u + at &nbsp;|&nbsp; s = ut + ½at² &nbsp;|&nbsp; v² = u² + 2as &nbsp;|&nbsp; s = (u+v)t/2</li>
+      <li>Free fall: a = g = 9.8 m/s² ≈ 10 m/s² (approximate)</li>
+      <li>Body at rest: u = 0 &nbsp;|&nbsp; Body stops: v = 0</li>
+      <li>Uniform velocity: a = 0, s = vt</li>
+      <li>To convert km/h → m/s: multiply by 5/18 (= divide by 3.6)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION: Force and Newton's Laws -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2.1</span>
+    <h2 id="ph2s2">Force and Newton's Laws of Motion</h2>
+<div class="viz-box">
+  <div class="viz-title">⚡ Newton's Three Laws — Quick Visual</div>
+  <div class="newton-grid">
+    <div class="nl-card nl-1"><div class="nl-num">1st Law</div><div class="nl-name">Law of Inertia</div><div class="nl-desc">Object at rest stays at rest. Moving object stays moving. <em>Jyaa sudhi external force na aave!</em></div><div class="nl-ex">📦 Bus rokay to aagal dhakelo lagvo</div></div>
+    <div class="nl-card nl-2"><div class="nl-num">2nd Law</div><div class="nl-name">F = ma</div><div class="nl-desc">Force = Mass × Acceleration. Force vadhshe to acceleration vadhse. <em>Mass fixed hoy to!</em></div><div class="nl-ex">⚽ Ball ne vadhare force thi maar → vadhare acceleration</div></div>
+    <div class="nl-card nl-3"><div class="nl-num">3rd Law</div><div class="nl-name">Action = Reaction</div><div class="nl-desc">Every action has equal & opposite reaction. <em>Same magnitude, opposite direction!</em></div><div class="nl-ex">🚀 Rocket: gas niche → rocket upar</div></div>
+  </div>
+</div>
+  </div>
+
+  <div class="def">
+    <strong>Force:</strong> An external effort (push or pull) that (1) produces or tries to produce motion in a body at rest, (2) stops or tries to stop a body in motion, (3) changes or tries to change the direction of motion.
+  </div>
+
+  <div class="subsection">
+    <h3>Types of Forces</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Contact Forces</h4>
+        <ul>
+          <li>Friction force</li>
+          <li>Normal force</li>
+          <li>Air resistance</li>
+          <li>Tension force</li>
+          <li>Spring force</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <h4>Non-Contact (Field) Forces</h4>
+        <ul>
+          <li>Gravitational force</li>
+          <li>Magnetic force</li>
+          <li>Electrostatic force</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Units of Force</h3>
+    <div class="formula">
+      <div class="eq">Force = Mass × Acceleration</div>
+    </div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>System</th><th>Unit</th><th>Definition</th></tr>
+      <tr><td>SI (MKS)</td><td>Newton (N)</td><td>1 N = force that produces 1 ms⁻² acceleration in 1 kg mass</td></tr>
+      <tr><td>CGS</td><td>Dyne</td><td>1 dyne = force that produces 1 cm s⁻² acceleration in 1 g mass</td></tr>
+    </table>
+    </div>
+    <div class="formula">
+      <div class="eq">1 newton = 10⁵ dyne</div>
+      <div class="desc">Derivation: 1 N = 1 kg × 1 m/s² = 10³ g × 10² cm/s² = 10⁵ g·cm/s²</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Newton's Three Laws of Motion</h3>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)">1st Law — Law of Inertia</div>
+      <div class="acc-body">A body continues in its state of rest or uniform motion in a straight line unless an external force acts on it. <br><br>
+      <span class="hi-y">Inertia</span> = tendency of a body to resist change in its state of motion. Mass is a measure of inertia — greater mass = greater inertia.</div>
+
+      <div class="acc-head" onclick="toggleAcc(this)">2nd Law — Law of Force</div>
+      <div class="acc-body">The rate of change of linear momentum of a body is proportional to the applied force, and change occurs in the direction of force.<br><br>
+      <div class="formula" style="margin:0.5rem 0">
+        <div class="eq">F = ma = dp/dt</div>
+        <div class="desc">F = force, m = mass, a = acceleration, p = momentum</div>
+      </div>
+      This gives us: 1 N = 1 kg × 1 m/s²</div>
+
+      <div class="acc-head" onclick="toggleAcc(this)">3rd Law — Law of Action-Reaction</div>
+      <div class="acc-body">For every action there is an equal and opposite reaction. Forces always occur in pairs — action and reaction act on <em>different</em> bodies.<br><br>
+      Example: When you push a wall, the wall pushes you back with equal force. When a rocket ejects gas backward, the gas pushes the rocket forward.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Solved Examples</h3>
+    <div class="example">
+      <div class="example-head">Example 1: Find applied force</div>
+      Mass = 5 kg, initial velocity u = 2 ms⁻¹, final velocity v = 3.5 ms⁻¹, time t = 2 s
+      <div class="example-sol">
+        a = (v − u)/t = (3.5 − 2)/2 = 1.5/2 = 0.75 ms⁻²<br>
+        F = ma = 5 × 0.75 = <strong>3.75 N</strong>
+      </div>
+    </div>
+    <div class="example">
+      <div class="example-head">Example 2: Find acceleration</div>
+      Force F = 15 N, mass m = 3 kg
+      <div class="example-sol">
+        a = F/m = 15/3 = <strong>5 ms⁻²</strong>
+      </div>
+    </div>
+    <div class="example">
+      <div class="example-head">Example 3: Find mass</div>
+      Force F = 20 N, acceleration a = 5 ms⁻²
+      <div class="example-sol">
+        m = F/a = 20/5 = <strong>4 kg</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Linear Momentum and Impulse -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2.2</span>
+    <h2 id="ph2s3">Linear Momentum and Impulse</h2>
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Momentum = mass × velocity (p = mv). Law of conservation: total momentum before collision = total momentum after. Impulse = F × t = change in momentum. Aa concept bahu MCQ ma aave chhe!</div></div>
+  </div>
+
+  <div class="def">
+    <strong>Linear Momentum (p):</strong> The product of mass and velocity. It is a vector quantity — direction same as velocity.
+  </div>
+
+  <div class="formula">
+    <div class="eq">p = m × v</div>
+    <div class="desc">SI unit: kg ms⁻¹ &nbsp;|&nbsp; CGS unit: g cm s⁻¹</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Important Properties of Momentum</h3>
+    <ul class="steps">
+      <li>When mass is constant: p ∝ v (momentum ∝ velocity)</li>
+      <li>When velocity is constant: p ∝ m (momentum ∝ mass)</li>
+      <li>If two bodies have equal momentum: M₁v₁ = M₂v₂ → v₂/v₁ = M₁/M₂</li>
+      <li>Heavier body → smaller velocity, lighter body → higher velocity (for equal momentum)</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Impulse of Force</h3>
+    <div class="def">
+      When a <strong>large force acts for a very short time</strong>, the body experiences an impulse. Example: hammer striking a nail, bat hitting a ball.
+    </div>
+
+    <div class="formula">
+      <div class="eq">Impulse = Force × time = F × t</div>
+      <div class="eq">Impulse = Change in momentum = m·v₂ − m·v₁ = Δp</div>
+      <div class="desc">SI unit: N·s (newton-second) or kg ms⁻¹ &nbsp;|&nbsp; CGS unit: dyne-second<br>Impulse is a VECTOR quantity.</div>
+    </div>
+
+    <div class="keypoint">Impulse = Change in momentum. This is the impulse-momentum theorem derived from Newton's 2nd law: F = dp/dt → F·dt = dp</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Applications of Impulse</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Situation</th><th>How impulse helps</th></tr>
+      <tr><td>Cricket player lowers hands while catching</td><td>Increases time of impact → reduces force → hands not hurt</td></tr>
+      <tr><td>Person falls on sand/cushion (not cement)</td><td>Longer time of momentum change → smaller force → less injury</td></tr>
+      <tr><td>China/glasswares wrapped in paper for packing</td><td>Paper increases time → reduces average force → less breakage</td></tr>
+      <tr><td>Shock absorbers in vehicles</td><td>Increases time of impact → reduces jerk force on rider</td></tr>
+      <tr><td>Buffers in train bogies</td><td>Increase time of impact → reduce severe jerks during shunting</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Circular Motion -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2.3</span>
+    <h2 id="ph2s4">Circular Motion</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Angular Velocity (ω)</h3>
+    <div class="def">
+      <strong>Angular velocity:</strong> The angle (in radians) described by a rotating body per unit time. Symbol: ω (omega).
+    </div>
+
+    <div class="formula">
+      <div class="eq">ω = θ/t = Angular displacement / time</div>
+      <div class="desc">Unit: radians per second (rad/s)</div>
+    </div>
+
+    <p>The angle θ (in radians) = arc AB / radius = S/r</p>
+
+    <div class="subsection">
+      <h3>Time Period (T) and Frequency (f)</h3>
+      <div class="formula">
+        <div class="eq">T = Time for one complete revolution (seconds)</div>
+        <div class="eq">f = 1/T &nbsp; (frequency in Hertz, Hz)</div>
+        <div class="eq">ω = 2π/T = 2πf</div>
+        <div class="desc">One Hz = one revolution per second</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Angular Acceleration (α)</h3>
+    <div class="def">
+      Rate of change of angular velocity.
+    </div>
+    <div class="formula">
+      <div class="eq">α = dω/dt = (ω₂ − ω₁) / t &nbsp; [rad/s²]</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Relation Between Angular and Linear Velocity</h3>
+    <div class="formula">
+      <div class="eq">v = rω</div>
+      <div class="desc">v = linear velocity (m/s), r = radius (m), ω = angular velocity (rad/s)</div>
+    </div>
+    <div class="formula">
+      <div class="eq">a = rα</div>
+      <div class="desc">a = linear (tangential) acceleration, α = angular acceleration</div>
+    </div>
+    <div class="keypoint">All particles of a rotating body have the SAME angular velocity. But linear velocity differs — particles farther from axis move faster: v = rω.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Centripetal Force and Centrifugal Force</h3>
+
+    <div class="def">
+      <strong>Centripetal Force:</strong> The inward force directed towards the centre of circular path that keeps the body moving in a circle. It is a REAL force.
+    </div>
+    <div class="def">
+      <strong>Centrifugal Force:</strong> The outward (pseudo) force felt by the object due to inertia. It is NOT a real force — it is a reaction to centripetal force by Newton's 3rd law. Equal in magnitude but opposite in direction.
+    </div>
+
+    <div class="formula">
+      <div class="eq">Centripetal Force F = mv²/r = mω²r</div>
+      <div class="desc">m = mass, v = velocity, r = radius of circular path</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Centripetal Acceleration a = v²/r = ω²r</div>
+    </div>
+
+    <!-- SVG Circular motion diagram -->
+    <div class="diagram">
+      <div class="diagram-title">Circular Motion — Forces on Object</div>
+      <svg viewBox="0 0 300 220" style="width:100%;max-width:320px">
+        <circle cx="150" cy="110" r="80" fill="none" stroke="#30363d" stroke-width="2" stroke-dasharray="6,4"/>
+        <circle cx="150" cy="30" r="10" fill="#58a6ff" stroke="#21262d" stroke-width="2"/>
+        <!-- velocity arrow (tangent) -->
+        <line x1="150" y1="30" x2="200" y2="30" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-g)"/>
+        <!-- centripetal arrow (inward) -->
+        <line x1="150" y1="30" x2="150" y2="75" stroke="#f85149" stroke-width="2" marker-end="url(#arr-r)"/>
+        <!-- centrifugal arrow (outward) -->
+        <line x1="150" y1="30" x2="150" y2="-5" stroke="#f0a500" stroke-width="2" marker-end="url(#arr-y)"/>
+        <!-- center point -->
+        <circle cx="150" cy="110" r="5" fill="#f0a500"/>
+        <line x1="150" y1="110" x2="150" y2="30" stroke="#f0a500" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- labels -->
+        <text x="207" y="33" fill="#3fb950" font-size="11">v (velocity)</text>
+        <text x="155" y="60" fill="#f85149" font-size="11">Fc (centripetal)</text>
+        <text x="155" y="18" fill="#f0a500" font-size="11">Cf (centrifugal)</text>
+        <text x="154" y="113" fill="#f0a500" font-size="11">O</text>
+        <text x="120" y="75" fill="#8b949e" font-size="10">r</text>
+        <defs>
+          <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3fb950"/></marker>
+          <marker id="arr-r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f85149"/></marker>
+          <marker id="arr-y" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f0a500"/></marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Vertical Circular Motion — Tension in String</h3>
+    <div class="formula">
+      <div class="eq">At LOWEST point: T = mg + mv²/r &nbsp; (maximum)</div>
+      <div class="eq">At HIGHEST point: T = mv²/r − mg &nbsp; (minimum)</div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example: Mass 2 kg, radius 1 m, v = 2 m/s, g = 10 m/s²</div>
+      <div class="example-sol">
+        At lowest point: T = mg + mv²/r = 2×10 + 2×4/1 = 20 + 8 = <strong>28 N</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Examples of Centripetal/Centrifugal Force in Real Life</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Example</th><th>Explanation</th></tr>
+      <tr><td>Car on curved road</td><td>Friction between road and tyre provides centripetal force. Road is banked (inner edge lower) to help.</td></tr>
+      <tr><td>Bicycle mudguard</td><td>Mud on tyre flies tangentially due to inertia (centrifugal tendency) — mudguard prevents it hitting rider</td></tr>
+      <tr><td>Cyclists bending at curves</td><td>Lean inward to get necessary centripetal force. When taking a turn on banked road, centripetal force is provided by horizontal component of normal reaction.</td></tr>
+      <tr><td>Aeroplane banking</td><td>Aircraft inclines inward during horizontal turn</td></tr>
+      <tr><td>Safe speed on banked road: tan θ = v²/rg</td><td>Max safe speed depends on radius, angle of banking, and g — NOT on mass of vehicle</td></tr>
+    </table>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Safe speed on banked road: v = √(rg·tan θ)</div>
+      <div class="eq">tan θ = v²/(rg)</div>
+      <div class="desc">θ = banking angle, r = radius, g = 9.8 m/s²</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Minimum radius for safe turn: r = v²/(μg)</div>
+      <div class="desc">μ = coefficient of friction between tyre and road</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Solved Examples</h3>
+    <div class="example">
+      <div class="example-head">Centripetal acceleration of 10 kg body, v=5 m/s, r=5 m</div>
+      <div class="example-sol">
+        a = v²/r = 25/5 = <strong>5 m/s²</strong>
+      </div>
+    </div>
+    <div class="example">
+      <div class="example-head">Angular velocity of flywheel at 180 rpm</div>
+      <div class="example-sol">
+        ω = 2π × (180/60) = 2π × 3 = 6π rad/s ≈ 18.85 rad/s
+      </div>
+    </div>
+    <div class="example">
+      <div class="example-head">Linear velocity: ω = 70 rad/s, r = 0.5 m</div>
+      <div class="example-sol">
+        v = rω = 0.5 × 70 = <strong>35 m/s</strong>
+      </div>
+    </div>
+    <div class="example">
+      <div class="example-head">Angular displacement in 0.5 s at ω = 11 rad/s</div>
+      <div class="example-sol">
+        θ = ω × t = 11 × 0.5 = <strong>5.5 rad</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Work, Energy, Power -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">2.4</span>
+    <h2 id="ph2s5">Work, Energy and Power</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Work</h3>
+    <div class="def">
+      Work is done when a force causes displacement in the direction of the force.
+    </div>
+    <div class="formula">
+      <div class="eq">W = F × d × cos θ</div>
+      <div class="desc">F = force (N), d = displacement (m), θ = angle between force and displacement<br>
+      If force and displacement are in same direction: W = F × d<br>
+      SI unit: Joule (J) = N·m &nbsp;|&nbsp; CGS: erg = dyne·cm<br>
+      <strong>1 J = 10⁷ erg</strong></div>
+    </div>
+    <div class="keypoint">Work is a SCALAR. Work is zero if: F=0, d=0, or θ=90° (force perpendicular to motion — e.g., a person carrying a bag while walking horizontally).</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Energy</h3>
+    <div class="def">
+      Energy is the capacity to do work. SI unit: Joule (J).
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Kinetic Energy (KE)</h4>
+        <ul>
+          <li>Energy due to motion</li>
+        </ul>
+        <div class="formula" style="margin:0.5rem 0">
+          <div class="eq">KE = ½mv²</div>
+          <div class="desc">m = mass, v = velocity</div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <h4>Potential Energy (PE)</h4>
+        <ul>
+          <li>Energy stored due to position or configuration</li>
+        </ul>
+        <div class="formula" style="margin:0.5rem 0">
+          <div class="eq">PE = mgh</div>
+          <div class="desc">m = mass, g = 9.8 m/s², h = height</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Work-Energy Theorem: W = ΔKE = ½mv² − ½mu²</div>
+    </div>
+
+    <div class="def">
+      <strong>Law of Conservation of Energy:</strong> Energy cannot be created or destroyed, only converted from one form to another. Total energy (KE + PE) remains constant in absence of non-conservative forces.
+    </div>
+
+    <div class="formula">
+      <div class="eq">At any point: KE + PE = constant (for conservative systems)</div>
+      <div class="eq">½mv² + mgh = constant</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Power</h3>
+    <div class="def">
+      Power is the rate of doing work.
+    </div>
+    <div class="formula">
+      <div class="eq">P = W/t = F × v</div>
+      <div class="desc">SI unit: Watt (W) = J/s &nbsp;|&nbsp; 1 horsepower = 746 W<br>1 kWh = 3.6 × 10⁶ J (commercial unit of energy)</div>
+    </div>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Chapter 2 — Key Points
+    <div class="gjl" style="margin-bottom:8px">Newton na Laws ane F=ma thi bahu numericals aave chhe. Samjo, pachhi solve karo!</div></div>
+    <ul>
+      <li>1 N = 10⁵ dyne &nbsp;|&nbsp; 1 J = 10⁷ erg</li>
+      <li>Impulse = F×t = Δp = m(v₂ − v₁)</li>
+      <li>v = rω &nbsp;|&nbsp; a = rα &nbsp;|&nbsp; ω = 2πf = 2π/T</li>
+      <li>Centripetal force F = mv²/r = mω²r (inward)</li>
+      <li>At lowest point in vertical circle: T = mg + mv²/r</li>
+      <li>At highest point: T = mv²/r − mg</li>
+      <li>KE = ½mv² &nbsp;|&nbsp; PE = mgh &nbsp;|&nbsp; P = W/t</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     CHAPTER 3 — ELECTRIC CURRENT
+     ============================================================ -->
+<div class="chapter-page" id="ch3">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch3 = Electric Current — Coulomb's law, Ohm's law (V=IR), series/parallel resistance, capacitors. Circuit problems: R series = R₁+R₂, R parallel = R₁R₂/(R₁+R₂). Aa formulas direct MCQ ma aave chhe!</div></div>
+<div class="ch-hero" style="--ch-color:var(--ch3)">
+  <div class="ch-badge">Chapter 03 · Physics</div>
+  <h1>Electric Current</h1>
+  <p>From the fundamental nature of charge to Ohm's Law, capacitors, and complete circuit analysis — this chapter covers all of electrostatics and basic circuit theory.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Electric Charge</span>
+    <span class="ch-topic-pill">Coulomb's Law</span>
+    <span class="ch-topic-pill">Electric Field</span>
+    <span class="ch-topic-pill">Electric Potential</span>
+    <span class="ch-topic-pill">Electric Flux</span>
+    <span class="ch-topic-pill">Ohm's Law</span>
+    <span class="ch-topic-pill">Resistance &amp; Resistivity</span>
+    <span class="ch-topic-pill">Capacitance</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<!-- SECTION: Electric Charge -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3.1</span>
+    <h2 id="ph3s1">Electric Charge</h2>
+  </div>
+
+  <div class="def">
+    Every atom contains <strong>electrons</strong> (negative), <strong>protons</strong> (positive), and <strong>neutrons</strong> (neutral). The property of particles due to which electric force exists between them is called <strong>electric charge</strong>.
+  </div>
+
+  <div class="facts-bar">
+    <div class="fact-card"><span class="fact-value">9.1 × 10⁻³¹ kg</span><div class="fact-label">Mass of electron</div></div>
+    <div class="fact-card"><span class="fact-value">1.6 × 10⁻²⁷ kg</span><div class="fact-label">Mass of proton/neutron</div></div>
+    <div class="fact-card"><span class="fact-value">e = 1.6 × 10⁻¹⁹ C</span><div class="fact-label">Fundamental charge (electron/proton)</div></div>
+    <div class="fact-card"><span class="fact-value">6.25 × 10¹⁸</span><div class="fact-label">Electrons in 1 Coulomb</div></div>
+  </div>
+
+  <p>Only <strong>electrons</strong> are transferred during charging. The substance that receives electrons becomes <em>negatively charged</em>; the one that loses electrons becomes <em>positively charged</em>. Every object is neutral by default.</p>
+
+  <div class="formula">
+    <div class="eq">n = 1/e = 1/(1.6 × 10⁻¹⁹) = 6.25 × 10¹⁸ electrons per coulomb</div>
+    <div class="desc">SI unit of charge: Coulomb (C)</div>
+  </div>
+
+  <div class="keypoint">Like charges repel. Unlike charges attract. Electric force is 10⁴³ times greater than gravitational force between two electrons!</div>
+</div>
+
+<!-- SECTION: Coulomb's Law -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3.2</span>
+    <h2 id="ph3s2">Coulomb's Law</h2>
+  </div>
+
+  <div class="def">
+    <strong>Coulomb's Law:</strong> The electric force between two stationary point charges is directly proportional to the product of their charges and inversely proportional to the square of the distance between them.
+  </div>
+
+  <div class="formula">
+    <div class="eq">F = k · q₁q₂ / r²</div>
+    <div class="eq">k = 1/(4πε₀) = 8.9875 × 10⁹ ≈ 9 × 10⁹ N·m²·C⁻²</div>
+    <div class="desc">ε₀ = permittivity of free space = 8.854 × 10⁻¹² C²/Nm²<br>
+    In CGS: k = 1 dyne·cm²/esu²<br>
+    Force is along the line joining the two charges.</div>
+  </div>
+
+  <div class="formula">
+    <div class="eq">In a medium: Fₘ = (1/4πε) · q₁q₂/r²</div>
+    <div class="eq">F/Fₘ = ε/ε₀ = εᵣ = K (dielectric constant)</div>
+    <div class="desc">Relative permittivity εᵣ > 1 always, so Fₘ &lt; F (force decreases in a medium)</div>
+  </div>
+
+  <div class="keypoint">When distance is doubled → force becomes 1/4th. When charges are doubled → force becomes 4 times.</div>
+
+  <div class="example">
+    <div class="example-head">Example: Total charge on 20 extra electrons</div>
+    <div class="example-sol">
+      q = n × e = 20 × (−1.6 × 10⁻¹⁹) = <strong>−3.2 × 10⁻¹⁸ C</strong>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Electric Field -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3.3</span>
+    <h2 id="ph3s3">Electric Field, Potential and Flux</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Electric Field (E)</h3>
+    <div class="def">
+      The force per unit positive test charge placed at a point. It is the effect of a charge felt in the surrounding space.
+    </div>
+    <div class="formula">
+      <div class="eq">E = F / q₀</div>
+      <div class="eq">E = kQ / r² = (1/4πε₀) · Q/r²</div>
+      <div class="desc">SI unit: N/C or V/m<br>Electric field is a VECTOR quantity.</div>
+    </div>
+
+    <div class="subsection">
+      <h3>Properties of Electric Field Lines</h3>
+      <ol class="steps">
+        <li>Start from positive charges, end at negative charges</li>
+        <li>Tangent at any point = direction of electric field at that point</li>
+        <li>Two field lines NEVER intersect (would imply two directions at one point)</li>
+        <li>Closer (denser) lines = stronger field; farther apart = weaker field</li>
+        <li>Uniform field lines are parallel and equidistant</li>
+        <li>Field lines are imaginary but electric field is real</li>
+        <li>Field lines are always perpendicular to the conducting surface</li>
+        <li>Field lines do NOT form closed paths</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Electric Potential (V)</h3>
+    <div class="def">
+      Work done against the electric field in bringing a unit positive charge from infinity to a point in the field.
+    </div>
+    <div class="formula">
+      <div class="eq">V = W / q₀</div>
+      <div class="eq">VA = −kQ/r</div>
+      <div class="desc">Unit: Volt (V) = Joule/Coulomb<br>1 Volt = 1 J/C<br>Electric potential is a SCALAR quantity.</div>
+    </div>
+    <div class="formula">
+      <div class="eq">Potential Difference: VB − VA = −k·Q/rAB = −WAB/q₀</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Electric Flux (φ)</h3>
+    <div class="def">
+      The number of electric field lines passing perpendicularly through a given surface area.
+    </div>
+    <div class="formula">
+      <div class="eq">φ = E · A · cos θ</div>
+      <div class="desc">E = electric field, A = area, θ = angle between E and normal to surface<br>
+      SI unit: V·m or N·m²/C<br>
+      Electric flux is a SCALAR.<br>
+      If θ = 0°: φ = EA (maximum) &nbsp;|&nbsp; If θ = 90°: φ = 0 (parallel)</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Ohm's Law and Resistance -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3.4</span>
+    <h2 id="ph3s4">Ohm's Law, Resistance and Conductance</h2>
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">V = IR — Voltage = Current × Resistance. Series: Rtotal = R1+R2+... Parallel: 1/Rtotal = 1/R1 + 1/R2 + ... Power: P = VI = I²R = V²/R. Aa formulas directly numerical ma use thaay chhe!</div></div>
+  </div>
+
+  <div class="def">
+    <strong>Electric Current (I):</strong> The rate of flow of electric charge through a conductor.
+  </div>
+  <div class="formula">
+    <div class="eq">I = Q/t</div>
+    <div class="desc">SI unit: Ampere (A). 1 A = 1 C/s<br>Current flows from + to − (conventional) but electrons flow − to +.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Ohm's Law</h3>
+    <div class="def">
+      At constant temperature, the current through a conductor is directly proportional to the potential difference across it.
+    </div>
+    <div class="formula">
+      <div class="eq">V = I × R &nbsp;→&nbsp; I = V/R &nbsp;→&nbsp; R = V/I</div>
+      <div class="desc">V = Voltage (Volts), I = Current (Amperes), R = Resistance (Ohms, Ω)</div>
+    </div>
+    <div class="keypoint">Ohm's Law is valid for metallic conductors at constant temperature. It does NOT apply to diodes, transistors, etc.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Resistance and Factors Affecting It</h3>
+    <div class="formula">
+      <div class="eq">R = ρ × L / A</div>
+      <div class="desc">ρ (rho) = resistivity (specific resistance) of material (Ω·m)<br>
+      L = length of conductor (m), A = cross-sectional area (m²)<br>
+      More length → more resistance. More area → less resistance.</div>
+    </div>
+
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Quantity</th><th>Symbol</th><th>Definition</th><th>Unit</th></tr>
+      <tr><td>Resistance</td><td>R</td><td>Opposition to current flow</td><td>Ohm (Ω)</td></tr>
+      <tr><td>Conductance</td><td>G</td><td>G = 1/R</td><td>Siemens (S) or mho (℧)</td></tr>
+      <tr><td>Resistivity</td><td>ρ</td><td>R per unit length per unit area: ρ = R·A/L</td><td>Ω·m</td></tr>
+      <tr><td>Conductivity</td><td>σ</td><td>σ = 1/ρ</td><td>S/m</td></tr>
+    </table>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Conductivity σ = 1/ρ = 1/(R·A/L) = L/(R·A)</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Combination of Resistors</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Series Combination</h4>
+        <div class="formula" style="margin:0.5rem 0">
+          <div class="eq">Rₛ = R₁ + R₂ + R₃ + … + Rₙ</div>
+          <div class="desc">Current same through all. Voltage divides.<br>Equivalent resistance is always GREATER than the largest individual resistance.</div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <h4>Parallel Combination</h4>
+        <div class="formula" style="margin:0.5rem 0">
+          <div class="eq">1/Rₚ = 1/R₁ + 1/R₂ + … + 1/Rₙ</div>
+          <div class="desc">Voltage same across all. Current divides.<br>Equivalent resistance is always LESS than the smallest individual resistance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVG: Series and parallel resistors -->
+    <div class="diagram">
+      <div class="diagram-title">Series vs Parallel Resistors</div>
+      <svg viewBox="0 0 500 150" style="width:100%;max-width:500px">
+        <!-- Series -->
+        <text x="10" y="20" fill="#bc8cff" font-size="12">SERIES</text>
+        <line x1="10" y1="50" x2="50" y2="50" stroke="#58a6ff" stroke-width="2"/>
+        <rect x="50" y="38" width="60" height="24" fill="#21262d" stroke="#bc8cff" rx="4"/>
+        <text x="72" y="54" fill="#bc8cff" font-size="12">R₁</text>
+        <line x1="110" y1="50" x2="150" y2="50" stroke="#58a6ff" stroke-width="2"/>
+        <rect x="150" y="38" width="60" height="24" fill="#21262d" stroke="#bc8cff" rx="4"/>
+        <text x="172" y="54" fill="#bc8cff" font-size="12">R₂</text>
+        <line x1="210" y1="50" x2="250" y2="50" stroke="#58a6ff" stroke-width="2"/>
+        <rect x="250" y="38" width="60" height="24" fill="#21262d" stroke="#bc8cff" rx="4"/>
+        <text x="272" y="54" fill="#bc8cff" font-size="12">R₃</text>
+        <line x1="310" y1="50" x2="350" y2="50" stroke="#58a6ff" stroke-width="2"/>
+        <text x="360" y="54" fill="#8b949e" font-size="11">Rₛ=R₁+R₂+R₃</text>
+
+        <!-- Parallel -->
+        <text x="10" y="85" fill="#3fb950" font-size="12">PARALLEL</text>
+        <line x1="10" y1="110" x2="50" y2="110" stroke="#58a6ff" stroke-width="2"/>
+        <line x1="50" y1="95" x2="50" y2="125" stroke="#58a6ff" stroke-width="2"/>
+        <!-- Branch 1 -->
+        <line x1="50" y1="100" x2="80" y2="100" stroke="#58a6ff" stroke-width="1.5"/>
+        <rect x="80" y="91" width="50" height="18" fill="#21262d" stroke="#3fb950" rx="3"/>
+        <text x="96" y="104" fill="#3fb950" font-size="11">R₁</text>
+        <line x1="130" y1="100" x2="160" y2="100" stroke="#58a6ff" stroke-width="1.5"/>
+        <!-- Branch 2 -->
+        <line x1="50" y1="110" x2="80" y2="110" stroke="#58a6ff" stroke-width="1.5"/>
+        <rect x="80" y="101" width="50" height="18" fill="#21262d" stroke="#3fb950" rx="3"/>
+        <text x="96" y="114" fill="#3fb950" font-size="11">R₂</text>
+        <line x1="130" y1="110" x2="160" y2="110" stroke="#58a6ff" stroke-width="1.5"/>
+        <!-- Branch 3 -->
+        <line x1="50" y1="120" x2="80" y2="120" stroke="#58a6ff" stroke-width="1.5"/>
+        <rect x="80" y="111" width="50" height="18" fill="#21262d" stroke="#3fb950" rx="3"/>
+        <text x="96" y="124" fill="#3fb950" font-size="11">R₃</text>
+        <line x1="130" y1="120" x2="160" y2="120" stroke="#58a6ff" stroke-width="1.5"/>
+        <line x1="160" y1="95" x2="160" y2="125" stroke="#58a6ff" stroke-width="2"/>
+        <line x1="160" y1="110" x2="200" y2="110" stroke="#58a6ff" stroke-width="2"/>
+        <text x="205" y="112" fill="#8b949e" font-size="10">1/Rₚ=1/R₁+1/R₂+1/R₃</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Electrical Power</h3>
+    <div class="formula">
+      <div class="eq">P = V × I = I²R = V²/R</div>
+      <div class="desc">Unit: Watt (W) = J/s. 1 kWh = 3.6×10⁶ J</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Capacitance -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">3.5</span>
+    <h2 id="ph3s5">Capacitance and Capacitors</h2>
+  </div>
+
+  <div class="def">
+    <strong>Capacitance (C):</strong> The ability of a conductor to store electric charge. The ratio of charge stored to potential difference.
+  </div>
+
+  <div class="formula">
+    <div class="eq">C = Q / V</div>
+    <div class="desc">SI unit: Farad (F) = Coulomb/Volt. Also written as °F.<br>1 μF = 10⁻⁶ F &nbsp;|&nbsp; 1 nF = 10⁻⁹ F &nbsp;|&nbsp; 1 pF = 10⁻¹² F</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Parallel Plate Capacitor</h3>
+    <p>Two parallel conducting plates of area A, separated by distance d, with a dielectric medium between them.</p>
+    <div class="formula">
+      <div class="eq">C = ε₀·A / d &nbsp; (vacuum/air)</div>
+      <div class="eq">C = K·ε₀·A / d &nbsp; (with dielectric)</div>
+      <div class="desc">ε₀ = 8.854 × 10⁻¹² F/m (absolute permittivity of free space)<br>
+      K = εᵣ = dielectric constant (relative permittivity)<br>
+      Capacitance ↑ if: A increases, d decreases, or K increases.</div>
+    </div>
+    <div class="keypoint">Condition for parallel plate capacitor: d² &lt;&lt; A (plate separation much smaller than plate area).</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Types of Capacitors</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Construction</th></tr>
+      <tr><td>Electrolytic</td><td>Thin metallic film (anode) + electrolyte paste (cathode) + oxide layer (dielectric)</td></tr>
+      <tr><td>Mica</td><td>Thin mica sheet sandwiched between conductor plates</td></tr>
+      <tr><td>Paper</td><td>Wax paper between tin plates</td></tr>
+      <tr><td>Film</td><td>Plastic film between thin conductive metal films</td></tr>
+      <tr><td>Ceramic</td><td>Ceramic dielectric material</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Series and Parallel Combinations of Capacitors</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Series Combination</h4>
+        <div class="formula" style="margin:0.5rem 0">
+          <div class="eq">1/Cₛ = 1/C₁ + 1/C₂ + … + 1/Cₙ</div>
+          <div class="desc">Same charge Q on each capacitor. Voltage divides.<br>Equivalent C is SMALLER than smallest individual C.</div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <h4>Parallel Combination</h4>
+        <div class="formula" style="margin:0.5rem 0">
+          <div class="eq">Cₚ = C₁ + C₂ + … + Cₙ</div>
+          <div class="desc">Same voltage across each capacitor. Charge divides.<br>Equivalent C is LARGER than largest individual C.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example: C₁=5μF, C₂=10μF, C₃=15μF</div>
+      <div class="example-sol">
+        Series: 1/Cₛ = 1/5 + 1/10 + 1/15 = 6/30 + 3/30 + 2/30 = 11/30<br>
+        Cₛ = 30/11 = <strong>2.72 μF</strong><br><br>
+        Parallel: Cₚ = 5 + 10 + 15 = <strong>30 μF</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Chapter 3 — Key Formulas
+    <div class="gjl" style="margin-bottom:8px">Work, Energy ane Power nana lage chhe pan aa chapter na numericals tricky hoy chhe — formulas clear karo!</div></div>
+    <ul>
+      <li>F = kq₁q₂/r² &nbsp;|&nbsp; k = 9×10⁹ Nm²C⁻²</li>
+      <li>E = F/q₀ = kQ/r² &nbsp;|&nbsp; φ = EA cosθ</li>
+      <li>V = kQ/r &nbsp;|&nbsp; C = Q/V</li>
+      <li>V = IR (Ohm's Law) &nbsp;|&nbsp; R = ρL/A</li>
+      <li>Series R: Rₛ = R₁+R₂+… &nbsp;|&nbsp; Parallel: 1/Rₚ = 1/R₁+1/R₂+…</li>
+      <li>Series C: 1/Cₛ = 1/C₁+1/C₂+… &nbsp;|&nbsp; Parallel: Cₚ = C₁+C₂+…</li>
+      <li>C = ε₀A/d &nbsp;|&nbsp; P = VI = I²R = V²/R</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     CHAPTER 4 — HEAT AND THERMOMETRY
+     ============================================================ -->
+<div class="chapter-page" id="ch4">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch4 = Heat & Thermometry — Temperature scales, conversion formulas, modes of heat transfer (conduction, convection, radiation), specific heat. K = °C + 273 — aa conversion bahu aave chhe!</div></div>
+<div class="ch-hero" style="--ch-color:var(--ch4)">
+  <div class="ch-badge">Chapter 04 · Physics</div>
+  <h1>Heat and Thermometry</h1>
+  <p>Understanding heat as energy transfer, temperature scales and their conversions, how heat travels through materials, and the thermal properties of substances.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Heat &amp; Temperature</span>
+    <span class="ch-topic-pill">Temperature Scales</span>
+    <span class="ch-topic-pill">Celsius ↔ Fahrenheit ↔ Kelvin</span>
+    <span class="ch-topic-pill">Modes of Heat Transfer</span>
+    <span class="ch-topic-pill">Heat Capacity</span>
+    <span class="ch-topic-pill">Specific Heat</span>
+    <span class="ch-topic-pill">Thermal Conductivity</span>
+    <span class="ch-topic-pill">Linear Thermal Expansion</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<!-- SECTION: Heat and Temperature -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4.1</span>
+    <h2 id="ph4s1">Heat, Temperature and Units</h2>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>Heat</h4>
+      <ul>
+        <li>A form of energy</li>
+        <li>Transferred between bodies due to temperature difference</li>
+        <li>Flows from higher T to lower T</li>
+        <li>SI unit: Joule (J)</li>
+        <li>CGS unit: erg</li>
+        <li>Practical unit: calorie (cal)</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h4>Temperature</h4>
+      <ul>
+        <li>Degree of hotness or coldness</li>
+        <li>Determines direction of heat flow</li>
+        <li>One of 7 fundamental quantities</li>
+        <li>SI unit: Kelvin (K)</li>
+        <li>Practical: °C, °F</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="eq">1 calorie = heat needed to raise 1 g of water from 14.5°C to 15.5°C</div>
+    <div class="eq">1 calorie = 4.186 joule (Joule's mechanical equivalent)</div>
+    <div class="desc">W/Q = J (constant), where W = work, Q = heat, J = 4.186 J/cal</div>
+  </div>
+</div>
+
+<!-- SECTION: Temperature Scales -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4.2</span>
+    <h2 id="ph4s2">Temperature Scales and Conversion</h2>
+<div class="viz-box">
+  <div class="viz-title">🌡️ Temperature Scales — Visual Comparison</div>
+  <div class="temp-compare">
+    <div class="tc-col"><div class="tc-head tc-c">Celsius °C</div><div class="tc-val tc-hot">100°C<div class="tc-label">Water Boils</div></div><div class="tc-bar"></div><div class="tc-val tc-cold">0°C<div class="tc-label">Water Freezes</div></div><div class="tc-val tc-abs">-273°C<div class="tc-label">Absolute Zero</div></div></div>
+    <div class="tc-formula"><div class="tc-eq">°F = <span style="color:#fde047">(9/5)×°C + 32</span></div><div class="tc-eq">K = <span style="color:#86efac">°C + 273</span></div><div class="tc-eq">°C = <span style="color:#93c5fd">(°F − 32) × 5/9</span></div></div>
+    <div class="tc-col"><div class="tc-head tc-k">Kelvin K</div><div class="tc-val tc-hot">373 K<div class="tc-label">Water Boils</div></div><div class="tc-bar"></div><div class="tc-val tc-cold">273 K<div class="tc-label">Water Freezes</div></div><div class="tc-val tc-abs">0 K<div class="tc-label">Absolute Zero</div></div></div>
+  </div>
+  <div class="g-tip" style="margin-top:10px"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Simple trick: K = °C + 273. Etle 25°C = 298 K. Body temp 37°C = 310 K. Aa conversions numericals ma direct kaam aave chhe!</div></div>
+</div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Scale</th><th>Freezing point of water</th><th>Boiling point of water</th><th>Divisions</th><th>Inventor</th></tr>
+    <tr><td>Celsius (°C)</td><td>0 °C</td><td>100 °C</td><td>100 equal parts</td><td>Celsius, 1710</td></tr>
+    <tr><td>Fahrenheit (°F)</td><td>32 °F</td><td>212 °F</td><td>180 equal parts</td><td>Fahrenheit, 1717</td></tr>
+    <tr><td>Kelvin (K) — Absolute</td><td>273.15 K (273 K)</td><td>373.15 K (373 K)</td><td>Same as Celsius</td><td>Lord Kelvin</td></tr>
+  </table>
+  </div>
+
+  <!-- SVG Temperature scale comparison -->
+  <div class="diagram">
+    <div class="diagram-title">Temperature Scale Comparison</div>
+    <svg viewBox="0 0 380 180" style="width:100%;max-width:400px">
+      <!-- Fahrenheit column -->
+      <rect x="30" y="20" width="60" height="140" fill="#21262d" stroke="#f85149" rx="4"/>
+      <text x="60" y="15" fill="#f85149" font-size="11" text-anchor="middle">°F</text>
+      <line x1="30" y1="40" x2="90" y2="40" stroke="#f85149" stroke-width="1.5"/>
+      <text x="20" y="43" fill="#e6edf3" font-size="10" text-anchor="end">212°</text>
+      <line x1="30" y1="130" x2="90" y2="130" stroke="#f85149" stroke-width="1.5"/>
+      <text x="20" y="133" fill="#e6edf3" font-size="10" text-anchor="end">32°</text>
+      <line x1="30" y1="158" x2="90" y2="158" stroke="#f85149" stroke-width="1.5"/>
+      <text x="20" y="161" fill="#8b949e" font-size="9" text-anchor="end">-468°</text>
+
+      <!-- Celsius column -->
+      <rect x="150" y="20" width="60" height="140" fill="#21262d" stroke="#58a6ff" rx="4"/>
+      <text x="180" y="15" fill="#58a6ff" font-size="11" text-anchor="middle">°C</text>
+      <line x1="150" y1="40" x2="210" y2="40" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="230" y="43" fill="#e6edf3" font-size="10">100°</text>
+      <line x1="150" y1="130" x2="210" y2="130" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="230" y="133" fill="#e6edf3" font-size="10">0°</text>
+      <line x1="150" y1="158" x2="210" y2="158" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="230" y="161" fill="#8b949e" font-size="9">-273°</text>
+
+      <!-- Kelvin column -->
+      <rect x="270" y="20" width="60" height="140" fill="#21262d" stroke="#3fb950" rx="4"/>
+      <text x="300" y="15" fill="#3fb950" font-size="11" text-anchor="middle">K</text>
+      <line x1="270" y1="40" x2="330" y2="40" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="340" y="43" fill="#e6edf3" font-size="10">373</text>
+      <line x1="270" y1="130" x2="330" y2="130" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="340" y="133" fill="#e6edf3" font-size="10">273</text>
+      <line x1="270" y1="158" x2="330" y2="158" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="340" y="161" fill="#8b949e" font-size="9">0</text>
+
+      <!-- Horizontal connection lines -->
+      <line x1="90" y1="40" x2="150" y2="40" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="90" y1="130" x2="150" y2="130" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="210" y1="40" x2="270" y2="40" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="210" y1="130" x2="270" y2="130" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- Labels -->
+      <text x="110" y="38" fill="#8b949e" font-size="9" text-anchor="middle">Boiling</text>
+      <text x="110" y="128" fill="#8b949e" font-size="9" text-anchor="middle">Freezing</text>
+      <text x="110" y="156" fill="#8b949e" font-size="9" text-anchor="middle">Abs. zero</text>
+    </svg>
+  </div>
+
+  <div class="subsection">
+    <h3>Conversion Formulas</h3>
+    <div class="formula">
+      <div class="eq">(tC − 0)/100 = (tF − 32)/180 = (tK − 273)/100</div>
+    </div>
+    <div class="formula">
+      <div class="eq">°C to °F: tF = (9/5)·tC + 32</div>
+      <div class="eq">°F to °C: tC = (5/9)·(tF − 32)</div>
+      <div class="eq">°C to K: tK = tC + 273.15</div>
+      <div class="eq">K to °C: tC = tK − 273.15</div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Fever of 101°F — Convert to °C and K</div>
+      <div class="example-sol">
+        tC = (5/9)(101 − 32) = (5/9)(69) = <strong>38.33 °C</strong><br>
+        tK = 38.33 + 273 = <strong>311.33 K</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">At what temperature do Celsius and Fahrenheit coincide?</div>
+      <div class="example-sol">
+        Let θ = tF = tC<br>
+        θ/5 = (θ − 32)/9 → 9θ = 5θ − 160 → 4θ = −160 → <strong>θ = −40°</strong><br>
+        Both scales read −40 at the same temperature.
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Absolute zero in Fahrenheit</div>
+      <div class="example-sol">
+        tF = (9/5)(−273.15) + 32 = −491.67 + 32 = <strong>−459.67 °F ≈ −460 °F</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="keypoint">Absolute zero (0 K = −273.15°C): The lowest possible temperature. At 0 K, the pressure of an ideal gas would become zero. Below this temperature, gas volume would be negative — impossible.</div>
+</div>
+
+<!-- SECTION: Modes of Heat Transfer -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4.3</span>
+    <h2 id="ph4s3">Modes of Heat Transfer</h2>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Mode</th><th>Medium needed?</th><th>How it works</th><th>Examples</th></tr>
+    <tr><td><strong>Conduction</strong></td><td>Yes (solid)</td><td>Heat passes through material without movement of matter</td><td>Iron rod heated at one end, cooking utensil</td></tr>
+    <tr><td><strong>Convection</strong></td><td>Yes (fluid: liquid/gas)</td><td>Heat transferred by actual movement of heated particles</td><td>Boiling water, sea breeze, room heating</td></tr>
+    <tr><td><strong>Radiation</strong></td><td>No (works in vacuum)</td><td>Electromagnetic waves (infrared) transfer energy without medium</td><td>Sun's heat reaching Earth, feeling warmth near fire</td></tr>
+  </table>
+  </div>
+
+  <div class="subsection">
+    <h3>Convection — Natural vs Forced</h3>
+    <p><strong>Natural convection:</strong> Driven by gravity. Hot particles rise (less dense), cold particles sink. Examples: sea breeze, trade winds, heating water in a flask.</p>
+    <p><strong>Forced convection:</strong> A pump or fan forces fluid movement. Examples: car radiator cooling system, forced-air home heating, human blood circulation (heart as pump).</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Radiation Properties</h3>
+    <ul class="steps">
+      <li>Does NOT need a medium — travels through vacuum</li>
+      <li>Travels at speed of light (3 × 10⁸ m/s)</li>
+      <li>Heat radiation = electromagnetic waves, wavelength range: 8×10⁻⁷ m to 4×10⁻⁴ m (infrared region)</li>
+      <li>When radiation falls on a body: partly reflected, partly absorbed, partly transmitted</li>
+      <li>Dark/black bodies absorb and emit more radiant energy than light-colored bodies</li>
+      <li>Factors affecting radiant energy emitted: temperature, nature of surface, area of surface</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION: Heat Capacity and Specific Heat -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4.4</span>
+    <h2 id="ph4s4">Heat Capacity and Specific Heat</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Heat Capacity (Hc)</h3>
+    <div class="def">
+      The ratio of heat given to a body to the corresponding change in its temperature.
+    </div>
+    <div class="formula">
+      <div class="eq">Hc = Q / ΔT</div>
+      <div class="desc">SI unit: J/K &nbsp;|&nbsp; Practical: cal/°C or cal/K</div>
+    </div>
+    <p>Heat capacity depends on <em>both</em> the material AND mass of the body.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>Specific Heat (c)</h3>
+    <div class="def">
+      The quantity of heat required per unit mass to raise the temperature of a body by 1 unit. It depends only on the material, NOT the mass.
+    </div>
+    <div class="formula">
+      <div class="eq">c = ΔQ / (m × ΔT) &nbsp;→&nbsp; ΔQ = m·c·ΔT</div>
+      <div class="desc">SI unit: J/(kg·K) &nbsp;|&nbsp; CGS: cal/(g·°C)</div>
+    </div>
+    <div class="formula">
+      <div class="eq">specific heat = Heat capacity / mass</div>
+    </div>
+
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Material</th><th>Specific Heat (J/kg·K)</th><th>Specific Heat (cal/g·K)</th></tr>
+      <tr><td>Water (H₂O)</td><td>4190</td><td>1.0</td></tr>
+      <tr><td>Sea water</td><td>3900</td><td>0.93</td></tr>
+      <tr><td>Ice (−10°C)</td><td>2220</td><td>0.530</td></tr>
+      <tr><td>Aluminium (Al)</td><td>900</td><td>0.2150</td></tr>
+      <tr><td>Copper (Cu)</td><td>386</td><td>0.0923</td></tr>
+      <tr><td>Silver (Ag)</td><td>236</td><td>0.0564</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">Water has the highest specific heat among common substances — it can absorb or release large amounts of heat with little temperature change. This is why oceans moderate Earth's climate.</div>
+  </div>
+</div>
+
+<!-- SECTION: Thermal Conductivity -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">4.5</span>
+    <h2 id="ph4s5">Thermal Conductivity</h2>
+  </div>
+
+  <div class="def">
+    <strong>Thermal Conductivity (K):</strong> The intrinsic ability of a solid to conduct heat through it. Different substances have different thermal conductivities.
+  </div>
+
+  <p>Good conductors: copper, silver, metals. Bad conductors (insulators): glass, wood, rubber, air.</p>
+
+  <div class="subsection">
+    <h3>Formula for Heat Conduction (Steady State)</h3>
+    <div class="formula">
+      <div class="eq">ΔQ/Δt = K · A · (T₁ − T₂) / d</div>
+      <div class="desc">ΔQ/Δt = rate of heat flow (W)<br>
+      K = coefficient of thermal conductivity<br>
+      A = cross-sectional area (m²)<br>
+      T₁ − T₂ = temperature difference (°C or K)<br>
+      d = thickness / distance between faces (m)</div>
+    </div>
+    <div class="formula">
+      <div class="eq">SI unit of K: W·m⁻¹·K⁻¹ (= J·s⁻¹·m⁻¹·K⁻¹)</div>
+      <div class="desc">CGS unit: cal·s⁻¹·cm⁻¹·°C⁻¹</div>
+    </div>
+
+    <div class="def">
+      <strong>Temperature Gradient:</strong> The rate of fall of temperature per unit distance in the direction of heat flow = ΔT/Δx.
+      <br><br><strong>Steady State:</strong> When temperature of every cross-section becomes constant and there is no more heat absorption. Only thermal conductivity matters (not specific heat) in steady state.
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example 1: Copper rod</div>
+      Copper rod: length 19 cm = 0.19 m, area = 0.785 cm² = 785×10⁻⁷ m², T₁=100°C, T₂=30°C, t=10 min=600 s, K=380 W/mK
+      <div class="example-sol">
+        Q = KA(T₁−T₂)t/d = 380 × 785×10⁻⁷ × 70 × 600 / 0.19<br>
+        Q = 380 × 785 × 70 × 600 × 10⁻⁷ / 0.19 = 6594 J ≈ <strong>6.59 kJ</strong>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Example 2: Glass window</div>
+      A = 0.5 m², d = 6 mm = 6×10⁻³ m, T inside = 23°C, T outside = 2°C, K = 1.0 W/mK, t = 1 hr = 3600 s
+      <div class="example-sol">
+        Q = 1.0 × 0.5 × (23−2) × 3600 / (6×10⁻³)<br>
+        Q = 0.5 × 21 × 3600 / 0.006 = 37800/0.006 = <strong>6,300,000 J = 63 × 10⁵ J</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Applications of Thermal Conductivity</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Application</th><th>Principle</th></tr>
+      <tr><td>Cold storage rooms: thick walls of brick</td><td>Brick = bad conductor → reduces heat flow from outside</td></tr>
+      <tr><td>Cooking utensil handles made of rubber/ebonite</td><td>Bad conductor → protects hands from heat</td></tr>
+      <tr><td>Ice wrapped in sawdust</td><td>Air in sawdust pores = insulator → prevents melting</td></tr>
+      <tr><td>Two bedsheets better than one thick sheet</td><td>Air layer between sheets = bad conductor → better insulation</td></tr>
+      <tr><td>Eskimo igloos (double-walled)</td><td>Trapped air between walls prevents heat loss</td></tr>
+      <tr><td>Metallic handle feels colder than wooden door</td><td>Metal conducts more body heat away → feels colder</td></tr>
+      <tr><td>Glass cracks on rapid cooling</td><td>Glass = poor conductor → uneven cooling creates stress → cracks</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Linear Thermal Expansion</h3>
+    <div class="def">
+      When a solid is heated, its length increases. The fractional change in length per degree Celsius rise in temperature is the <strong>coefficient of linear expansion (α)</strong>.
+    </div>
+    <div class="formula">
+      <div class="eq">L = L₀(1 + α·ΔT)</div>
+      <div class="eq">ΔL = L₀ · α · ΔT</div>
+      <div class="desc">L₀ = original length, L = new length, ΔT = temperature change<br>
+      α = coefficient of linear expansion (per °C or per K)<br>
+      Unit of α: °C⁻¹ or K⁻¹</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Area Expansion: A = A₀(1 + β·ΔT) where β = 2α</div>
+      <div class="eq">Volume Expansion: V = V₀(1 + γ·ΔT) where γ = 3α</div>
+      <div class="desc">β = coefficient of superficial (area) expansion = 2α<br>
+      γ = coefficient of cubical (volume) expansion = 3α<br>
+      Relationship: α : β : γ = 1 : 2 : 3</div>
+    </div>
+
+    <div class="keypoint">Bimetallic strips bend when heated because two metals have different coefficients of linear expansion — one expands more, causing the strip to curve. Used in thermostats and bimetallic thermometers.</div>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Chapter 4 — Key Points
+    <div class="gjl" style="margin-bottom:8px">Light na laws ane mirror/lens formula DDCET ma pakka aave j chhe — sign convention bhulsho nahi!</div></div>
+    <ul>
+      <li>°C to °F: tF = (9/5)tC + 32 &nbsp;|&nbsp; °F to °C: tC = (5/9)(tF−32)</li>
+      <li>K = °C + 273.15 (use 273 for calculations)</li>
+      <li>°C and °F coincide at −40° &nbsp;|&nbsp; °F and K coincide at 574.6</li>
+      <li>1 calorie = 4.186 J &nbsp;|&nbsp; Q = mcΔT</li>
+      <li>Rate of conduction: ΔQ/Δt = KA(ΔT)/d</li>
+      <li>K unit: W m⁻¹ K⁻¹ &nbsp;|&nbsp; ΔL = L₀αΔT</li>
+      <li>Radiation travels at 3×10⁸ m/s through vacuum</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     CHAPTER 5 — WAVE MOTION, OPTICS AND ACOUSTICS
+     ============================================================ -->
+<div class="chapter-page" id="ch5">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch5 = Wave, Optics & Acoustics — Refraction, Snell's law, TIR, optical fiber, LASER, echo. Snell's law: n₁sinθ₁ = n₂sinθ₂. Echo = sound wall thi reflect thaay chhe, minimum 17m distance joie!</div></div>
+<div class="ch-hero" style="--ch-color:var(--ch5)">
+  <div class="ch-badge">Chapter 05 · Physics</div>
+  <h1>Wave Motion, Optics and Acoustics</h1>
+  <p>From the fundamental nature of waves to the magic of total internal reflection, laser technology, fiber optics, and the science of sound in rooms — complete coverage for DDCET 2026.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Types of Waves</span>
+    <span class="ch-topic-pill">Wave Equations</span>
+    <span class="ch-topic-pill">Refraction &amp; Snell's Law</span>
+    <span class="ch-topic-pill">Refractive Index</span>
+    <span class="ch-topic-pill">Total Internal Reflection</span>
+    <span class="ch-topic-pill">Critical Angle</span>
+    <span class="ch-topic-pill">Optical Fiber</span>
+    <span class="ch-topic-pill">LASER</span>
+    <span class="ch-topic-pill">Sound &amp; Echo</span>
+    <span class="ch-topic-pill">Reverberation &amp; Sabine</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<!-- SECTION: Types of Waves -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.1</span>
+    <h2 id="ph5s1">Types of Waves</h2>
+  </div>
+
+  <div class="def">
+    <strong>Wave:</strong> A disturbance that transfers energy from one point to another without transferring matter.
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Classification</th><th>Type</th><th>Description</th><th>Examples</th></tr>
+    <tr><td rowspan="2">By medium requirement</td><td><strong>Mechanical waves</strong></td><td>Require a material medium to propagate</td><td>Sound waves, water waves, seismic waves</td></tr>
+    <tr><td><strong>Non-mechanical (EM waves)</strong></td><td>Do NOT require a medium — travel through vacuum</td><td>Light, X-rays, radio waves, gamma rays</td></tr>
+    <tr><td rowspan="2">By particle motion vs wave propagation</td><td><strong>Transverse waves</strong></td><td>Particle vibration ⊥ (perpendicular to) wave propagation direction</td><td>Light waves, water surface waves</td></tr>
+    <tr><td><strong>Longitudinal waves</strong></td><td>Particle vibration ∥ (parallel to) wave propagation direction — compressions and rarefactions</td><td>Sound waves, P-waves (earthquakes)</td></tr>
+    <tr><td rowspan="2">By wave form</td><td><strong>Progressive (Traveling) waves</strong></td><td>Energy and waveform travel forward continuously</td><td>Light from a source, sound traveling in open air</td></tr>
+    <tr><td><strong>Stationary (Standing) waves</strong></td><td>Wave pattern doesn't travel — nodes (zero amplitude) and antinodes (max amplitude) fixed in space</td><td>Guitar string vibrating, sound in a closed pipe</td></tr>
+  </table>
+  </div>
+
+  <div class="subsection">
+    <h3>Progressive Wave vs Stationary Wave — Detailed Comparison</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Feature</th><th>Progressive (Travelling) Wave</th><th>Stationary (Standing) Wave</th></tr>
+      <tr><td>Energy transfer</td><td>Energy travels forward continuously</td><td>No net energy transfer — energy is stored</td></tr>
+      <tr><td>Amplitude</td><td>Same for all particles (at same instant)</td><td>Varies — zero at nodes, maximum at antinodes</td></tr>
+      <tr><td>Waveform</td><td>Moves forward with wave velocity</td><td>Does not move — fixed in space</td></tr>
+      <tr><td>Nodes</td><td>No nodes — all particles vibrate</td><td>Nodes (zero displacement) at fixed positions</td></tr>
+      <tr><td>Phase</td><td>Adjacent particles have different phases</td><td>All particles between 2 nodes are in same phase</td></tr>
+      <tr><td>Formation</td><td>Single wave from source</td><td>Superposition of two identical waves traveling in opposite directions</td></tr>
+      <tr><td>Example</td><td>Sound in open air, EM waves in space</td><td>Vibrating string (fixed both ends), sound in pipes</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- SVG: Transverse vs Longitudinal -->
+  <div class="diagram">
+    <div class="diagram-title">Transverse Wave vs Longitudinal Wave</div>
+    <svg viewBox="0 0 500 180" style="width:100%;max-width:520px">
+      <!-- Transverse -->
+      <text x="10" y="16" fill="#3fb950" font-size="12">Transverse Wave</text>
+      <path d="M 10,50 Q 40,20 70,50 Q 100,80 130,50 Q 160,20 190,50 Q 220,80 250,50 Q 280,20 310,50" fill="none" stroke="#3fb950" stroke-width="2"/>
+      <line x1="10" y1="50" x2="330" y2="50" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- Arrow showing particle motion -->
+      <line x1="70" y1="20" x2="70" y2="80" stroke="#f0a500" stroke-width="1.5" marker-end="url(#ua)" marker-start="url(#da)"/>
+      <text x="340" y="53" fill="#8b949e" font-size="10">→ wave direction</text>
+      <text x="75" y="45" fill="#f0a500" font-size="9">↕ particles</text>
+      <!-- Labels -->
+      <text x="10" y="90" fill="#8b949e" font-size="9">Crest</text>
+      <text x="10" y="110" fill="#8b949e" font-size="9">Trough</text>
+      <line x1="40" y1="88" x2="70" y2="22" stroke="#8b949e" stroke-width="0.5"/>
+      <line x1="40" y1="108" x2="100" y2="78" stroke="#8b949e" stroke-width="0.5"/>
+
+      <!-- Longitudinal -->
+      <text x="10" y="128" fill="#58a6ff" font-size="12">Longitudinal Wave</text>
+      <!-- compressions and rarefactions represented as dots -->
+      <text x="10" y="165" fill="#30363d" font-size="8">sparse</text>
+      <text x="60" y="165" fill="#58a6ff" font-size="8">dense</text>
+      <text x="125" y="165" fill="#30363d" font-size="8">sparse</text>
+      <text x="185" y="165" fill="#58a6ff" font-size="8">dense</text>
+      <text x="250" y="165" fill="#30363d" font-size="8">sparse</text>
+      <!-- dots representing particles -->
+      <circle cx="20" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="35" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="50" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="65" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="74" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="83" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="92" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="108" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="123" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="138" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="155" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="164" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="173" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="182" cy="153" r="3" fill="#58a6ff" opacity="0.8"/>
+      <circle cx="198" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <circle cx="213" cy="153" r="2" fill="#58a6ff" opacity="0.3"/>
+      <text x="340" y="155" fill="#8b949e" font-size="10">→ wave &amp; particles</text>
+      <defs>
+        <marker id="ua" markerWidth="6" markerHeight="6" refX="3" refY="0" orient="auto"><path d="M0,6 L3,0 L6,6 Z" fill="#f0a500"/></marker>
+        <marker id="da" markerWidth="6" markerHeight="6" refX="3" refY="6" orient="auto"><path d="M0,0 L3,6 L6,0 Z" fill="#f0a500"/></marker>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<!-- SECTION: Wave Parameters -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.2</span>
+    <h2 id="ph5s2">Wave Parameters and Equations</h2>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Parameter</th><th>Symbol</th><th>Definition</th><th>Unit</th></tr>
+    <tr><td>Amplitude</td><td>A</td><td>Maximum displacement of a particle from its rest/equilibrium position</td><td>m</td></tr>
+    <tr><td>Wavelength</td><td>λ (lambda)</td><td>Distance between two consecutive points in the same phase (e.g., crest to crest)</td><td>m</td></tr>
+    <tr><td>Time Period</td><td>T</td><td>Time for one complete oscillation/cycle</td><td>s</td></tr>
+    <tr><td>Frequency</td><td>f or n</td><td>Number of complete cycles per second</td><td>Hz (s⁻¹)</td></tr>
+    <tr><td>Wave Speed</td><td>v</td><td>Distance traveled by wave per unit time</td><td>m/s</td></tr>
+    <tr><td>Phase</td><td>φ</td><td>The position/state of the wave at a given instant</td><td>radians</td></tr>
+    <tr><td>Intensity</td><td>I</td><td>Energy transmitted per unit time per unit area</td><td>W/m²</td></tr>
+    <tr><td>Angular frequency</td><td>ω</td><td>ω = 2πf</td><td>rad/s</td></tr>
+    <tr><td>Wave number</td><td>k</td><td>k = 2π/λ</td><td>rad/m</td></tr>
+  </table>
+  </div>
+
+  <div class="formula">
+    <div class="eq">v = f × λ = λ/T</div>
+    <div class="desc">Wave speed = frequency × wavelength</div>
+  </div>
+
+  <div class="formula">
+    <div class="eq">Wave equation: y = A sin(ωt − kx)</div>
+    <div class="desc">y = displacement at position x and time t<br>
+    A = amplitude, ω = 2πf = angular frequency, k = 2π/λ = wave number</div>
+  </div>
+
+  <div class="formula">
+    <div class="eq">Intensity ∝ A² (Intensity proportional to square of amplitude)</div>
+    <div class="eq">I = P/Area (for a point source: I ∝ 1/r²)</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Electromagnetic Wave Spectrum</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Frequency (Hz)</th><th>Wavelength</th><th>Key Property/Use</th></tr>
+      <tr><td>Radio waves</td><td>10⁴ – 10⁹</td><td>km – cm</td><td>Broadcasting, communication</td></tr>
+      <tr><td>Microwaves</td><td>10⁹ – 10¹²</td><td>cm – mm</td><td>Radar, microwave ovens, Wi-Fi</td></tr>
+      <tr><td>Infrared (heat)</td><td>10¹¹ – 4×10¹⁴</td><td>0.7 μm – 1 mm</td><td>Thermal imaging, remote controls</td></tr>
+      <tr><td>Visible light</td><td>4×10¹⁴ – 7×10¹⁴</td><td>400–700 nm</td><td>Vision, photography</td></tr>
+      <tr><td>Ultraviolet</td><td>7×10¹⁴ – 10¹⁷</td><td>10–400 nm</td><td>Sterilization, sunburn</td></tr>
+      <tr><td>X-rays</td><td>10¹⁷ – 10²⁰</td><td>0.01–10 nm</td><td>Medical imaging</td></tr>
+      <tr><td>Gamma rays</td><td>&gt;10²⁰</td><td>&lt;0.01 nm</td><td>Cancer treatment, nuclear reactions</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">All EM waves travel at speed of light c = 3 × 10⁸ m/s in vacuum.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Sound Waves</h3>
+    <p>Sound is a <strong>longitudinal, mechanical wave</strong>. It needs a medium — cannot travel through vacuum.</p>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Frequency Range</th><th>Use</th></tr>
+      <tr><td>Infrasonic</td><td>Below 20 Hz</td><td>Natural disasters sensing, elephant communication</td></tr>
+      <tr><td>Audible</td><td>20 Hz – 20,000 Hz (20 kHz)</td><td>Human hearing range</td></tr>
+      <tr><td>Ultrasonic</td><td>Above 20,000 Hz</td><td>Medical sonography, sonar, SONAR, industrial cleaning, bat navigation</td></tr>
+    </table>
+    </div>
+    <p>Speed of sound in air at 0°C ≈ 332 m/s; at room temperature ≈ 343 m/s.</p>
+  </div>
+</div>
+
+<!-- SECTION: Refraction and Snell's Law -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.3</span>
+    <h2 id="ph5s3">Refraction, Refractive Index and Snell's Law</h2>
+  </div>
+
+  <div class="def">
+    <strong>Refraction:</strong> The bending of light when it passes from one medium to another. Occurs because the speed of light is different in different media.
+  </div>
+
+  <div class="subsection">
+    <h3>Laws of Reflection (Important Prerequisite)</h3>
+    <div class="def">
+      <strong>Reflection:</strong> Bouncing back of light (or any wave) from a surface.
+    </div>
+    <ol class="steps">
+      <li>The angle of incidence (i) = angle of reflection (r). Both measured from the normal to the surface at the point of incidence.</li>
+      <li>The incident ray, reflected ray, and normal at the point of incidence all lie in the same plane.</li>
+    </ol>
+    <div class="keypoint">Laws of reflection apply to ALL types of mirrors (plane, concave, convex) and to all waves (light, sound, water waves). Total Internal Reflection also obeys these same laws of reflection.</div>
+  </div>
+
+  <p><span class="hi-b">Optically rarer medium</span> (like air): higher speed of light. <span class="hi-b">Optically denser medium</span> (like glass): lower speed of light.</p>
+
+  <div class="subsection">
+    <h3>Laws of Refraction</h3>
+    <ol class="steps">
+      <li>The incident ray, refracted ray, and normal at the point of incidence — all lie in the same plane.</li>
+      <li>Incident ray and refracted ray are on <em>opposite sides</em> of the normal.</li>
+      <li>Going rarer→denser: bends TOWARDS normal (angle of refraction &lt; angle of incidence: r &lt; i)</li>
+      <li>Going denser→rarer: bends AWAY from normal (r &gt; i)</li>
+      <li>A ray hitting normal (i=0°) passes straight through without bending.</li>
+      <li><strong>Snell's Law:</strong> sin i / sin r = constant = refractive index</li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <h3>Refractive Index and Snell's Law</h3>
+    <div class="formula">
+      <div class="eq">μ = η = sin i / sin r = constant (Snell's Law)</div>
+    </div>
+    <div class="formula">
+      <div class="eq">Relative refractive index of medium 2 w.r.t. medium 1: μ₂₁ = sin i / sin r = v₁/v₂</div>
+      <div class="desc">v₁, v₂ = speeds of light in medium 1 and medium 2<br>
+      Symbol: μ (mu) or η (eta) or n</div>
+    </div>
+
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Medium</th><th>Absolute Refractive Index</th></tr>
+      <tr><td>Vacuum / Air</td><td>1.0 (reference)</td></tr>
+      <tr><td>Water</td><td>1.33</td></tr>
+      <tr><td>Ice</td><td>1.31</td></tr>
+      <tr><td>Glass (crown)</td><td>1.52</td></tr>
+      <tr><td>Glass (flint)</td><td>1.62</td></tr>
+      <tr><td>Diamond</td><td>2.42</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">Diamond has the highest refractive index among common substances. This is why it sparkles — total internal reflection occurs easily due to small critical angle (24°).</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Effects of Refraction in Daily Life</h3>
+    <ul class="steps">
+      <li>A pencil placed in water appears bent/broken at the surface</li>
+      <li>Objects at the bottom of water appear shallower than they are</li>
+      <li>Difficult to catch a fish — its position appears different from actual</li>
+      <li>Lateral shift: when light passes through a glass slab, emergent ray is shifted parallel to incident ray</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION: TIR -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.4</span>
+    <h2 id="ph5s4">Total Internal Reflection (TIR) and Critical Angle</h2>
+  </div>
+
+  <div class="def">
+    <strong>Total Internal Reflection (TIR):</strong> When light travels from a denser medium to a rarer medium, and the angle of incidence exceeds the critical angle, the light is completely reflected back into the denser medium — none passes through.
+  </div>
+
+  <div class="subsection">
+    <h3>Critical Angle (θc)</h3>
+    <div class="def">
+      The angle of incidence (in the denser medium) for which the angle of refraction becomes exactly 90° (refracted ray travels along the boundary).
+    </div>
+
+    <div class="formula">
+      <div class="eq">sin θc = nᵣ / nᵢ = n₂/n₁</div>
+      <div class="eq">θc = sin⁻¹(nᵣ/nᵢ)</div>
+      <div class="desc">nᵢ = refractive index of denser (incident) medium<br>
+      nᵣ = refractive index of rarer medium<br>
+      For water-air: θc = sin⁻¹(1/1.33) ≈ 48.6°<br>
+      For crown glass-air: θc = sin⁻¹(1/1.52) ≈ 41.14°<br>
+      For diamond-air: θc = sin⁻¹(1/2.42) ≈ 24°</div>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Derivation: nᵢ sin θc = nᵣ sin 90° = nᵣ (since sin 90° = 1)</div>
+      <div class="eq">∴ sin θc = nᵣ/nᵢ</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Necessary Conditions for TIR</h3>
+    <ol class="steps">
+      <li>Light must travel from <strong>denser medium → rarer medium</strong></li>
+      <li>Angle of incidence must be <strong>greater than the critical angle</strong> (i &gt; θc)</li>
+    </ol>
+    <div class="keypoint">TIR does NOT occur when light goes from rarer to denser medium. Higher refractive index → smaller critical angle → easier TIR.</div>
+  </div>
+
+  <!-- SVG: TIR diagram -->
+  <div class="diagram">
+    <div class="diagram-title">Total Internal Reflection — What Happens as Angle Increases</div>
+    <svg viewBox="0 0 500 200" style="width:100%;max-width:520px">
+      <!-- Interface line -->
+      <line x1="0" y1="100" x2="500" y2="100" stroke="#30363d" stroke-width="2"/>
+      <!-- Labels -->
+      <text x="10" y="92" fill="#8b949e" font-size="11">Rarer (Air)</text>
+      <text x="10" y="118" fill="#58a6ff" font-size="11">Denser (Water)</text>
+      <!-- Case 1: i < θc (normal refraction) -->
+      <text x="30" y="20" fill="#3fb950" font-size="10">i &lt; θc</text>
+      <line x1="80" y1="140" x2="80" y2="60" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="55" y1="150" x2="80" y2="100" stroke="#3fb950" stroke-width="2"/>
+      <line x1="80" y1="100" x2="100" y2="55" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <line x1="80" y1="100" x2="105" y2="130" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="90" y="60" fill="#3fb950" font-size="9">refracted</text>
+      <!-- Case 2: i = θc (critical) -->
+      <text x="195" y="20" fill="#f0a500" font-size="10">i = θc</text>
+      <line x1="240" y1="140" x2="240" y2="60" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="205" y1="150" x2="240" y2="100" stroke="#f0a500" stroke-width="2"/>
+      <line x1="240" y1="100" x2="340" y2="100" stroke="#f0a500" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <line x1="240" y1="100" x2="265" y2="132" stroke="#f0a500" stroke-width="1.5"/>
+      <text x="300" y="95" fill="#f0a500" font-size="9">along boundary</text>
+      <!-- Case 3: i > θc (TIR) -->
+      <text x="380" y="20" fill="#f85149" font-size="10">i &gt; θc (TIR)</text>
+      <line x1="420" y1="140" x2="420" y2="60" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="375" y1="155" x2="420" y2="100" stroke="#f85149" stroke-width="2"/>
+      <line x1="420" y1="100" x2="465" y2="55" stroke="#f85149" stroke-width="2"/>
+      <text x="466" y="58" fill="#f85149" font-size="9">reflected</text>
+      <text x="390" y="180" fill="#8b949e" font-size="9">No refraction!</text>
+    </svg>
+  </div>
+
+  <div class="subsection">
+    <h3>Applications of TIR</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Application</th><th>Explanation</th></tr>
+      <tr><td>Sparkling of diamonds</td><td>Critical angle = 24° (very small). Most light undergoes TIR inside diamond and exits only from top → brilliant sparkle</td></tr>
+      <tr><td>Mirage in desert</td><td>Hot air near ground has low density (rarer) — light from sky bends and undergoes TIR → appears like water</td></tr>
+      <tr><td>Looming (polar regions)</td><td>TIR in cold dense air layers → ships appear to float in air</td></tr>
+      <tr><td>Optical fiber</td><td>Light undergoes repeated TIR inside the fiber core and travels long distances</td></tr>
+      <tr><td>Endoscope (medical)</td><td>Uses TIR in optical fibers to see inside the body</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: Optical Fiber -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.5</span>
+    <h2 id="ph5s5">Optical Fiber</h2>
+  </div>
+
+  <div class="def">
+    <strong>Optical Fiber:</strong> A thin, flexible strand of high-quality glass, quartz, or plastic that transmits light (and information) over long distances using Total Internal Reflection.
+  </div>
+
+  <div class="subsection">
+    <h3>Construction</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Part</th><th>Description</th></tr>
+      <tr><td>Core</td><td>Central part — high refractive index (n₁). Light travels through here. Diameter: ~8-10 μm (single mode) or 50-200 μm (multimode)</td></tr>
+      <tr><td>Cladding</td><td>Layer surrounding core — lower refractive index (n₂). Ensures TIR at core-cladding boundary. Condition: n₁ &gt; n₂</td></tr>
+      <tr><td>Outer jacket</td><td>Protective plastic coating</td></tr>
+    </table>
+    </div>
+
+    <div class="formula">
+      <div class="eq">Condition for light propagation: n₁ &gt; n₂ (core denser than cladding)</div>
+      <div class="eq">Numerical Aperture (NA) = √(n₁² − n₂²)</div>
+      <div class="desc">NA indicates the light-gathering capacity of the fiber. Higher NA = more light accepted.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>How Light Travels in Optical Fiber</h3>
+    <ol class="steps">
+      <li>Light enters one end of the fiber at the acceptance angle</li>
+      <li>Hits core-cladding boundary at an angle greater than critical angle</li>
+      <li>Undergoes TIR — bounces along the fiber</li>
+      <li>Even if fiber is curved or twisted, TIR continues</li>
+      <li>Light emerges from the other end</li>
+    </ol>
+    <div class="keypoint">Even if angle of incidence exceeds the acceptance angle at entry, light will NOT propagate in the fiber.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Types of Optical Fibers</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Description</th></tr>
+      <tr><td>Single-mode step-index fiber</td><td>Core diameter ~8-10 μm. One path for light. Used in long-distance communication. Most widely used.</td></tr>
+      <tr><td>Multimode step-index fiber</td><td>Core diameter ~50-200 μm. Multiple paths. More signal loss.</td></tr>
+      <tr><td>Multimode graded-index fiber</td><td>Refractive index decreases gradually from center. Reduces dispersion.</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Applications of Optical Fiber</h3>
+    <ul class="steps">
+      <li><strong>Telecommunications:</strong> Internet cables, phone lines — carry signals as light pulses at high speed. Optical fibers carry far more information than copper wires (wider bandwidth).</li>
+      <li><strong>Medical (Endoscopy):</strong> Flexible fiber bundles allow doctors to view inside the body without surgery. Used in colonoscopy, bronchoscopy, etc.</li>
+      <li><strong>Military and sensing:</strong> Secure communication, fiber optic sensors</li>
+      <li><strong>Broadcasting:</strong> Cable TV, data transmission</li>
+    </ul>
+    <p>Estimated lifespan of optical fiber: <strong>20–30 years</strong>. Phenomenon responsible for signal loss: <strong>scattering and absorption</strong>.</p>
+  </div>
+</div>
+
+<!-- SECTION: LASER -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.6</span>
+    <h2 id="ph5s6">LASER</h2>
+  </div>
+
+  <div class="def">
+    <strong>LASER</strong> = <strong>L</strong>ight <strong>A</strong>mplification by <strong>S</strong>timulated <strong>E</strong>mission of <strong>R</strong>adiation
+  </div>
+
+  <div class="subsection">
+    <h3>Characteristics of Laser Light</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>#</th><th>Property</th><th>Explanation</th></tr>
+      <tr><td>1</td><td>Monochromatic</td><td>Single wavelength (single frequency/colour)</td></tr>
+      <tr><td>2</td><td>Coherent</td><td>All photons are in the same phase (or constant phase difference)</td></tr>
+      <tr><td>3</td><td>Directional (Unidirectional)</td><td>Travels in one straight direction with very little divergence — beam cross-section barely changes over long distances</td></tr>
+      <tr><td>4</td><td>High Intensity &amp; Brightness</td><td>Energy concentrated in a narrow beam — extremely bright</td></tr>
+      <tr><td>5</td><td>Parallel rays</td><td>Rays in laser beam are parallel to each other</td></tr>
+      <tr><td>6</td><td>Stimulated emission</td><td>Produced by stimulated (induced) emission — NOT spontaneous emission</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Laser vs Ordinary Light</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Ordinary Light (Bulb)</h4>
+        <ul>
+          <li>Spreads in ALL directions (divergent)</li>
+          <li>Intensity decreases rapidly with distance</li>
+          <li>Polychromatic (many wavelengths)</li>
+          <li>Incoherent (photons in different phases)</li>
+          <li>Low intensity</li>
+          <li>Cannot be focused to a very tiny spot</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <h4>LASER</h4>
+        <ul>
+          <li>Travels in ONE direction (non-divergent)</li>
+          <li>Intensity remains almost constant</li>
+          <li>Monochromatic (single wavelength)</li>
+          <li>Coherent (all photons in phase)</li>
+          <li>Very high intensity</li>
+          <li>Can be focused to microscopic spot</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Applications of LASER</h3>
+    <ul class="steps">
+      <li>Metal cutting and hole drilling (industrial)</li>
+      <li>Welding (precise, clean)</li>
+      <li>Eye surgery (LASIK), cancer treatment</li>
+      <li>Barcode scanners in shops</li>
+      <li>CD/DVD read/write laser</li>
+      <li>Optical mouse (computer)</li>
+      <li>Fiber optic communication (laser as light source)</li>
+      <li>Surveying, remote sensing, LIDAR</li>
+      <li>Testing physical and chemical properties of materials</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION: Echo, Reverberation, Sabine -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">5.7</span>
+    <h2 id="ph5s7">Echo, Reverberation and Sabine's Formula</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>Echo</h3>
+    <div class="def">
+      <strong>Echo:</strong> A repetition of sound heard after reflection from a distant hard surface. The original sound and its echo are heard as separate sounds.
+    </div>
+    <div class="formula">
+      <div class="eq">Condition for echo: Minimum distance from reflecting surface = v×t/2</div>
+      <div class="eq">For distinct echo: time gap ≥ 1/10 s (0.1 s — minimum persistence of hearing)</div>
+      <div class="desc">At 343 m/s (speed of sound at room temperature):<br>
+      Min. distance = 343 × 0.1/2 ≈ 17 m</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Reverberation</h3>
+    <div class="def">
+      <strong>Reverberation:</strong> The persistence of sound in an enclosed space after the source has stopped. It occurs due to multiple reflections of sound from walls, ceiling, floor, etc.
+    </div>
+    <p>In echo — the reflected sound arrives AFTER the original has ended (>0.1 s gap).<br>
+    In reverberation — reflected sounds overlap with the original, prolonging it.</p>
+
+    <div class="def">
+      <strong>Reverberation Time (RT or T):</strong> The time taken for sound intensity to fall to one millionth (10⁻⁶) of its original value after the source stops. Equivalently, time for sound level to fall by 60 dB.
+    </div>
+
+    <div class="keypoint">Optimal reverberation time for speech: 0.5–1.0 s. For music: 1.5–2.5 s. Too much reverberation → sounds blend, unclear speech. Too little → sounds dead, flat.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Sabine's Formula</h3>
+    <div class="formula">
+      <div class="eq">T = 0.161 × V / A</div>
+      <div class="desc">T = reverberation time (seconds)<br>
+      V = volume of the room (m³)<br>
+      A = total absorption in the room (sabins) = Σ(aᵢ × Sᵢ)<br>
+      aᵢ = absorption coefficient of ith surface material<br>
+      Sᵢ = area of ith surface (m²)</div>
+    </div>
+    <div class="formula">
+      <div class="eq">Absorption coefficient (a) = Sound energy absorbed / Sound energy incident</div>
+      <div class="desc">Ranges from 0 (perfect reflection) to 1 (complete absorption)<br>
+      Unit of total absorption A: sabin (1 sabin = 1 m² of perfectly absorbing surface)</div>
+    </div>
+
+    <div class="example">
+      <div class="example-head">Understanding Sabine's Formula</div>
+      A lecture hall has volume V = 3000 m³ and total absorption A = 200 sabins.
+      <div class="example-sol">
+        T = 0.161 × 3000 / 200 = 483/200 = <strong>2.415 seconds</strong><br>
+        (This is too high for a lecture hall — would need more absorbing material to reduce it to ~1 s)
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Absorption Coefficient Values</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Material</th><th>Absorption Coefficient (approx.)</th></tr>
+      <tr><td>Open window / door</td><td>1.0 (perfect absorber — reference)</td></tr>
+      <tr><td>Carpet</td><td>0.2 – 0.5</td></tr>
+      <tr><td>Curtains (heavy)</td><td>0.5 – 0.7</td></tr>
+      <tr><td>Brick wall</td><td>0.02 – 0.05</td></tr>
+      <tr><td>Concrete</td><td>0.01 – 0.02</td></tr>
+      <tr><td>Audience (seated)</td><td>0.4 – 0.5</td></tr>
+      <tr><td>Wooden floor</td><td>0.05 – 0.1</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Acoustic Design of Auditoriums</h3>
+    <ul class="steps">
+      <li>Walls covered with sound-absorbing materials (felt, carpets, perforated boards)</li>
+      <li>Curved reflecting surfaces direct sound to all areas</li>
+      <li>No sharp echoes from back wall — use sound absorbers</li>
+      <li>Volume chosen carefully for required reverberation time</li>
+      <li>Audience itself contributes to absorption</li>
+    </ul>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Chapter 5 — Key Formulas and Points
+    <div class="gjl" style="margin-bottom:8px">Electricity chapter ma Ohm's Law ane resistance formulas thi direct MCQ aave chhe!</div></div>
+    <ul>
+      <li>v = fλ &nbsp;|&nbsp; T = 1/f &nbsp;|&nbsp; ω = 2πf &nbsp;|&nbsp; y = A sin(ωt − kx)</li>
+      <li>Snell's Law: sin i / sin r = μ = constant</li>
+      <li>μ = v₁/v₂ (ratio of speeds) = n (refractive index)</li>
+      <li>Critical angle: sin θc = n₂/n₁ (rarer/denser refractive index)</li>
+      <li>TIR occurs when: light goes denser→rarer AND i &gt; θc</li>
+      <li>Diamond θc = 24°, Glass θc ≈ 41°, Water θc ≈ 49°</li>
+      <li>Optical fiber: n₁(core) &gt; n₂(cladding) for TIR; NA = √(n₁²−n₂²)</li>
+      <li>LASER = Light Amplification by Stimulated Emission of Radiation</li>
+      <li>Sabine: T = 0.161V/A &nbsp;|&nbsp; Min. echo distance ≈ 17 m</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Chapter switching
+function showChapter(n) {
+  document.querySelectorAll('.chapter-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('ch'+n).classList.add('active');
+  document.querySelector('[data-ch="'+n+'"]').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  updateProgress();
+}
+
+// Accordion
+function toggleAcc(el) {
+  const body = el.nextElementSibling;
+  el.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// Progress bar + back to top
+window.addEventListener('scroll', updateProgress);
+function updateProgress() {
+  const doc = document.documentElement;
+  const scrolled = doc.scrollTop || document.body.scrollTop;
+  const total = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+  const pct = total > 0 ? (scrolled / total) * 100 : 0;
+  document.getElementById('prog').style.width = pct + '%';
+  const btn = document.getElementById('backTop');
+  if (scrolled > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+}
+</script>
+
+<script id="hub-comm">
+window.addEventListener('message', function(e) {
+  if (!e.data || typeof e.data !== 'object') return;
+  if (e.data.action === 'navigate') { showChapter(parseInt(e.data.id)); }
+  if (e.data.action === 'scroll') {
+    var el = document.getElementById(e.data.id);
+    if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+  if (e.data.action === 'back') { window.parent.postMessage('closeSubject', '*'); }
+});
+</script>
+
+</div><!-- /ddcet-main -->
+
+<script id="phys-switch-js">
+function phSwitch(n){
+  [1,2,3,4,5].forEach(function(i){
+    var pg=document.getElementById('ch'+i);
+    var btn=document.getElementById('sbch'+i);
+    var chips=document.getElementById('sbchips'+i);
+    if(pg)    pg.classList[i===n?'add':'remove']('active');
+    if(btn)   btn.classList[i===n?'add':'remove']('active');
+    if(chips) chips.classList[i===n?'add':'remove']('open');
+  });
+  // also update original nav tabs
+  document.querySelectorAll('.nav-tab').forEach(function(t){
+    t.classList[parseInt(t.getAttribute('data-ch'))===n?'add':'remove']('active');
+  });
+  window.scrollTo(0,0);
+}
+</script>
+
+<script id="ddcet-chip-js">
+(function(){
+// initChips: 1-click=scroll, 2-click=purple, 3-click=green
+function initChips(){
+  var saved = {};
+  try{saved = JSON.parse(localStorage.getItem('ddcet-chip-states')||'{}');}catch(e){}
+  document.querySelectorAll('.chip[data-target]').forEach(function(chip){
+    var key = (chip.textContent||'').trim();
+    if(saved[key]==='active') chip.classList.add('chip-active');
+    if(saved[key]==='done')   chip.classList.add('chip-done');
+    var clicks=0, timer=null;
+    chip.addEventListener('click',function(e){
+      e.stopPropagation();
+      clicks++;
+      clearTimeout(timer);
+      var c=clicks;
+      timer=setTimeout(function(){
+        if(c===1){
+          var tid=chip.getAttribute('data-target');
+          var el=document.getElementById(tid);
+          if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('sec-flash');setTimeout(function(){el.classList.remove('sec-flash');},700);}
+        } else if(c===2){
+          chip.classList.toggle('chip-active');
+          chip.classList.remove('chip-done');
+          saveChip(chip);
+        } else {
+          chip.classList.toggle('chip-done');
+          chip.classList.remove('chip-active');
+          saveChip(chip);
+        }
+        clicks=0;
+      },250);
+    });
+  });
+}
+function saveChip(chip){
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem('ddcet-chip-states')||'{}');}catch(e){}
+  var key=(chip.textContent||'').trim().replace(/[↗●✓]/g,'').trim();
+  if(chip.classList.contains('chip-done'))       saved[key]='done';
+  else if(chip.classList.contains('chip-active')) saved[key]='active';
+  else delete saved[key];
+  try{localStorage.setItem('ddcet-chip-states',JSON.stringify(saved));}catch(e){}
+}
+// ── Mobile nav ──
+function initMobileMenu(){
+  var sb = document.getElementById('ddcet-sb');
+  var backdrop = document.getElementById('mob-backdrop');
+  function openDrawer(){
+    sb.classList.add('mob-open');
+    if(backdrop) backdrop.style.display='block';
+    document.body.style.overflow='hidden';
+  }
+  function closeDrawer(){
+    sb.classList.remove('mob-open');
+    if(backdrop) backdrop.style.display='none';
+    document.body.style.overflow='';
+  }
+  // topbar open button
+  var openBtn = document.getElementById('mob-open-btn');
+  if(openBtn) openBtn.onclick = openDrawer;
+  // close btn inside drawer
+  var closeBtn = document.getElementById('mob-close-btn');
+  if(closeBtn) closeBtn.onclick = closeDrawer;
+  // backdrop tap closes drawer
+  if(backdrop) backdrop.onclick = closeDrawer;
+  // clicking a chapter inside drawer closes drawer (after a tiny delay)
+  if(sb){
+    sb.querySelectorAll('.sb-ch-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        setTimeout(closeDrawer, 220);
+      });
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded',function(){
+  initChips();
+  initMobileMenu();
+});
+})();
+</script>
+
+
+<script id="mobile-nav-js">
+(function(){
+  function initMob(){
+    var sb = document.getElementById('ddcet-sb');
+    var backdrop = document.getElementById('mob-backdrop');
+    var openBtn = document.getElementById('mob-open-btn');
+    var closeBtn = document.getElementById('mob-close-btn');
+    if(!sb) return;
+
+    function open_(){
+      sb.classList.add('mob-open');
+      if(backdrop){ backdrop.classList.remove('hidden'); }
+      document.body.style.overflow='hidden';
+    }
+    function close_(){
+      sb.classList.remove('mob-open');
+      if(backdrop){ backdrop.classList.add('hidden'); }
+      document.body.style.overflow='';
+    }
+
+    if(openBtn){
+      openBtn.addEventListener('click', function(e){ e.stopPropagation(); open_(); });
+      openBtn.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); open_(); });
+    }
+    if(closeBtn){
+      closeBtn.addEventListener('click', function(e){ e.stopPropagation(); close_(); });
+      closeBtn.addEventListener('touchend', function(e){ e.preventDefault(); close_(); });
+    }
+    if(backdrop){
+      backdrop.classList.add('hidden');
+      backdrop.addEventListener('click', close_);
+      backdrop.addEventListener('touchend', function(e){ e.preventDefault(); close_(); });
+    }
+
+    // close drawer when a chapter button is tapped
+    sb.querySelectorAll('.sb-ch-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ setTimeout(close_, 200); });
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initMob);
+  } else {
+    initMob();
+  }
+})();
+</script>
+
+</body>
+</html>

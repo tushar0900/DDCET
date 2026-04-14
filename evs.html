@@ -1,0 +1,3194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Environmental Sciences – DDCET 2026 Complete Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --border: #30363d;
+    --accent: #39d353;
+    --accent2: #58a6ff;
+    --accent3: #f78166;
+    --accent4: #ffa657;
+    --accent5: #bc8cff;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #c9d1d9;
+    --yellow: #e3b341;
+    --teal: #39c5cf;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #0d2818 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(57,211,83,0.12) 0%, transparent 65%);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(57,211,83,0.15);
+    border: 1px solid rgba(57,211,83,0.4);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #e6edf3 30%, #39d353);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--text2);
+    font-size: 15px;
+    max-width: 580px;
+    margin: 0 auto 28px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text2);
+  }
+  .badge span { color: var(--accent4); }
+
+  /* NAV */
+  .sticky-nav {
+    display:none; position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 40px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    white-space: nowrap;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: rgba(57,211,83,0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* SECTION HEADERS */
+  .chapter-block {
+    padding: 60px 0 20px;
+  }
+  .chapter-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .chapter-num {
+    background: var(--accent);
+    color: #0d1117;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .chapter-heading h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .chapter-heading .weightage {
+    margin-left: auto;
+    background: rgba(255,166,87,0.15);
+    border: 1px solid rgba(255,166,87,0.4);
+    color: var(--accent4);
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* TOPIC SECTIONS */
+  .topic {
+    margin-bottom: 40px;
+  }
+  .topic-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topic-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--accent2);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .subtopic-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent4);
+    margin: 18px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .subtopic-title::before {
+    content: '▶';
+    font-size: 10px;
+    color: var(--accent4);
+  }
+
+  p { margin-bottom: 12px; color: var(--text3); }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .card.green { border-color: rgba(57,211,83,0.3); background: rgba(57,211,83,0.05); }
+  .card.green h4 { color: var(--accent); }
+  .card.blue { border-color: rgba(88,166,255,0.3); background: rgba(88,166,255,0.05); }
+  .card.blue h4 { color: var(--accent2); }
+  .card.orange { border-color: rgba(255,166,87,0.3); background: rgba(255,166,87,0.05); }
+  .card.orange h4 { color: var(--accent4); }
+  .card.red { border-color: rgba(247,129,102,0.3); background: rgba(247,129,102,0.05); }
+  .card.red h4 { color: var(--accent3); }
+  .card.purple { border-color: rgba(188,140,255,0.3); background: rgba(188,140,255,0.05); }
+  .card.purple h4 { color: var(--accent5); }
+  .card.yellow { border-color: rgba(227,179,65,0.3); background: rgba(227,179,65,0.05); }
+  .card.yellow h4 { color: var(--yellow); }
+  .card.teal { border-color: rgba(57,197,207,0.3); background: rgba(57,197,207,0.05); }
+  .card.teal h4 { color: var(--teal); }
+
+  /* LISTS */
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { color: var(--text3); margin-bottom: 5px; }
+  li strong { color: var(--text); }
+
+  /* TREE DIAGRAM */
+  .tree {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  .tree-title {
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .tree-root {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .tree-node {
+    display: inline-block;
+    background: var(--accent);
+    color: #0d1117;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 18px;
+    border-radius: 8px;
+  }
+  .tree-level {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    position: relative;
+  }
+  .tree-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--text3);
+    text-align: center;
+  }
+  .tree-item.blue { border-color: rgba(88,166,255,0.4); color: var(--accent2); }
+  .tree-item.green { border-color: rgba(57,211,83,0.4); color: var(--accent); }
+  .tree-item.orange { border-color: rgba(255,166,87,0.4); color: var(--accent4); }
+  .tree-item.purple { border-color: rgba(188,140,255,0.4); color: var(--accent5); }
+  .tree-item.red { border-color: rgba(247,129,102,0.4); color: var(--accent3); }
+  .tree-connector { text-align: center; color: var(--text2); font-size: 18px; line-height: 1; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--text);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    color: var(--text3);
+  }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* IMPORTANT BOX */
+  .important {
+    background: rgba(227,179,65,0.08);
+    border: 1px solid rgba(227,179,65,0.35);
+    border-left: 4px solid var(--yellow);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .important::before {
+    content: '⚡ Important';
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--yellow);
+    margin-bottom: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .important p { color: var(--text3); margin: 0; }
+
+  /* NOTE BOX */
+  .note {
+    background: rgba(88,166,255,0.07);
+    border: 1px solid rgba(88,166,255,0.3);
+    border-left: 4px solid var(--accent2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .note::before {
+    content: '📌 Remember';
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent2);
+    margin-bottom: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .note p { color: var(--text3); margin: 0; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--accent5);
+    text-align: center;
+  }
+
+  /* MCQ SECTION */
+  .mcq-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 40px;
+  }
+  .mcq-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent4);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mcq-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .mcq-q {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .mcq-opts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .mcq-opt {
+    font-size: 13px;
+    color: var(--text2);
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+  .mcq-opt.correct {
+    background: rgba(57,211,83,0.12);
+    border-color: rgba(57,211,83,0.4);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .mcq-ans {
+    font-size: 12px;
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    cursor: pointer;
+    user-select: none;
+  }
+  .mcq-explain {
+    display: none;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text2);
+    background: rgba(57,211,83,0.06);
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+  .mcq-explain.show { display: block; }
+
+  /* ENERGY COMPARISON */
+  .energy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .energy-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .energy-icon { font-size: 28px; margin-bottom: 8px; }
+  .energy-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .energy-adv, .energy-dis {
+    font-size: 11px;
+    text-align: left;
+    color: var(--text2);
+  }
+  .energy-adv li { color: rgba(57,211,83,0.9); }
+  .energy-dis li { color: rgba(247,129,102,0.9); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 30px 40px;
+    text-align: center;
+    color: var(--text2);
+    font-size: 13px;
+    margin-top: 60px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .sticky-nav { padding: 10px 16px; }
+    .container { padding: 0 16px; }
+    .chapter-heading { flex-wrap: wrap; }
+    .mcq-opts { grid-template-columns: 1fr; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chapter-block { animation: fadeUp 0.4s ease both; }
+
+  /* KEY FACT PILL */
+  .fact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .fact-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text2);
+  }
+  .fact-pill strong { color: var(--accent4); }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .flow-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text3);
+  }
+  .flow-arr { color: var(--accent); font-size: 16px; font-weight: 700; }
+
+  .highlight { color: var(--accent4); font-weight: 600; }
+  .green-text { color: var(--accent); }
+  .blue-text { color: var(--accent2); }
+  .red-text { color: var(--accent3); }
+  .purple-text { color: var(--accent5); }
+</style>
+
+<style id="gujlish-style">
+.gjl{
+  display:block;
+  margin-top:7px;
+  padding:4px 10px;
+  background:rgba(139,92,246,0.10);
+  border-left:3px solid #7c3aed;
+  border-radius:0 6px 6px 0;
+  font-size:12.5px;
+  color:#c4b5fd;
+  font-style:italic;
+  line-height:1.5;
+}
+.gjl::before{content:'🗣 '; font-style:normal;}
+</style>
+
+<style id="ddcet-sb-style">
+:root{--sw:248px}
+*{box-sizing:border-box}
+body{display:flex;min-height:100vh;background:#0f172a;color:#e2e8f0}
+.ddcet-sb{
+  width:var(--sw);min-width:var(--sw);background:#080f1e;
+  border-right:1px solid #1e2a3a;
+  position:fixed;top:0;left:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;z-index:200;
+  scrollbar-width:thin;scrollbar-color:#1e2a3a transparent;
+}
+.ddcet-sb::-webkit-scrollbar{width:3px}
+.ddcet-sb::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:2px}
+.ddcet-main{margin-left:var(--sw);flex:1;min-width:0;overflow-x:hidden}
+.sb-back-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 16px 10px;
+  color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;
+  border-bottom:1px solid #1e2a3a;
+  transition:color .15s;letter-spacing:.03em;
+}
+.sb-back-btn:hover{color:#e2e8f0}
+.sb-head{padding:16px 16px 8px}
+.sb-subject{font-size:1.1rem;font-weight:800;color:#f1f5f9;margin-bottom:2px}
+.sb-subject-sub{font-size:11px;color:#64748b;font-weight:500}
+.sb-label{padding:10px 16px 4px;font-size:10px;color:#475569;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.sb-ch-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;margin:2px 8px;
+  border-radius:10px;cursor:pointer;
+  transition:all .15s;
+}
+.sb-ch-btn:hover{background:rgba(79,70,229,.12)}
+.sb-ch-btn.active{background:rgba(79,70,229,.18);border-left:3px solid #6366f1;padding-left:11px}
+.sb-ch-num{
+  min-width:26px;height:26px;border-radius:6px;
+  background:#1e293b;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#94a3b8;
+}
+.sb-ch-btn.active .sb-ch-num{background:#4f46e5;color:#fff}
+.sb-ch-info{flex:1;min-width:0}
+.sb-ch-name{font-size:12.5px;font-weight:600;color:#cbd5e1;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-ch-btn.active .sb-ch-name{color:#a5b4fc}
+.sb-ch-wt{font-size:10px;color:#475569;margin-top:1px}
+.sb-chips-wrap{padding:4px 12px 10px;display:none}
+.sb-chips-wrap.open{display:flex;flex-wrap:wrap;gap:5px}
+/* chips */
+.chip{padding:5px 11px;border-radius:16px;font-size:11.5px;font-weight:500;
+  background:#1e293b;border:1px solid #334155;color:#94a3b8;
+  cursor:pointer;transition:all .18s;user-select:none;display:inline-flex;align-items:center;gap:4px}
+.chip:hover{background:rgba(79,70,229,.12);border-color:rgba(99,102,241,.5);color:#a5b4fc}
+.chip[data-target]::after{content:'↗';font-size:9px;opacity:.35}
+.chip.chip-active{background:rgba(79,70,229,.25)!important;border-color:#818cf8!important;color:#a5b4fc!important;box-shadow:0 0 0 2px rgba(79,70,229,.15)}
+.chip.chip-active::after{content:'●';color:#818cf8;opacity:1}
+.chip.chip-done{background:rgba(16,185,129,.18)!important;border-color:#10b981!important;color:#6ee7b7!important}
+.chip.chip-done::after{content:'✓';color:#10b981;font-weight:700;opacity:1}
+.sb-foot{margin-top:auto;padding:14px 16px;border-top:1px solid #1e2a3a;font-size:11px;color:#475569}
+.sb-foot strong{color:#818cf8}
+/* hide original nav elements replaced by sidebar */
+.orig-nav-hide{display:none!important}
+/* responsive */
+@media(max-width:768px){
+  /* sidebar becomes full-screen drawer */
+  .ddcet-sb{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    width:100%!important;height:100vh;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    z-index:500;overflow-y:auto;
+    padding-bottom:60px;
+  }
+  .ddcet-sb.mob-open{transform:translateX(0)!important}
+  .ddcet-main{margin-left:0!important;padding-top:54px}
+  /* hide desktop back btn in sidebar, show mob topbar */
+  .sb-back-btn{display:none!important}
+  .mob-topbar{display:flex!important}
+  /* drawer close button */
+  .mob-close-btn{display:flex!important}
+  /* backdrop */
+  .mob-backdrop{display:block!important}
+}
+/* ── Sticky top bar (mobile only) ── */
+.mob-topbar{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:400;
+  height:52px;
+  background:#080f1e;
+  border-bottom:1px solid #1e2a3a;
+  align-items:center;
+  padding:0 12px;
+  gap:10px;
+}
+.mob-topbar-back{
+  background:none;border:none;color:#94a3b8;
+  font-size:14px;font-weight:600;cursor:pointer;
+  padding:8px 10px 8px 4px;
+  white-space:nowrap;
+}
+.mob-topbar-back:active{color:#e2e8f0}
+.mob-topbar-title{
+  flex:1;font-size:13px;font-weight:700;color:#e2e8f0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.mob-topbar-chapters{
+  background:#1e293b;border:1px solid #334155;color:#a5b4fc;
+  font-size:12px;font-weight:700;cursor:pointer;
+  padding:7px 14px;border-radius:8px;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.mob-topbar-chapters:active{background:#334155}
+/* ── Drawer close button ── */
+.mob-close-btn{
+  display:none;
+  width:100%;padding:14px 16px;
+  background:#0d1526;border:none;border-bottom:1px solid #1e2a3a;
+  color:#94a3b8;font-size:14px;font-weight:700;cursor:pointer;
+  text-align:left;align-items:center;gap:8px;
+}
+.mob-close-btn:active{background:#1e293b}
+/* ── Backdrop ── */
+.mob-backdrop{
+  display:none;
+  position:fixed;inset:0;z-index:499;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(2px);
+}
+/* ── MOBILE OVERRIDES ── */
+@media(max-width:768px){
+  :root{--sw:0px}
+  .ddcet-sb{
+    position:fixed!important;
+    top:0!important;left:0!important;
+    width:85vw!important;max-width:320px;
+    height:100vh!important;
+    transform:translateX(-100%)!important;
+    transition:transform .28s ease!important;
+    z-index:600!important;
+    overflow-y:auto!important;
+    padding-bottom:80px!important;
+  }
+  .ddcet-sb.mob-open{transform:translateX(0)!important}
+  .ddcet-main{margin-left:0!important;padding-top:0!important}
+  .sb-back-btn{display:none!important}
+  .mob-topbar{display:flex!important}
+  .mob-close-btn{display:flex!important}
+  .mob-backdrop{display:block!important;opacity:1!important}
+  .mob-backdrop.hidden{display:none!important}
+  /* body padding from back-to-hub bar */
+  body{padding-top:46px!important}
+  /* make chips wrap nicely */
+  .sb-chips-wrap.open{display:flex!important}
+  /* full width content */
+  .ch-page,.chapter-page,.chapter-content{width:100%!important;padding:12px!important}
+  /* fix overflow */
+  html,body{overflow-x:hidden!important}
+}
+@media(min-width:769px){
+  .mob-topbar{display:none!important}
+  .mob-backdrop{display:none!important}
+  .mob-close-btn{display:none!important}
+}
+
+/* section highlight flash */
+.sec-flash{animation:flash-sec .7s ease}
+@keyframes flash-sec{0%,100%{background:transparent}50%{background:rgba(79,70,229,.15)}}
+</style>
+
+<style id="diagram-css">
+/* Gujlish tip box */
+.g-tip{display:flex;gap:10px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:#c4b5fd;line-height:1.5}
+.g-tip-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.g-tip-text{flex:1}
+/* viz boxes */
+.viz-box{background:#0d1829;border:1px solid #1e3a5f;border-radius:14px;padding:18px 20px;margin:16px 0;overflow:hidden}
+.viz-title{font-size:13px;font-weight:700;color:#93c5fd;margin-bottom:14px;letter-spacing:.02em}
+/* pH scale */
+.ph-bar{display:flex;border-radius:8px;overflow:hidden;height:68px;margin-bottom:6px}
+.ph-seg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:6px 3px;font-size:11px;font-weight:800;color:#fff;text-align:center;line-height:1.2}
+.ph-lbl{font-size:9px;font-weight:400;margin-top:3px;opacity:.9}
+.ph-arrows{display:flex;justify-content:space-between;font-size:11px;font-weight:600;padding:2px 4px}
+/* reactivity ladder */
+.react-ladder{display:flex;flex-direction:column;gap:3px;max-width:400px}
+.rl-item{display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:6px;font-size:12.5px}
+.rl-sym{font-weight:800;min-width:32px;font-family:'Fira Code',monospace;font-size:14px}
+.rl-name{flex:1;color:#e2e8f0}
+.rl-note{font-size:10px;color:#94a3b8;font-style:italic}
+.rl-top{background:rgba(229,62,62,.15);border-left:3px solid #e53e3e;}.rl-top .rl-sym{color:#fc8181}
+.rl-high{background:rgba(237,137,54,.12);border-left:3px solid #ed8936;}.rl-high .rl-sym{color:#fbd38d}
+.rl-mid{background:rgba(68,211,161,.1);border-left:3px solid #48bb78;}.rl-mid .rl-sym{color:#9ae6b4}
+.rl-h2{background:rgba(99,102,241,.15);border-left:3px solid #6366f1;}.rl-h2 .rl-sym{color:#a5b4fc}
+.rl-low{background:rgba(59,130,246,.1);border-left:3px solid #3b82f6;}.rl-low .rl-sym{color:#93c5fd}
+.rl-bot{background:rgba(245,158,11,.1);border-left:3px solid #f59e0b;}.rl-bot .rl-sym{color:#fcd34d}
+/* food chain */
+.food-chain{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.fc-box{padding:10px 14px;border-radius:10px;font-size:12.5px;font-weight:700;text-align:center;min-width:100px}
+.fc-sub{font-size:10px;font-weight:400;margin-top:4px;line-height:1.3}
+.fc-arrow{font-size:16px;color:#64748b;font-weight:700}
+.fc-prod{background:rgba(16,185,129,.12);border:1px solid #10b981;color:#6ee7b7}
+.fc-herb{background:rgba(251,191,36,.1);border:1px solid #f59e0b;color:#fcd34d}
+.fc-carn{background:rgba(239,68,68,.1);border:1px solid #ef4444;color:#fca5a5}
+.fc-top{background:rgba(139,92,246,.12);border:1px solid #8b5cf6;color:#c4b5fd}
+.fc-decomp{background:rgba(107,114,128,.1);border:1px solid #374151;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#9ca3af;margin-top:6px}
+/* temperature scales */
+.temp-compare{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.tc-col{display:flex;flex-direction:column;gap:6px;min-width:100px}
+.tc-head{font-weight:800;font-size:13px;text-align:center;padding:5px;border-radius:6px}
+.tc-c{background:rgba(239,68,68,.15);color:#fca5a5}
+.tc-k{background:rgba(59,130,246,.15);color:#93c5fd}
+.tc-val{padding:7px 10px;border-radius:6px;font-size:12px;font-weight:600;text-align:center;background:rgba(255,255,255,.04)}
+.tc-label{font-size:9.5px;font-weight:400;color:#94a3b8;margin-top:2px}
+.tc-hot{border:1px solid #ef4444;color:#fca5a5}
+.tc-cold{border:1px solid #60a5fa;color:#93c5fd}
+.tc-abs{border:1px solid #475569;color:#64748b}
+.tc-formula{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:10px}
+.tc-eq{font-size:12px;color:#e2e8f0;font-family:'Fira Code',monospace}
+.tc-bar{flex:1;min-height:20px;background:linear-gradient(to bottom,#ef4444,#60a5fa);border-radius:4px;margin:4px auto;width:6px}
+/* Newton's laws */
+.newton-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:600px){.newton-grid{grid-template-columns:1fr;}.food-chain{flex-direction:column;}.temp-compare{flex-direction:column}}
+.nl-card{border-radius:12px;padding:14px;border:1px solid #1e2a3a}
+.nl-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.nl-name{font-size:14px;font-weight:800;margin-bottom:8px}
+.nl-desc{font-size:12px;line-height:1.5;color:#cbd5e1;margin-bottom:8px}
+.nl-ex{font-size:11.5px;color:#94a3b8;font-style:italic}
+.nl-1{background:rgba(239,68,68,.06);border-color:#b91c1c;}.nl-1 .nl-num{color:#f87171;}.nl-1 .nl-name{color:#fca5a5}
+.nl-2{background:rgba(251,146,60,.06);border-color:#c2410c;}.nl-2 .nl-num{color:#fb923c;}.nl-2 .nl-name{color:#fed7aa}
+.nl-3{background:rgba(52,211,153,.06);border-color:#065f46;}.nl-3 .nl-num{color:#34d399;}.nl-3 .nl-name{color:#a7f3d0}
+</style>
+</head>
+<body>
+<style id="back-btn-style">
+#back-to-hub{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:#080f1e;border-bottom:1px solid #1e2a3a;
+  padding:10px 16px;
+  display:flex;align-items:center;gap:12px;
+  font-family:'Segoe UI',system-ui,sans-serif;
+}
+#back-to-hub a{
+  color:#94a3b8;text-decoration:none;font-size:13px;font-weight:700;
+  padding:6px 14px;border-radius:8px;border:1px solid #334155;
+  background:#0f172a;display:inline-flex;align-items:center;gap:6px;
+  transition:all .2s;
+}
+#back-to-hub a:hover{color:#e2e8f0;border-color:#475569;background:#1e293b}
+#back-to-hub .hub-label{
+  font-size:12px;color:#475569;font-weight:600;
+}
+/* push content down so back bar doesn't cover it */
+body{padding-top:46px!important}
+/* on desktop with sidebar, move back bar to not overlap sidebar */
+@media(min-width:769px){
+  #back-to-hub{left:var(--sw,248px)}
+  body{padding-top:46px!important}
+}
+</style>
+<div id="back-to-hub">
+  <a href="index.html">← All Subjects</a>
+  <span class="hub-label">DDCET 2026</span>
+</div>
+
+<div class="mob-topbar" id="mob-topbar">
+  <button class="mob-topbar-back" href="index.html">⬅</button>
+  <div class="mob-topbar-title">🌿 EVS</div>
+  <button class="mob-topbar-chapters" id="mob-open-btn">☰ Chapters</button>
+</div>
+<div class="mob-backdrop" id="mob-backdrop"></div>
+<div class="ddcet-sb" id="ddcet-sb">
+  <button class="mob-close-btn" id="mob-close-btn">✕ &nbsp; Close Menu</button>
+  <a class="sb-back-btn" href="index.html">← All Subjects</a>
+  <div class="sb-head">
+    <div class="sb-subject">🌿 EVS</div>
+    <div class="sb-subject-sub">4 Topics · DDCET 2026</div>
+  </div>
+  <div class="sb-label">Topics</div>
+  <div class="sb-ch-btn active" id="sbch1" onclick="evsScroll('evs-ch1',1)">
+    <div class="sb-ch-num">1</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Ecosystem</div><div class="sb-ch-wt">~10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap open" id="sbchips1">
+    <span class="chip" data-target="evs-t1-ecosystem">What is Ecosystem</span>
+    <span class="chip" data-target="evs-t1-classify">Classification</span>
+    <span class="chip" data-target="evs-t1-components">Components</span>
+    <span class="chip" data-target="evs-t1-biotic">Biotic vs Abiotic</span>
+    <span class="chip" data-target="evs-t1-food">Food Chain</span>
+    <span class="chip" data-target="evs-t1-food">Food Web</span>
+    <span class="chip" data-target="evs-t1-atm">Atmosphere</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch2" onclick="evsScroll('evs-ch2',2)">
+    <div class="sb-ch-num">2</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Pollution</div><div class="sb-ch-wt">Key Topic</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips2">
+    <span class="chip" data-target="evs-t2-air">Air Pollution</span>
+    <span class="chip" data-target="evs-t2-water">Water Pollution</span>
+    <span class="chip" data-target="evs-t2-noise">Noise Pollution</span>
+    <span class="chip" data-target="evs-t2-solid">Solid Waste</span>
+    <span class="chip" data-target="evs-t2-plastic">Plastic Pollution</span>
+    <span class="chip" data-target="evs-t2-ewaste">E-Waste</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch3" onclick="evsScroll('evs-ch3',3)">
+    <div class="sb-ch-num">3</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Climate Change</div><div class="sb-ch-wt">Key Topic</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips3">
+    <span class="chip" data-target="evs-t3-greenhouse">Greenhouse Effect</span>
+    <span class="chip" data-target="evs-t3-greenhouse">Global Warming</span>
+    <span class="chip" data-target="evs-t3-ozone">Ozone Layer</span>
+    <span class="chip" data-target="evs-t3-ozone">ODS Gases</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch4" onclick="evsScroll('evs-ch4',4)">
+    <div class="sb-ch-num">4</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Renewable Energy</div><div class="sb-ch-wt">Very Important</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips4">
+    <span class="chip" data-target="evs-t4-solar">Solar Energy</span>
+    <span class="chip" data-target="evs-t4-wind">Wind Energy</span>
+    <span class="chip" data-target="evs-t4-bio">Biomass</span>
+    <span class="chip" data-target="evs-t4-hydro">Hydro Energy</span>
+    <span class="chip" data-target="evs-t4-geo">Geothermal</span>
+    <span class="chip" data-target="evs-t4-tidal">Tidal Energy</span>
+    <span class="chip" data-target="evs-t4-hydrogen">Hydrogen Energy</span>
+  </div>
+  <div class="sb-foot"><strong>EVS</strong> = 10% of DDCET paper</div>
+</div>
+
+
+<div class="ddcet-main">
+
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">DDCET 2026 · BE-01 · Chapter 10</div>
+  <h1>Environmental Sciences<br>Complete Notes</h1>
+  <p>Everything from zero — all concepts explained with visuals, examples, MCQs, and key facts. Weightage: <strong style="color:var(--accent4)">10%</strong></p>
+  <div class="hero-badges">
+    <div class="badge">📚 <span>4 Major Topics</span></div>
+    <div class="badge">🧪 <span>Ecosystem + Pollution + Climate + Energy</span></div>
+    <div class="badge">✅ <span>MCQs from book included</span></div>
+    <div class="badge">⚡ <span>10% weightage</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <a href="#ecosystem" class="nav-btn">🌿 Ecosystem</a>
+  <a href="#pollution" class="nav-btn">💨 Pollution</a>
+  <a href="#climate" class="nav-btn">🌡️ Climate Change</a>
+  <a href="#energy" class="nav-btn">⚡ Renewable Energy</a>
+  <a href="#mcq-all" class="nav-btn">📝 All MCQs</a>
+</nav>
+
+<div class="container">
+
+<!-- ============================= CHAPTER 1: ECOSYSTEM ============================= -->
+<section id="ecosystem" class="chapter-block">
+  <div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch1 = Ecosystem — Ecosystem components, food chain, food web, pyramid of numbers. 10% energy transfer rule PAKKO yaad karo. Producer → Herbivore → Carnivore → Top predator — aa order badalasho nahi!</div></div>
+  <div class="chapter-heading" id="evs-ch1">
+    <div class="chapter-num">1</div>
+    <div>
+      <h2>Ecosystem</h2>
+      <div style="color:var(--text2);font-size:13px;">Classification · Components · Food Chain · Biotic & Abiotic</div>
+    </div>
+    <div class="weightage">Weightage: ~10%</div>
+  </div>
+
+  <!-- WHAT IS ECOSYSTEM -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t1-ecosystem">What is an Ecosystem?</div>
+    <div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">"Eco" = Greek ma "oikos" = home. Ecosystem = ek jagah jya biotic (jivit) ane abiotic (nir-jiv) vastu interact kare chhe. Sun energy input aape chhe, decomposers energy/nutrients return kare chhe — circular process!</div></div>
+    <p>An <strong>ecosystem</strong> is a community of living organisms (plants, animals, microbes) interacting with each other and with their non-living (physical) environment as a system. Earth itself is the largest ecosystem.</p>
+    <div class="important">
+      <p>The word "eco" comes from Greek <em>oikos</em> meaning "home." An ecosystem is essentially a home where living and non-living things interact constantly. Energy flows and matter cycles within it.</p>
+    <span class="gjl">Eco = Greek ma "home" — ecosystem matlab saad bhashama: jivit ane nir-jiv vastu na gharna aapas ma interaction!</span>
+    </div>
+  </div>
+
+  <!-- CLASSIFICATION -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t1-classify">Classification of Ecosystem</div>
+    <p>Ecosystems are broadly divided into <strong>Natural</strong> and <strong>Artificial</strong> ecosystems.</p>
+
+    <div class="tree">
+      <div class="tree-title">// Ecosystem Classification Tree</div>
+      <div class="tree-root"><div class="tree-node">ECOSYSTEM</div></div>
+      <div class="tree-connector">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+      <div class="tree-level">
+        <div class="tree-item blue" style="padding:10px 20px;font-size:13px;font-weight:700;">🌍 Natural Ecosystem</div>
+        <div class="tree-item orange" style="padding:10px 20px;font-size:13px;font-weight:700;">🏗️ Artificial Ecosystem</div>
+      </div>
+      <div class="tree-level" style="margin-top:8px;">
+        <div style="text-align:center; flex:1;">
+          <div class="tree-connector">↙ &nbsp;&nbsp; ↘</div>
+          <div class="tree-level">
+            <div class="tree-item green">🌲 Terrestrial</div>
+            <div class="tree-item blue">💧 Aquatic</div>
+          </div>
+        </div>
+        <div style="text-align:center; flex:1;">
+          <div class="tree-connector">↓</div>
+          <div class="tree-level">
+            <div class="tree-item orange">🌾 Agriculture</div>
+            <div class="tree-item orange">🐠 Aquarium</div>
+            <div class="tree-item orange">🏙️ Urban</div>
+            <div class="tree-item orange">🏭 Industrial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>🌲 Terrestrial (Land)</h4>
+        <ul>
+          <li><strong>Forest ecosystem</strong></li>
+          <li><strong>Grassland ecosystem</strong></li>
+          <li><strong>Desert ecosystem</strong> (Babool, Cactus plants)</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h4>💧 Aquatic (Water)</h4>
+        <ul>
+          <li><strong>Marine</strong> – sea, ocean</li>
+          <li><strong>Fresh water</strong>
+            <ul>
+              <li>Lotic (Running): River, Stream</li>
+              <li>Lentic (Standing): Lake, Pond</li>
+            </ul>
+          </li>
+          <li><strong>Estuarine</strong> – where river meets sea</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><strong>Fish house / Aquarium</strong> is the most common example of an <strong>artificial ecosystem</strong> asked in DDCET MCQs. The <strong>Sea</strong> is the largest ecosystem on Earth.</p>
+    </div>
+
+    <div class="important">
+      <p><strong>Lotic vs Lentic:</strong> Lotic = flowing/running water (river, stream). Lentic = still/standing water (lake, pond). Easy trick: <em>Lotic = Lots of movement</em>.</p>
+    </div>
+  </div>
+
+  <!-- COMPONENTS -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t1-components">Components of Ecosystem</div>
+    <p>Every ecosystem has two types of components:</p>
+
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>🏗️ (A) Structural Components</h4>
+        <ul>
+          <li><strong>Biotic</strong> – living things (plants, animals, microbes)</li>
+          <li><strong>Abiotic</strong> – non-living things (air, water, soil, sunlight, temperature)</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h4>⚙️ (B) Functional Components</h4>
+        <ul>
+          <li><strong>Food chain</strong></li>
+          <li><strong>Food web</strong></li>
+          <li><strong>Bio-Geo Chemical Cycles</strong> (Carbon cycle, Nitrogen cycle, Water cycle)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIOTIC COMPONENTS -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t1-biotic">Biotic Components (Living Things)</div>
+    <p>Biotic = all <strong>living organisms</strong> in an ecosystem. Classified into 3 groups based on their role:</p>
+
+    <div class="tree">
+      <div class="tree-title">// Biotic Component Classification</div>
+      <div class="tree-root"><div class="tree-node">BIOTIC COMPONENTS</div></div>
+      <div class="tree-connector">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+      <div class="tree-level">
+        <div class="tree-item green">🌿 Producers<br><small>Green plants, Algae, Bacteria</small></div>
+        <div class="tree-item blue">🐄 Consumers<br><small>Herbivores, Carnivores, Omnivores</small></div>
+        <div class="tree-item orange">🍄 Decomposers<br><small>Bacteria, Fungi, Earthworms, Termites</small></div>
+      </div>
+    </div>
+
+    <!-- PRODUCERS -->
+    <div class="subtopic-title">1. Producers (Autotrophs)</div>
+    <p>Organisms that can <strong>make their own food</strong>. They are the <em>building blocks</em> of every ecosystem.</p>
+    <div class="card green">
+      <h4>Producers</h4>
+      <ul>
+        <li><strong>Green plants & Algae</strong> → use sunlight to convert CO₂ + water → glucose + O₂ (Photosynthesis)</li>
+        <li><strong>Some bacteria</strong> → use energy from inorganic chemicals to make food (Chemosynthesis)</li>
+      </ul>
+    </div>
+    <div class="formula">Photosynthesis: CO₂ + H₂O + Sunlight → Glucose + O₂</div>
+    <div class="note">
+      <p>The most important element in the composition of biotic components is <strong>Carbon (C)</strong>. Organisms contain about <strong>49% carbon</strong>. In DNA and RNA, the important element is <strong>Phosphorous (P)</strong>.</p>
+    </div>
+
+    <!-- CONSUMERS -->
+    <div class="subtopic-title">2. Consumers (Heterotrophs)</div>
+    <p>Organisms that cannot make their own food — they get energy by eating other organisms. Also called <strong>heterotrophs</strong>.</p>
+
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>Also Called</th>
+        <th>Feeds On</th>
+        <th>Examples</th>
+      </tr>
+      <tr>
+        <td><strong>Herbivores</strong></td>
+        <td>Primary / 1st order consumers</td>
+        <td>Plants only</td>
+        <td>Cow, deer, goat, grasshopper</td>
+      </tr>
+      <tr>
+        <td><strong>Carnivores</strong></td>
+        <td>Secondary / 2nd order consumers</td>
+        <td>Animals (herbivores)</td>
+        <td>Fox, snake, birds eating insects, hawks</td>
+      </tr>
+      <tr>
+        <td><strong>Tertiary consumers</strong></td>
+        <td>3rd order consumers</td>
+        <td>Secondary consumers</td>
+        <td>Lion, tiger</td>
+      </tr>
+      <tr>
+        <td><strong>Omnivores</strong></td>
+        <td>Opportunistic feeders / top-level carnivores</td>
+        <td>Plants AND animals</td>
+        <td>Humans, frog</td>
+      </tr>
+    </table>
+
+    <div class="important">
+      <p>In a food web, <strong>Humans are both primary and secondary consumers</strong> (omnivores). They eat plants (primary) and animals (secondary). Answer = (c).</p>
+    </div>
+
+    <!-- DECOMPOSERS -->
+    <div class="subtopic-title">3. Decomposers (Reducers / Saprotrophs)</div>
+    <p>Microorganisms that <strong>break down dead organic material</strong> of producers and consumers into simpler substances. They recycle nutrients back into the soil.</p>
+    <div class="card orange">
+      <h4>Decomposers</h4>
+      <ul>
+        <li><strong>Bacteria</strong> – attack animal tissues</li>
+        <li><strong>Fungi</strong> – attack plant tissues</li>
+        <li><strong>Earthworms, Termites</strong></li>
+      </ul>
+      <p style="margin-top:8px;color:var(--text2);font-size:12px;">Also called "reducers" because they reduce the volume of organic material. Also called saprotrophs.</p>
+    </div>
+
+    <div class="subtopic-title">4. Scavengers (Detritivores)</div>
+    <p>Animals that feed on <strong>dead bodies</strong> of other organisms. Example: Earthworms, termites. Also called saprotrophs.</p>
+
+    <!-- ABIOTIC -->
+    <div class="subtopic-title">Abiotic Components</div>
+    <p>Non-living physical and chemical factors in the environment:</p>
+    <div class="fact-row">
+      <div class="fact-pill">🌡️ Temperature</div>
+      <div class="fact-pill">💧 Water</div>
+      <div class="fact-pill">🌬️ Air</div>
+      <div class="fact-pill">🪨 Soil / Minerals</div>
+      <div class="fact-pill">☀️ Sunlight</div>
+      <div class="fact-pill">🌧️ Rainfall</div>
+    </div>
+  </div>
+
+  <!-- FOOD CHAIN & FOOD WEB -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t1-food">Food Chain & Food Web</div>
+    <div class="viz-box">
+  <div class="viz-title">🌱 Food Chain — Flow Diagram</div>
+  <div class="food-chain">
+    <div class="fc-box fc-prod">🌿 Plants<div class="fc-sub">Producers (Autotrophs)<br>Photosynthesis thi food banaave</div></div>
+    <div class="fc-arrow">→ Energy →</div>
+    <div class="fc-box fc-herb">🐛 Herbivores<div class="fc-sub">Primary Consumers<br>Plants khaay chhe</div></div>
+    <div class="fc-arrow">→ Energy →</div>
+    <div class="fc-box fc-carn">🦊 Carnivores<div class="fc-sub">Secondary Consumers<br>Herbivores khaay chhe</div></div>
+    <div class="fc-arrow">→ Energy →</div>
+    <div class="fc-box fc-top">🦁 Top Predator<div class="fc-sub">Tertiary Consumer<br>Food chain no end</div></div>
+  </div>
+  <div class="fc-decomp">🍄 Decomposers — Dead matter ne decompose kare chhe (Bacteria, Fungi)</div>
+  <div class="g-tip" style="margin-top:10px"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Energy flow: Sun → Plants → Herbivores → Carnivores → Top Predator → Decomposers. Energy 10% j transfer thaay chhe — baaki 90% heat thaay chhe! Aa 10% law DDCET ma pakko aave chhe!</div></div>
+</div>
+
+    <div class="subtopic-title">Food Chain</div>
+    <p>A <strong>food chain</strong> is a linear sequence showing how energy and nutrients pass from one organism to another through eating.</p>
+    <div class="flow">
+      <div class="flow-node">🌿 Producer<br><small>Grass</small></div>
+      <div class="flow-arr">→</div>
+      <div class="flow-node">🐛 Herbivore<br><small>Grasshopper</small></div>
+      <div class="flow-arr">→</div>
+      <div class="flow-node">🐸 Carnivore<br><small>Frog</small></div>
+      <div class="flow-arr">→</div>
+      <div class="flow-node">🐍 Carnivore<br><small>Snake</small></div>
+      <div class="flow-arr">→</div>
+      <div class="flow-node">🦅 Top Consumer<br><small>Eagle</small></div>
+    </div>
+
+    <div class="important">
+      <p>In a food chain, <strong>energy flows from trophic level-1 (producers) to higher levels (1→4)</strong>. Energy is LOST at each step (~90% lost, only 10% passed on). This is the <strong>10% law</strong>.</p>
+    </div>
+
+    <div class="subtopic-title">Food Web</div>
+    <p>A <strong>food web</strong> is a complex network of multiple interconnected food chains. It gives a more realistic picture of feeding relationships in an ecosystem.</p>
+
+    <div class="subtopic-title">Pyramid of Numbers</div>
+    <p>A <strong>pyramid of numbers</strong> shows the number of organisms at each trophic level. At the base (producers), population is <strong>maximum</strong>. As you go up, numbers decrease.</p>
+    <div class="note">
+      <p>In pyramid of numbers, <strong>Producers have maximum population</strong>. This is because energy decreases at every level, so fewer organisms can be supported at higher levels.</p>
+    </div>
+  </div>
+
+  <!-- ATMOSPHERE COMPOSITION -->
+  <div class="topic">
+    <div class="topic-title">Composition of Atmosphere (Key Facts for MCQs)</div>
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>Major Gases in Air</h4>
+        <ul>
+          <li>Nitrogen (N₂) → <strong>78.08%</strong></li>
+          <li>Oxygen (O₂) → <strong>20.95%</strong></li>
+          <li>Argon (Ar) → <strong>0.93%</strong></li>
+          <li>CO₂ → <strong>0.03%</strong></li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h4>Environment Spheres</h4>
+        <ul>
+          <li><strong>Hydrosphere</strong> – sea, rivers, lakes</li>
+          <li><strong>Atmosphere</strong> – air around Earth</li>
+          <li><strong>Lithosphere</strong> – land/crust</li>
+          <li><strong>Biosphere</strong> – zone of life</li>
+        </ul>
+      </div>
+    </div>
+    <div class="important">
+      <p>The component of environment made of sea, rivers, lakes = <strong>Hydrosphere</strong>. Maximum pollutants are found in the <strong>Hydrosphere</strong>.</p>
+    </div>
+  </div>
+
+  <!-- WILDLIFE FACTS -->
+  <div class="topic">
+    <div class="topic-title">Wildlife & Conservation Facts (MCQ-important)</div>
+    <table>
+      <tr><th>Species</th><th>Location</th></tr>
+      <tr><td>Leatherback turtles</td><td>Andaman Nicobar Islands</td></tr>
+      <tr><td>Wild Ass (critically endangered)</td><td>Small desert of Kutch</td></tr>
+      <tr><td>Hungal dear</td><td>Jammu-Kashmir</td></tr>
+      <tr><td>Great Indian Bustard</td><td>Thar Desert, Rajasthan</td></tr>
+      <tr><td>Unicorn Rhino</td><td>Sundarvan forests</td></tr>
+      <tr><td>Barsinga dear</td><td>Assam / Uttaranchal (NOT Gujarat Gir)</td></tr>
+      <tr><td>Mangrove forests</td><td>Near sea shore on marshy land</td></tr>
+    </table>
+    <div class="note">
+      <p><strong>IUCN</strong> (International Union for Conservation of Nature) is located in <strong>Switzerland</strong>.</p>
+      <p>Drug causing death of vultures = <strong>Diclofenac</strong> (veterinary drug).</p>
+      <p>At present, about <strong>1.75 Earths</strong> are required to sustain present human population.</p>
+    </div>
+  </div>
+
+  <!-- MCQ ECOSYSTEM -->
+  <div class="mcq-section">
+    <div class="mcq-title">📝 Ecosystem – Practice MCQs (From Book)</div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">1. Humans, animals, insects are ________ component of ecosystem.</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) biotic ✓</div>
+        <div class="mcq-opt">(b) abiotic</div>
+        <div class="mcq-opt">(c) physical</div>
+        <div class="mcq-opt">(d) chemical</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">2. Which element is most important in composition of biotic component?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Oxygen</div>
+        <div class="mcq-opt">(b) Hydrogen</div>
+        <div class="mcq-opt correct">(c) Carbon ✓</div>
+        <div class="mcq-opt">(d) Chlorine</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">3. Babool and cactus plants are found in?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Coral reef ecosystem</div>
+        <div class="mcq-opt correct">(b) Desert ecosystem ✓</div>
+        <div class="mcq-opt">(c) Fresh water ecosystem</div>
+        <div class="mcq-opt">(d) Tropical ecosystem</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">4. Vegetables, grass, trees are which type of biotic components?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Producers ✓</div>
+        <div class="mcq-opt">(b) Consumers</div>
+        <div class="mcq-opt">(c) Decomposers</div>
+        <div class="mcq-opt">(d) Transformers</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">5. What is approximate content of Nitrogen in atmosphere?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) 72%</div>
+        <div class="mcq-opt">(b) 60%</div>
+        <div class="mcq-opt correct">(c) 78% ✓</div>
+        <div class="mcq-opt">(d) 22%</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">6. In a food web, human is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Producer</div>
+        <div class="mcq-opt">(b) Only primary consumer</div>
+        <div class="mcq-opt correct">(c) Primary and secondary consumer ✓</div>
+        <div class="mcq-opt">(d) Only secondary consumer</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">7. Which of the following is an artificial ecosystem?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Forest</div>
+        <div class="mcq-opt">(b) Desert</div>
+        <div class="mcq-opt correct">(c) Fish house ✓</div>
+        <div class="mcq-opt">(d) Pond</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">8. Which is the largest ecosystem on Earth?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Forests</div>
+        <div class="mcq-opt correct">(b) Sea ✓</div>
+        <div class="mcq-opt">(c) Deserts</div>
+        <div class="mcq-opt">(d) Grasslands</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">9. In food chain and food web, which component converts solar energy into food?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Animals</div>
+        <div class="mcq-opt correct">(b) Vegetation ✓</div>
+        <div class="mcq-opt">(c) Carnivores</div>
+        <div class="mcq-opt">(d) Bacteria</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">10. In the pyramid of numbers, population of _____ is maximum.</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Producers ✓</div>
+        <div class="mcq-opt">(b) Primary consumers</div>
+        <div class="mcq-opt">(c) Secondary consumers</div>
+        <div class="mcq-opt">(d) Tertiary consumers</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">11. IUCN is located at?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) USA</div>
+        <div class="mcq-opt">(b) Australia</div>
+        <div class="mcq-opt">(c) New Zealand</div>
+        <div class="mcq-opt correct">(d) Switzerland ✓</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================= CHAPTER 2: POLLUTION ============================= -->
+<section id="pollution" class="chapter-block">
+  <div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch2 = Pollution — Air, Water, Noise, Soil pollution. Sources + effects + control methods — dareek mate. Greenhouse gases: CO₂, CH₄, N₂O, CFC. Acid rain = pH < 5.6. BOD vadhshe to water pollution vadhshe!</div></div>
+  <div class="chapter-heading" id="evs-ch2">
+    <div id="evs-ch2-anchor" style="display:none"></div><div class="chapter-num" style="background:var(--accent3);">2</div>
+    <div>
+      <h2>Pollution & Its Types</h2>
+      <div style="color:var(--text2);font-size:13px;">Air · Water · Noise · Solid Waste · Plastic · E-Waste</div>
+    </div>
+    <div class="weightage" style="background:rgba(247,129,102,0.1);border-color:rgba(247,129,102,0.4);color:var(--accent3);">Key Topic</div>
+  </div>
+
+  <!-- DEFINITION -->
+  <div class="topic">
+    <div class="topic-title">What is Environmental Pollution?</div>
+    <p><strong>Environmental pollution</strong> = any undesirable change in physical, chemical, or biological characteristics of any component of environment (air, water, land) that causes harmful effects on various life forms or property.</p>
+    <p>Pollution dates back to when humans first discovered fire. Burning fossil fuels (coal, oil, gas) releases poisonous gases.</p>
+
+    <div class="card-grid">
+      <div class="card red">
+        <h4>🌋 Natural Causes</h4>
+        <ul>
+          <li>Volcanic eruptions</li>
+          <li>Earthquakes</li>
+          <li>Storms and dust</li>
+          <li>UV radiations</li>
+          <li>Decay of organic matter (releases H₂S)</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h4>🏭 Man-made Causes</h4>
+        <ul>
+          <li>Commercial & industrial activities</li>
+          <li>Over population, Urbanisation</li>
+          <li>Insecticides, pesticides</li>
+          <li>Use of vehicles, Mining</li>
+          <li>Nuclear explosions</li>
+          <li>Construction of buildings, roads, dams</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Types of Environmental Pollution</div>
+    <div class="fact-row">
+      <div class="fact-pill">💧 Water pollution</div>
+      <div class="fact-pill">💨 Air pollution</div>
+      <div class="fact-pill">🏜️ Land pollution</div>
+      <div class="fact-pill">🔊 Noise pollution</div>
+      <div class="fact-pill">☢️ Radioactive pollution</div>
+      <div class="fact-pill">🌡️ Thermal pollution</div>
+    </div>
+
+    <div class="subtopic-title">Pollutant</div>
+    <p>A <strong>pollutant</strong> = any substance present in environment in concentration that alters quality of environment and affects living things adversely. NOT all pollutants are harmful if present in small amounts (e.g., nitrogen, phosphorus, sulphur in small amounts increase soil fertility).</p>
+
+    <div class="subtopic-title">Classification of Pollutants</div>
+    <div class="card-grid">
+      <div class="card green">
+        <h4>♻️ Biodegradable Pollutants</h4>
+        <p style="font-size:12px;color:var(--text2);">Degraded naturally by bacteria. Examples:</p>
+        <ul>
+          <li>Municipal waste water (sewage)</li>
+          <li>Wood, Paper, Garbage, Cardboard</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>⛔ Non-biodegradable Pollutants</h4>
+        <p style="font-size:12px;color:var(--text2);">Cannot be broken down naturally. Examples:</p>
+        <ul>
+          <li>DDT, Plastics, Aluminium</li>
+          <li>Heavy metals like lead, mercury</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <p>MCQ shortcut: Paper is <strong>biodegradable</strong>. DDT, Plastic, Aluminium are <strong>NOT biodegradable</strong>.</p>
+    </div>
+  </div>
+
+  <!-- AIR POLLUTION -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t2-air">Air Pollution</div>
+    <div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Air pollution na major sources: Vehicles (CO, NOx), Industries (SO₂), Burning (particulate matter). CO = colorless, odorless, deadly! CO₂ na vadhara thi greenhouse effect. CFC = ozone deplete kare chhe — refrigerators ma vaparay!</div></div>
+    <p><strong>Definition (IS:4167-1966):</strong> "Air pollution is the presence in ambient atmosphere of substances, generally resulting from human activity, in sufficient concentration and for sufficient time that causes harmful effects on humans, plants and animals."</p>
+
+    <div class="subtopic-title">Scales of Air Pollution</div>
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>Indoor (Micro scale)</h4>
+        <p>Inside buildings, homes. E.g., cooking smoke.</p>
+      </div>
+      <div class="card green">
+        <h4>Outdoor / Ambient (Meso scale)</h4>
+        <p>Local outdoor area. E.g., city smog.</p>
+      </div>
+      <div class="card orange">
+        <h4>Global (Macro scale)</h4>
+        <p>Global level. E.g., ozone depletion, greenhouse effect.</p>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Sources of Air Pollution</div>
+    <div class="card-grid">
+      <div class="card green">
+        <h4>🌿 Natural Sources</h4>
+        <ul>
+          <li>Atmospheric chemical reactions</li>
+          <li>Volcanic eruptions (gases + ash)</li>
+          <li>Forest fires (smoke + greenhouse gases)</li>
+          <li>Dust storms, electric storms</li>
+          <li>Marsh gases (decaying vegetation)</li>
+          <li>Pollen (from trees, grasses, weeds)</li>
+          <li>Salt spray from oceans</li>
+          <li>Microorganisms (algae, fungi, bacteria)</li>
+          <li>Radioactive substances (uranium, radium, thorium)</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>🏭 Man-made Sources</h4>
+        <ul>
+          <li><strong>Combustion of fuel</strong> – coal, wood, oil, LPG</li>
+          <li><strong>Automobile exhaust</strong> – CO (carbon monoxide)</li>
+          <li><strong>Industries</strong> – iron/steel, refineries, chemical plants</li>
+          <li><strong>Thermal power plants</strong> – SO₂</li>
+          <li><strong>Nuclear power plants</strong> – radioactive fly ash</li>
+          <li><strong>Agricultural activities</strong> – pesticides</li>
+          <li><strong>Construction materials</strong> – bricks, cement dust</li>
+          <li><strong>Sanitation system</strong> – garbage, foul gases</li>
+          <li>Mining, Nuclear explosions, Aircraft</li>
+          <li>Waste water treatment plants</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="important">
+      <p><strong>CFC</strong> (Chlorofluorocarbon) – produced from refrigerators, air conditioners, and paints. Contains Carbon, Hydrogen, Chlorine and Fluorine. Major cause of ozone layer depletion.</p>
+    </div>
+
+    <div class="subtopic-title">Effects of Air Pollution on Human Health</div>
+    <table>
+      <tr><th>Pollutant</th><th>Effect</th></tr>
+      <tr><td>CO + NO with haemoglobin</td><td>Forms carboxyhaemoglobin → reduces oxygen-carrying capacity of blood</td></tr>
+      <tr><td>NOₓ and SOₓ</td><td>Irritation to eyes, throat, nose; asthma, bronchitis</td></tr>
+      <tr><td>PAN (photochemical smog)</td><td>Irritation of eyes, nose, throat, respiratory diseases</td></tr>
+      <tr><td>Aromatic hydrocarbons</td><td>Cancer</td></tr>
+      <tr><td>Dust, smog, soot</td><td>Asthma, bronchitis, lung cancer</td></tr>
+      <tr><td>Silica-containing dust</td><td>Silicosis</td></tr>
+      <tr><td>Lead</td><td>Nervous system damage, kidney damage, vision problems</td></tr>
+      <tr><td>Mercury (fossil fuel combustion)</td><td>Nerve, brain, kidney damage</td></tr>
+      <tr><td>Radioactive substances</td><td>Lung diseases, cancer</td></tr>
+    </table>
+
+    <div class="note">
+      <p><strong>Minamata disease</strong> is caused by <strong>Mercury</strong> poisoning. <strong>Bhopal Gas Tragedy (Dec 1984)</strong> was caused by <strong>Methyl Isocyanate (MIC)</strong> leaked from Union Carbide company.</p>
+    </div>
+
+    <div class="subtopic-title">Effects on Plants</div>
+    <ul>
+      <li>Air pollutants enter through <strong>stomata</strong> (leaf pores), destroy chlorophyll, affect photosynthesis</li>
+      <li>Pollutants erode the waxy coating of leaves called <strong>cuticle</strong> → leaf drop</li>
+      <li>Particulates (dust, fog, soot) block stomata → reduce transpiration rate</li>
+      <li>SO₂ affects marble, limestone, roofing, paper, textiles, monuments</li>
+    </ul>
+
+    <div class="subtopic-title">Effects on Climate</div>
+    <p>CO₂ and greenhouse gases → temperature rises → melting of ice caps and glaciers → rise in sea level. About <strong>50% of greenhouse effect</strong> is attributed to CO₂.</p>
+
+    <div class="subtopic-title">Effects on Animals</div>
+    <ul>
+      <li>Lead poisoning near smelters → paralysis, difficulty breathing, loss of appetite</li>
+      <li>Arsenic poisoning → salivation, vomiting, abnormal temperature, death</li>
+      <li>Fluorine toxicity in cattle and sheep → lack of appetite, diarrhoea, muscle weakness, death</li>
+    </ul>
+
+    <div class="subtopic-title">Automobile Exhaust Contains</div>
+    <div class="fact-row">
+      <div class="fact-pill"><strong>Hydrocarbons</strong></div>
+      <div class="fact-pill"><strong>Carbon Monoxide (CO)</strong></div>
+      <div class="fact-pill">Lead vapour</div>
+      <div class="fact-pill">SO₂</div>
+    </div>
+
+    <div class="subtopic-title">Photochemical Smog</div>
+    <p>Formed when <strong>NOₓ + Hydrocarbons + Sunlight</strong> react in atmosphere → forms <strong>PAN (Peroxyacetyl Nitrate)</strong>.</p>
+    <div class="formula">NOₓ + Hydrocarbons + Sunlight → PAN (Photochemical Smog)</div>
+    <div class="note">
+      <p>Main product of photochemical smog = <strong>PAN</strong>. Gas harmful to Taj Mahal = <strong>SO₂</strong> (sulphur dioxide). Air pollutant that reduces oxygen-carrying capacity of blood = <strong>CO (Carbon Monoxide)</strong>.</p>
+    </div>
+
+    <div class="subtopic-title">Control of Air Pollution</div>
+    <ol>
+      <li>Use <strong>LPG/CNG</strong> instead of diesel/petrol in automobiles</li>
+      <li>Grow more trees (trees absorb atmospheric CO₂)</li>
+      <li>Do not burn plastic wastes</li>
+      <li>Use bicycles; use public transport</li>
+      <li>Process changes in industries (e.g., wash coal before pulverisation)</li>
+      <li>Control dust in cement plants (rotary kiln)</li>
+      <li>Fix <strong>catalytic converters</strong> in vehicles</li>
+      <li>Reduce use of pesticides and chemical fertilisers</li>
+      <li>Use <strong>electrostatic precipitators</strong> in thermal power plants</li>
+      <li>Use controlling equipment: cyclone separator, fabric filter, wet scrubber</li>
+    </ol>
+
+    <div class="subtopic-title">Air Pollution Control Equipment</div>
+    <div class="fact-row">
+      <div class="fact-pill">1. Gravitational settling chamber</div>
+      <div class="fact-pill">2. Cyclone separator</div>
+      <div class="fact-pill">3. Electrostatic precipitators</div>
+      <div class="fact-pill">4. Fabric filters</div>
+      <div class="fact-pill">5. Wet scrubbers</div>
+    </div>
+    <div class="note">
+      <p>In a <strong>cyclone separator</strong>, the force used to remove particulate matter from gas is <strong>centrifugal force</strong>.</p>
+    </div>
+  </div>
+
+  <!-- WATER POLLUTION -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t2-water">Water Pollution</div>
+    <p>Any physical, biological, or chemical change in water quality that adversely affects living organisms or makes water unsuitable for use = <strong>water pollution</strong>.</p>
+
+    <div class="subtopic-title">Signs of Polluted Water</div>
+    <ul>
+      <li>Bad taste or odour</li>
+      <li>Offensive odours from rivers, lakes, oceans</li>
+      <li>Reduction in number of fish / aquatic life</li>
+      <li>Oil or grease floating on surface</li>
+      <li>Unchecked growth of aquatic weeds</li>
+      <li>Presence of colour due to organic matter</li>
+    </ul>
+
+    <div class="subtopic-title">Major Sources of Water Pollution</div>
+    <ul>
+      <li>Sewage (discharge of sewers and drains)</li>
+      <li>Industrial effluents (chemical, dye, paper, tannery)</li>
+      <li>Intensive use of chemical fertilisers</li>
+      <li>Use of insecticides in fields</li>
+      <li>Synthetic detergents</li>
+      <li>Oil spillage during drilling and shipment</li>
+      <li>Discharge from nuclear power plants / research centres</li>
+      <li>Radioactive ash from nuclear explosions</li>
+      <li>Dead animals thrown in water bodies</li>
+      <li>Waste heat from industrial discharge and thermal plants</li>
+    </ul>
+
+    <div class="important">
+      <p><strong>BOD</strong> = <strong>Biochemical Oxygen Demand</strong> – measures the amount of organic (carbonic) matter in domestic sewage. Higher BOD = more polluted water. pH of acidic water = <strong>less than 7</strong>.</p>
+    </div>
+  </div>
+
+  <!-- NOISE POLLUTION -->
+  <div class="topic">
+    <div class="topic-title" id="evs-t2-noise">Noise Pollution</div>
+
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>🔊 Sound vs Noise</h4>
+        <table style="font-size:12px;">
+          <tr><th>Sound</th><th>Noise</th></tr>
+          <tr><td>What we hear</td><td>Unpleasant, unwanted sound</td></tr>
+          <tr><td>Constant pitch (frequency)</td><td>Variable pitch</td></tr>
+          <tr><td>Periodic motion</td><td>Non-periodic motion</td></tr>
+          <tr><td>Meaningful communication</td><td>No meaningful communication</td></tr>
+          <tr><td>Unit: Hertz (Hz)</td><td>Unit: <strong>Decibel (dB)</strong></td></tr>
+        </table>
+      </div>
+      <div class="card orange">
+        <h4>📊 Measurement</h4>
+        <p style="font-size:12px;">Intensity of sound = sound energy received per second per unit area.</p>
+        <div class="formula" style="font-size:12px;margin:8px 0;">dB = 10 log₁₀ (I / I₀)</div>
+        <p style="font-size:12px;">Where I₀ = 10⁻¹² W/m² (reference intensity)</p>
+        <p style="font-size:12px;">Acceptable noise in urban residential area = <strong>35–45 dBA</strong></p>
+        <p style="font-size:12px;">Repeated sound of <strong>150 dB</strong> reduces hearing capacity.</p>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Effects of Noise Pollution</div>
+    <div class="card-grid">
+      <div class="card red">
+        <h4>Physical Effects</h4>
+        <ul>
+          <li>Loss of hearing (>80–90 dBA for 8+ hrs/day)</li>
+          <li>Total deafness (acoustic trauma)</li>
+          <li>Damage to ear drum from sudden loud sounds</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h4>Physiological Effects</h4>
+        <ul>
+          <li>Headache, nausea</li>
+          <li>Dizziness, gastric ulcers</li>
+          <li>High heart beat rate</li>
+          <li>Blood pressure and sugar fluctuations</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h4>Psychological Effects</h4>
+        <ul>
+          <li>Annoyance, insomnia (sleep interference)</li>
+          <li>Depression, fatigue</li>
+          <li>Mental stress, speech interference</li>
+          <li>Decrease in efficiency</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Control of Noise Pollution</div>
+    <ol>
+      <li><strong>Control at receiver's end</strong> – ear plugs, ear muffs, noise helmets, headphones</li>
+      <li><strong>Suppression at source</strong> – soundproof chambers, proper maintenance, sound-absorbing materials, silencers, quieter machines, vibration damping (rubber, cork, neoprene under machines)</li>
+      <li><strong>Acoustic zoning</strong> – silence zones near hospitals, schools, residential areas; keep industrial areas, bus terminals, railway stations, aerodromes away from residential areas</li>
+      <li><strong>Planting trees</strong> – green trees along roadsides reduce noise</li>
+      <li><strong>Sound insulation</strong> – acoustical tiles, perforated plywood in recording rooms</li>
+      <li><strong>Legislative measures</strong> – Noise Pollution Act, restrict loud speakers near silence zones</li>
+    </ol>
+  </div>
+
+  <!-- SOLID WASTE -->
+  <div class="topic">
+    <div class="topic-title">Solid Waste Management (SWM)</div>
+    <p><strong>Solid waste</strong> = all solid and semi-solid materials discarded by a community. Arises from human and animal activities.</p>
+
+    <div class="subtopic-title">Types of Solid Waste</div>
+    <div class="card-grid">
+      <div class="card green">
+        <h4>1. Refuse</h4>
+        <p>General term for all rejected/worthless solid wastes. Includes garbage + rubbish + ashes + industrial wastes. <strong>Does NOT include body waste (excreta).</strong></p>
+      </div>
+      <div class="card blue">
+        <h4>2. Garbage</h4>
+        <p>Putrescible organic waste from kitchens, hotels, restaurants (vegetable/fruit peelings, waste food). Density: 450–900 kg/m³. Decomposes quickly.</p>
+      </div>
+      <div class="card orange">
+        <h4>3. Rubbish</h4>
+        <p>Non-putrescible wastes excluding ashes. Paper, rags, glass/plastic bottles, broken crockery, furniture. Density: 50–400 kg/m³.</p>
+      </div>
+      <div class="card red">
+        <h4>4. Ashes</h4>
+        <p>Incombustible waste from houses, industries, furnaces, chulhas. Density: 700–850 kg/m³.</p>
+      </div>
+    </div>
+
+    <div class="subtopic-title">More Definitions</div>
+    <div class="card-grid">
+      <div class="card purple">
+        <h4>5. Putrefaction</h4>
+        <p>Anaerobic decomposition of organic matter by anaerobic/facultative bacteria in absence of oxygen.</p>
+      </div>
+      <div class="card teal">
+        <h4>6. Leachate</h4>
+        <p>Liquid that has travelled through solid waste and has dissolved materials. Non-biodegradable dumped waste + rain water → coloured liquid = leachate.</p>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Municipal Solid Waste (MSW)</div>
+    <p>Waste from domestic and commercial activities. Also called "refuse." Includes garbage, rubbish, ashes, dust, construction wastes, dead animals.</p>
+    <div class="fact-row">
+      <div class="fact-pill">India MSW: <strong>~65 million tons/year</strong></div>
+      <div class="fact-pill">Projected by 2031: <strong>~125 million tons</strong></div>
+      <div class="fact-pill">Land required: <strong>1250 hectares/year</strong></div>
+    </div>
+
+    <div class="subtopic-title">Objectives of SWM</div>
+    <ol>
+      <li>Remove discarded materials from inhabited places in timely manner</li>
+      <li>Prevent spread of disease</li>
+      <li>Minimise likelihood of fires</li>
+      <li>Reduce aesthetic insults from putrifying organic matter</li>
+      <li>Dispose refuse minimising hazards to environment</li>
+    </ol>
+
+    <div class="subtopic-title">Three Basic Functional Elements of SWM</div>
+    <div class="fact-row">
+      <div class="fact-pill">1. Collection</div>
+      <div class="fact-pill">2. Disposal</div>
+      <div class="fact-pill">3. Recycling/Reutilisation</div>
+    </div>
+  </div>
+
+  <!-- PLASTIC WASTE -->
+  <div class="topic">
+    <div class="topic-title">Plastic Waste & Its Hazards</div>
+    <p>Plastics = synthetic organic polymers. Used in everything from water bottles to medical supplies. Despite initial assumptions of being harmless, plastic disposal has caused major environmental problems.</p>
+
+    <div class="fact-row">
+      <div class="fact-pill">Global production 2018: <strong>380 million tonnes</strong></div>
+      <div class="fact-pill">Since 1950: <strong>6.3 billion tonnes</strong> produced</div>
+      <div class="fact-pill">Only <strong>9% recycled</strong>, 12% incinerated</div>
+      <div class="fact-pill">Yearly in oceans: <strong>13 million tonnes</strong></div>
+      <div class="fact-pill">Marine lives killed: <strong>~100,000/year</strong></div>
+    </div>
+
+    <div class="subtopic-title">Toxic Constituents in Plastics</div>
+    <div class="fact-row">
+      <div class="fact-pill">Phthalates</div>
+      <div class="fact-pill">Poly-fluorinated chemicals</div>
+      <div class="fact-pill">Bisphenol A (BPA)</div>
+      <div class="fact-pill">Brominated flame retardants</div>
+      <div class="fact-pill">Antimony trioxide</div>
+    </div>
+
+    <div class="subtopic-title">Environmental Effects of Plastic Waste</div>
+    <ul>
+      <li>Environmental natural beauty deterioration</li>
+      <li>Entanglement and death of aquatic organisms (260+ marine species)</li>
+      <li>Sewage system blockage → mosquito breeding</li>
+      <li>Reduction in water percolation and soil aeration → reduced agricultural productivity</li>
+      <li>Chlorinated plastics leach toxic chemicals into soil → contaminate groundwater</li>
+      <li><strong>Methane</strong> (dangerous greenhouse gas) released during biodegradation of plastics</li>
+      <li>Plastics in oceans release polystyrene and BPA → water pollution</li>
+      <li>Open burning → dioxins, PCBs, furans → respiratory disorders</li>
+      <li><strong>Microplastics</strong> – bioaccumulate in food chain</li>
+    </ul>
+
+    <div class="important">
+      <p><strong>BPA (Bisphenol A)</strong> is used in inner linings of food cans, reusable water bottles, and baby bottles. Long-term exposure leaches BPA into food/drinks. In women: polycystic ovarian syndrome, obesity, recurrent miscarriages.</p>
+    </div>
+  </div>
+
+  <!-- E-WASTE -->
+  <div class="topic">
+    <div class="topic-title">E-Waste (Electronic Waste)</div>
+    <p><strong>E-waste</strong> = electrical and electronic equipment that is discarded by consumers or bulk consumers, or rejects from manufacturing, refurbishment and repair processes.</p>
+
+    <div class="subtopic-title">E-waste Generation in India</div>
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>India's Position</h4>
+        <ul>
+          <li><strong>4th largest</strong> e-waste producer in the world</li>
+          <li>Computer devices: <strong>70%</strong> of e-waste</li>
+          <li>Telecom sector: <strong>12%</strong></li>
+          <li>Medical equipment: <strong>8%</strong></li>
+          <li>Electrical equipment: <strong>7%</strong></li>
+          <li>Individual household: <strong>15%</strong></li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h4>Statistics</h4>
+        <ul>
+          <li>Global: 20–50 million tons disposed/year</li>
+          <li>= 5% of all Municipal Solid Waste</li>
+          <li>Annual growth rate: <strong>10%</strong></li>
+          <li>10 states contribute 70% of total e-waste</li>
+          <li>65 cities generate 60% of total e-waste</li>
+          <li>Top city: <strong>Mumbai</strong>, then Delhi, Bengaluru, Chennai, Kolkata, Ahmedabad</li>
+          <li>Top state: <strong>Maharashtra</strong>, then Tamil Nadu, UP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Constituent Materials of E-waste</div>
+    <div class="fact-row">
+      <div class="fact-pill">Iron & Steel: <strong>50%</strong></div>
+      <div class="fact-pill">Plastics: <strong>21%</strong></div>
+      <div class="fact-pill">Mercury, Arsenic, Lead: <strong>13%</strong></div>
+    </div>
+    <ul>
+      <li><strong>Useful metals:</strong> iron, steel, copper, aluminium</li>
+      <li><strong>Precious metals:</strong> platinum, gold, silver</li>
+      <li><strong>Hazardous materials:</strong> mercury, lithium, barium, radioactive isotopes</li>
+      <li><strong>Toxic substances:</strong> Dioxins, PCBs, Lead, Zinc, Cadmium</li>
+    </ul>
+
+    <div class="important">
+      <p><strong>Maximum material found in e-waste = Ferrous metal (Iron & Steel = 50%)</strong>. E-Waste (Management) Rules 2016 were published by India's Ministry of Environment, Forest and Climate Change [Amended 2018].</p>
+    </div>
+
+    <div class="subtopic-title">Effects on Human Health</div>
+    <ul>
+      <li>Electronic gadgets contain lead, cadmium, chromium, mercury, PVC, brominated flame retardants, beryllium, antimony, phthalates</li>
+      <li>Long-term exposure damages: nervous systems, kidneys, bones, reproductive and endocrine systems. Some are carcinogenic and neurotoxic.</li>
+      <li>Children are especially vulnerable</li>
+    </ul>
+
+    <div class="subtopic-title">Effects on Environment</div>
+    <ul>
+      <li>E-waste landfilled → contaminated leachates → pollutes groundwater</li>
+      <li>Acids/sludge from melting chips → acidification of soil → water contamination</li>
+      <li>Toxic heavy metals follow "soil-crop-food pathway" → heavy metal exposure to humans</li>
+      <li>Incineration → toxic fumes/gases → air pollution</li>
+      <li>Open air burning of circuit boards (plastic) to recover copper → air pollution</li>
+      <li>Burning computer monitors → dioxins → cancer</li>
+    </ul>
+
+    <div class="subtopic-title">Recycling of E-waste (Important)</div>
+    <table>
+      <tr><th>Component</th><th>How Recycled</th></tr>
+      <tr><td>Plastic</td><td>Sent to recyclers → fence posts, plastic sleepers, trays, vineyard stakes</td></tr>
+      <tr><td>Metal</td><td>Scrap sent to recyclers → new steel and metallic materials</td></tr>
+      <tr><td>Glass (from CRTs)</td><td>Retrieved from Cathode Ray Tubes → complex process (hazardous materials)</td></tr>
+      <tr><td>Mercury</td><td>Sent to specialized mercury recycling facilities</td></tr>
+      <tr><td>Printed Circuit Boards</td><td>Smelted → recover silver, tin, gold, palladium, copper</td></tr>
+      <tr><td>Hard Drives</td><td>Shredded → aluminium ingots for automotive industry</td></tr>
+      <tr><td>Ink/Toner Cartridges</td><td>Returned to manufacturer → remanufactured or separated into metal/plastic</td></tr>
+      <tr><td>Batteries</td><td>Hulled for plastic → metals smelted → recover nickel, steel, cadmium, cobalt</td></tr>
+    </table>
+  </div>
+
+  <!-- POLLUTION MCQs -->
+  <div class="mcq-section">
+    <div class="mcq-title">📝 Pollution – Practice MCQs</div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">1. Gas emitted by factories/power plants most harmful to atmosphere?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Oxygen</div>
+        <div class="mcq-opt">(b) Nitrogen</div>
+        <div class="mcq-opt">(c) Chlorine</div>
+        <div class="mcq-opt correct">(d) Carbon dioxide ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">2. Gas produced from refrigerators, air conditioners and paints business is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Carbon dioxide</div>
+        <div class="mcq-opt correct">(b) CFC ✓</div>
+        <div class="mcq-opt">(c) Nitrogen</div>
+        <div class="mcq-opt">(d) Ozone</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">3. As per IS code, acceptable noise level in urban residential area is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) 35–45 dBA ✓</div>
+        <div class="mcq-opt">(b) 45–55 dBA</div>
+        <div class="mcq-opt">(c) 30–40 dBA</div>
+        <div class="mcq-opt">(d) 40–50 dBA</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">4. Noise pollution is measured in?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) decibel ✓</div>
+        <div class="mcq-opt">(b) dyne</div>
+        <div class="mcq-opt">(c) Eco</div>
+        <div class="mcq-opt">(d) Newton</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">5. Which of the following is NOT a greenhouse gas?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) CO₂</div>
+        <div class="mcq-opt correct">(b) O₂ ✓</div>
+        <div class="mcq-opt">(c) CH₄</div>
+        <div class="mcq-opt">(d) CFC</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">6. Which of the following is biodegradable?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Paper ✓</div>
+        <div class="mcq-opt">(b) DDT</div>
+        <div class="mcq-opt">(c) Plastic</div>
+        <div class="mcq-opt">(d) Aluminium</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">7. CO₂ content in atmosphere?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) 3%</div>
+        <div class="mcq-opt">(b) 0.1%</div>
+        <div class="mcq-opt correct">(c) 0.03% ✓</div>
+        <div class="mcq-opt">(d) 10%</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">8. In Dec 1984, from Union Carbide Bhopal, which toxic gas was leaked?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Methane</div>
+        <div class="mcq-opt correct">(b) Methyl Isocyanate ✓</div>
+        <div class="mcq-opt">(c) Acetylene</div>
+        <div class="mcq-opt">(d) Carbon monoxide</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">9. 'Minamata' disease is caused by?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Mercury ✓</div>
+        <div class="mcq-opt">(b) Lead</div>
+        <div class="mcq-opt">(c) Zinc</div>
+        <div class="mcq-opt">(d) Manganese</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">10. BOD means?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Basic oxygen demand</div>
+        <div class="mcq-opt">(b) Biological oxygen demand</div>
+        <div class="mcq-opt correct">(c) Biochemical oxygen demand ✓</div>
+        <div class="mcq-opt">(d) Biological organic demand</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">11. Which gas has adverse effect on Taj Mahal?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) CO</div>
+        <div class="mcq-opt correct">(b) SO₂ ✓</div>
+        <div class="mcq-opt">(c) CFC</div>
+        <div class="mcq-opt">(d) Hydrogen</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">12. Which air pollutant reduces oxygen-carrying capacity of blood?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Ammonia</div>
+        <div class="mcq-opt">(b) Hydrogen sulphide</div>
+        <div class="mcq-opt correct">(c) Carbon monoxide ✓</div>
+        <div class="mcq-opt">(d) Sulphur dioxide</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">13. Automobile exhaust mainly contains?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Hydrocarbon, carbon monoxide ✓</div>
+        <div class="mcq-opt">(b) Lead vapour</div>
+        <div class="mcq-opt">(c) Sulphur dioxide</div>
+        <div class="mcq-opt">(d) Carbon dioxide</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">14. Which fuel used in automobiles produces least pollution?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Petrol</div>
+        <div class="mcq-opt">(b) Diesel</div>
+        <div class="mcq-opt">(c) LPG</div>
+        <div class="mcq-opt correct">(d) CNG ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">15. Which of the following is maximum in e-waste?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Plastic</div>
+        <div class="mcq-opt correct">(b) Ferrous metal ✓</div>
+        <div class="mcq-opt">(c) Non-ferrous metal</div>
+        <div class="mcq-opt">(d) Glass</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================= CHAPTER 3: CLIMATE CHANGE ============================= -->
+<section id="climate" class="chapter-block">
+  <div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch3 = Climate Change — Greenhouse effect (natural process chhe, but human activities vadhare kare chhe). Global warming → polar ice melts → sea level rises. Ozone layer CFCs thi deplete thaay chhe — Montreal Protocol 1987 ma sign thyu!</div></div>
+  <div class="chapter-heading" id="evs-ch3">
+    <div id="evs-ch3-anchor" style="display:none"></div><div class="chapter-num" style="background:var(--accent2);">3</div>
+    <div>
+      <h2>Climate Change</h2>
+      <div style="color:var(--text2);font-size:13px;">Greenhouse Effect · Global Warming · Ozone Layer Depletion</div>
+    </div>
+    <div class="weightage" style="background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.4);color:var(--accent2);">Key Topic</div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-title">What is Climate Change?</div>
+    <p><strong>Climate change</strong> refers to any significant change in climatic factors such as temperature, wind, precipitation, lasting for an unexpected period.</p>
+
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>🌡️ Global Warming</h4>
+        <p>Refers specifically to the <strong>rise in temperature of Earth</strong>.</p>
+      </div>
+      <div class="card purple">
+        <h4>🌍 Climate Change</h4>
+        <p>Refers to <strong>all changes in climate</strong> = global warming + changes in rainfall, wind, sea level, etc.</p>
+      </div>
+    </div>
+    <div class="note">
+      <p>Climate change ≠ Global warming. Global warming is one part of climate change. Climate change = global warming + all other changes.</p>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-title">Causes of Climate Change</div>
+    <ol>
+      <li>Change in the sun's intensity</li>
+      <li>Slow changes in Earth's orbit around the sun</li>
+      <li>Change in ocean circulation</li>
+      <li><strong>Human activities</strong> (main cause today):
+        <ul>
+          <li>Burning fossil fuels</li>
+          <li>Deforestation</li>
+          <li>Desertification</li>
+          <li>Urbanisation</li>
+          <li>Industrialisation</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="topic">
+    <div class="topic-title">Effects of Climate Change</div>
+    <div class="card-grid">
+      <div class="card red">
+        <h4>Direct Effects</h4>
+        <ul>
+          <li>Extreme hot and cold spells</li>
+          <li>Wet or dry spells of rainfall</li>
+          <li>Cyclones, Floods</li>
+          <li>Rise in sea level</li>
+          <li>Global warming</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h4>Cascading Effects</h4>
+        <ul>
+          <li>Change in rainfall pattern</li>
+          <li>Serious water shortage</li>
+          <li>Change in crop pattern</li>
+          <li>Growth of microorganisms → spread of diseases</li>
+          <li>Melting of polar ice</li>
+          <li>Adverse effects on ecosystem</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GREENHOUSE EFFECT -->
+  <div class="topic">
+    <div class="topic-title">Greenhouse Effect & Global Warming</div>
+    <p>The global average temperature has increased by about <strong>1°C in the last century</strong>. The main cause is the abnormal increase in concentration of <strong>greenhouse gases</strong> in the atmosphere.</p>
+
+    <div class="card blue">
+      <h4>🌿 How Greenhouse Effect Works</h4>
+      <p style="color:var(--text3);font-size:13px;">Think of a car parked in sunlight. Sunlight enters through glass windows (like atmosphere), heats the interior, but the heat cannot escape — the glass traps it. Similarly, greenhouse gases trap heat radiated by Earth.</p>
+    </div>
+
+    <div class="flow" style="flex-direction:column;align-items:flex-start;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="flow-node">☀️ Sunlight hits Earth</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">Earth radiates heat</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">GHGs trap heat</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">🌡️ Temperature rises</div>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Main Greenhouse Gases (GHGs)</div>
+    <table>
+      <tr><th>#</th><th>Gas</th><th>Formula</th><th>% contribution</th></tr>
+      <tr><td>1</td><td><strong>Carbon dioxide</strong></td><td>CO₂</td><td>~50% of greenhouse effect</td></tr>
+      <tr><td>2</td><td><strong>Methane</strong></td><td>CH₄</td><td>Significant contributor</td></tr>
+      <tr><td>3</td><td><strong>Nitrous Oxide</strong></td><td>N₂O</td><td>–</td></tr>
+      <tr><td>4</td><td><strong>Chlorofluorocarbon</strong></td><td>CFC</td><td>Also depletes ozone</td></tr>
+      <tr><td>5</td><td><strong>Ozone</strong></td><td>O₃</td><td>At troposphere level</td></tr>
+      <tr><td>6</td><td><strong>Water vapour</strong></td><td>H₂O</td><td>Natural contributor</td></tr>
+    </table>
+
+    <div class="important">
+      <p>Gas mainly responsible for greenhouse effect = <strong>CFC</strong> (in MCQ context — though CO₂ contributes most in reality, CFC is the answer for the exam as per book).<br>
+      O₂ is <strong>NOT a greenhouse gas</strong>. Methane (CH₄) and CO₂ are main GHGs.<br>
+      About <strong>50% of greenhouse effect</strong> = CO₂.</p>
+    </div>
+
+    <div class="subtopic-title">Steps to Control Global Warming</div>
+    <ol>
+      <li>Reduction in use of fossil fuels for energy generation</li>
+      <li>Promote non-conventional energy: wind, solar, nuclear</li>
+      <li>Hydrogen as future energy source</li>
+      <li>Reduce N₂O emission by minimising nitrogen fertilisers in agriculture</li>
+      <li>Increase vegetation cover / forests (forests are "sinks" for CO₂ absorption)</li>
+    </ol>
+
+    <div class="note">
+      <p>Reason for sea level rise = <strong>Global warming</strong> (melting of glaciers and polar ice).</p>
+    </div>
+  </div>
+
+  <!-- OZONE LAYER -->
+  <div class="topic">
+    <div class="topic-title">Ozone Layer</div>
+    <p>The <strong>ozone layer</strong> is located in the <strong>stratosphere</strong>, about <strong>15 to 30 km</strong> above Earth's surface. About <strong>90%</strong> of atmospheric ozone is concentrated here.</p>
+    <p>The ozone layer absorbs most of the sun's <strong>ultraviolet (UV) radiation</strong> and protects life on Earth. It acts like a natural sunscreen — also called the <strong>ozone shield</strong> or <strong>Earth's protective umbrella</strong>.</p>
+
+    <div class="important">
+      <p>The ozone layer absorbs = <strong>Ultraviolet rays</strong>. NOT x-rays, infrared rays, or G-rays. Mainly responsible for ozone layer depletion = <strong>CFC (Chlorofluorocarbon)</strong>. CFC used in refrigerators contains Carbon, Hydrogen, Chlorine and Fluorine.</p>
+    </div>
+
+    <div class="subtopic-title">Effects of Ozone Depletion</div>
+    <ul>
+      <li>More UV-B radiation (200–280 nm) reaches Earth's surface</li>
+      <li>UV-B affects DNA and photosynthetic chemicals → mutation and cancer</li>
+      <li>Cases of <strong>skin cancer</strong> (disfigurement) will increase</li>
+      <li>Easy absorption of UV by eye lens and cornea → increase in <strong>cataract</strong></li>
+      <li>Destruction of melanin-producing cells → immunosuppression; fair-skinned people at greater risk</li>
+      <li>Decrease in <strong>phytoplankton</strong> population → affects zooplankton, fish, marine animals, whole aquatic food chain</li>
+      <li>Decrease in yield of crops: corn, rice, soyabean, cotton, bean, pea, wheat</li>
+      <li>Degradation of paints, plastics, polymer materials → economic loss</li>
+    </ul>
+
+    <div class="subtopic-title">International Agreements on Climate Change</div>
+    <div class="fact-row">
+      <div class="fact-pill">Paris Agreement (2015)</div>
+      <div class="fact-pill">Montreal Protocol</div>
+      <div class="fact-pill">Earth Summit</div>
+      <div class="fact-pill">Kyoto Protocol</div>
+      <div class="fact-pill">Vienna Convention</div>
+      <div class="fact-pill">Copenhagen Conference</div>
+      <div class="fact-pill">Doha Climate Conference (2012)</div>
+    </div>
+  </div>
+
+  <!-- CLIMATE MCQs -->
+  <div class="mcq-section">
+    <div class="mcq-title">📝 Climate Change – Practice MCQs</div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">1. The ozone layer absorbs?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) X-rays</div>
+        <div class="mcq-opt">(b) G-rays</div>
+        <div class="mcq-opt">(c) Infrared rays</div>
+        <div class="mcq-opt correct">(d) Ultraviolet rays ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">2. Which of the following is NOT a greenhouse gas?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) CO₂</div>
+        <div class="mcq-opt correct">(b) O₂ ✓</div>
+        <div class="mcq-opt">(c) CH₄</div>
+        <div class="mcq-opt">(d) CFC</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">3. Due to 'ozone hole', which rays come to Earth's surface?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Laser rays</div>
+        <div class="mcq-opt">(b) X-rays</div>
+        <div class="mcq-opt correct">(c) Ultraviolet rays ✓</div>
+        <div class="mcq-opt">(d) None of these</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">4. Which is mainly responsible for ozone layer depletion?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) CFC ✓</div>
+        <div class="mcq-opt">(b) SO₂</div>
+        <div class="mcq-opt">(c) CO</div>
+        <div class="mcq-opt">(d) CH₄</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">5. Which of the following is a greenhouse gas?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Oxygen</div>
+        <div class="mcq-opt">(b) Nitrogen</div>
+        <div class="mcq-opt correct">(c) Carbon dioxide ✓</div>
+        <div class="mcq-opt">(d) Sulphur dioxide</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">6. Reason for sea level rise is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Depletion in ozone layer</div>
+        <div class="mcq-opt">(b) Smog</div>
+        <div class="mcq-opt correct">(c) Global warming ✓</div>
+        <div class="mcq-opt">(d) Acid rain</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">7. Gas mainly responsible for greenhouse effect?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) CO₂</div>
+        <div class="mcq-opt correct">(b) CFC ✓</div>
+        <div class="mcq-opt">(c) CH₄</div>
+        <div class="mcq-opt">(d) N₂O</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">8. CFC used in refrigerators contains?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Carbon</div>
+        <div class="mcq-opt">(b) Hydrogen</div>
+        <div class="mcq-opt">(c) Chlorine and fluorine</div>
+        <div class="mcq-opt correct">(d) All the above ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">9. Which is a greenhouse gas?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Nitrogen</div>
+        <div class="mcq-opt">(b) Oxygen</div>
+        <div class="mcq-opt correct">(c) Water vapour ✓</div>
+        <div class="mcq-opt">(d) Argon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================= CHAPTER 4: RENEWABLE ENERGY ============================= -->
+<section id="energy" class="chapter-block">
+  <div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">Ch4 = Renewable Energy — Solar, Wind, Hydro, Tidal, Geothermal, Biomass, Hydrogen. Renewable = nature thi dobara milshe (inexhaustible). Non-renewable = coal, petroleum — limited chhe. Advantages + disadvantages dareek na yaad karo!</div></div>
+  <div class="chapter-heading" id="evs-ch4">
+    <div id="evs-ch4-anchor" style="display:none"></div><div class="chapter-num" style="background:var(--yellow);">4</div>
+    <div>
+      <h2>Renewable Sources of Energy</h2>
+      <div style="color:var(--text2);font-size:13px;">Wind · Solar · Biomass · Tidal · Geothermal · Hydro · Hydrogen</div>
+    </div>
+    <div class="weightage" style="background:rgba(227,179,65,0.1);border-color:rgba(227,179,65,0.4);color:var(--yellow);">Very Important</div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-title">Introduction to Renewable Energy</div>
+    <p><strong>Renewable energy</strong> = energy from sources that are naturally replenished on a human timescale (sun, wind, water, geothermal heat, biomass). Unlike fossil fuels, they don't run out.</p>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Renewable Sources</h4>
+        <ul>
+          <li>Wind energy</li>
+          <li>Solar energy</li>
+          <li>Biomass / Biogas</li>
+          <li>Tidal energy</li>
+          <li>Geothermal energy</li>
+          <li>Hydro energy</li>
+          <li>Hydrogen energy</li>
+          <li>Forests and vegetation</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>❌ Non-Renewable Sources</h4>
+        <ul>
+          <li>Petroleum</li>
+          <li>Coal</li>
+          <li>Natural gas</li>
+          <li>Fossil fuels</li>
+          <li>Nuclear energy (uranium, plutonium)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="important">
+      <p>For <strong>sustainable development</strong>, <strong>Renewable energy</strong> is recommended. By using conventional (fossil fuel) energy → it <strong>produces pollution</strong>. Solar energy is the only <strong>continuously available</strong> renewable source.</p>
+    </div>
+  </div>
+
+  <!-- WIND ENERGY -->
+  <div class="topic">
+    <div class="topic-title">⚡ Wind Energy</div>
+    <p><strong>Wind</strong> = air in motion, caused by uneven heating of Earth's surface by the sun. The kinetic energy of moving air is proportional to wind speed.</p>
+    <p>Wind energy is used to run <strong>turbines to generate electricity</strong>. It is cheap and pollution-free.</p>
+
+    <div class="fact-row">
+      <div class="fact-pill">Min wind speed: <strong>&gt; 6.5 m/sec</strong></div>
+      <div class="fact-pill">Min avg annual wind speed: <strong>15 km/hr</strong></div>
+      <div class="fact-pill">India total wind potential: <strong>~11,000 MW</strong></div>
+      <div class="fact-pill">TN potential: <strong>6000 MW</strong></div>
+      <div class="fact-pill">Gujarat potential: <strong>5000 MW</strong></div>
+      <div class="fact-pill">India harnessed: <strong>2000 MW</strong></div>
+    </div>
+
+    <div class="note">
+      <p>Gujarat wind farm locations: <strong>Mandvi-Kutch</strong> and <strong>Lambha near Dwarka</strong>. State with <strong>maximum wind energy installed capacity</strong> = <strong>Tamil Nadu</strong>.</p>
+    </div>
+
+    <div class="subtopic-title">Wind Mill / Wind Turbine</div>
+    <p>A machine that converts kinetic energy of wind into mechanical energy of shaft = <strong>wind mill</strong>. When connected to generator = <strong>wind turbine generator / aerogenerator</strong>.</p>
+
+    <div class="subtopic-title">Types of Wind Turbines</div>
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>HAWT (Horizontal Axis Wind Turbine)</h4>
+        <ul>
+          <li>Generator placed <strong>in the nacelle (nessel)</strong> — above the tower</li>
+          <li>Large rotor rotates by <strong>lift force</strong></li>
+          <li>Blade design = <strong>aerodynamic</strong></li>
+          <li>Generator type = <strong>Synchronous induction generator</strong></li>
+          <li>Yaw control = rotates rotor in direction of wind</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h4>Savonious Wind Turbine</h4>
+        <ul>
+          <li>Rotor axis is <strong>vertical</strong></li>
+          <li>Used for water pumping / low-power applications</li>
+          <li>Nessel is used in <strong>Horizontal Axis Wind Turbine (HAWT)</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Applications of Wind Energy / Wind Mills</div>
+    <div class="card-grid">
+      <div class="card green">
+        <h4>Applications</h4>
+        <ul>
+          <li>Generate electricity (wind mills)</li>
+          <li>Run water pumps for irrigation</li>
+          <li>Run flour mills (grinding grains)</li>
+          <li>Run machines without electric power</li>
+          <li>Water pumping and irrigation</li>
+          <li>Electro-metallurgical processes</li>
+          <li>Stand-by energy source</li>
+          <li>Run farm machinery</li>
+          <li>Diamond cutting-polishing factory</li>
+          <li>Domestic lighting</li>
+          <li>Hybrid power plants (with solar)</li>
+          <li>Fishing and salt industries</li>
+          <li>Battery charging</li>
+          <li>Telecommunication in remote areas</li>
+          <li>Rural forestry projects</li>
+          <li>Cottage industries</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h4>Wind Farm Converts</h4>
+        <p style="color:var(--accent2);">Wind energy → <strong>Electrical energy</strong></p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Advantages</h4>
+        <ul>
+          <li>Completely non-polluting</li>
+          <li>Renewable source</li>
+          <li>No raw material required</li>
+          <li>Initial investment moderate</li>
+          <li>Easy and quick construction</li>
+          <li>Low operation and maintenance costs</li>
+          <li>Cheaper generation</li>
+          <li>No greenhouse gases produced</li>
+          <li>No toxic/radioactive waste</li>
+          <li>Land below turbines can grow crops</li>
+          <li>Highly decentralised installation</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>❌ Limitations</h4>
+        <ul>
+          <li>Location must have high wind speed (&gt;6.5 m/s)</li>
+          <li>Wind direction continuously changes</li>
+          <li>Motion is variable and unsteady</li>
+          <li>Power production not uniform → intermittent</li>
+          <li>Noise unsuitable for populated areas</li>
+          <li>Only in vast open areas</li>
+          <li>High wind during thunderstorm may damage system</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLAR ENERGY -->
+  <div class="topic">
+    <div class="topic-title">☀️ Solar Energy</div>
+    <p>Energy from the sun. The most abundant and continuously available renewable energy source.</p>
+    <div class="fact-row">
+      <div class="fact-pill">Solar constant: <strong>1367 W/m²·μm</strong></div>
+      <div class="fact-pill">N-type material produces <strong>free electrons</strong> for solar rays</div>
+    </div>
+    <div class="card blue">
+      <h4>Solar Cell / Photovoltaic</h4>
+      <p>N-type semiconductor material produces free electrons when exposed to solar rays. A strip made by connecting two metals is called a <strong>thermocouple</strong>.</p>
+      <p>Silicon material: can resist very high temperature, has high boiling point, is very hard.</p>
+    </div>
+  </div>
+
+  <!-- BIOMASS ENERGY -->
+  <div class="topic">
+    <div class="topic-title">🌾 Biomass Energy</div>
+    <p><strong>Biomass</strong> = all types of biological substances: plant products (wood, crop, algae, aquatic plants), their residues (straw, husk, sawdust, cow dung, animal droppings), and waste materials (garbage, night soil).</p>
+
+    <div class="subtopic-title">3 Categories of Biomass Resources</div>
+    <div class="card-grid">
+      <div class="card green">
+        <h4>1. Traditional Solid Mass</h4>
+        <ul><li>Wood</li><li>Agricultural residue</li></ul>
+      </div>
+      <div class="card blue">
+        <h4>2. Non-traditional (Liquid)</h4>
+        <ul><li>Biomass converted to liquid fuels</li></ul>
+      </div>
+      <div class="card orange">
+        <h4>3. Fermented Gas</h4>
+        <ul><li>Biogas (methane) from fermentation of biomass</li></ul>
+      </div>
+    </div>
+
+    <p>Burning 1 kg of wood → <strong>4000–5000 kcal</strong> of heat. Burning biomass in presence of air = bioenergy. Residue = manure for agriculture.</p>
+    <div class="note">
+      <p>Gas with <strong>maximum content in biogas = Methane (CH₄)</strong>. Biogas digestion takes place in <strong>absence of Oxygen</strong>. Normally <strong>Molasses</strong> is used to manufacture ethanol.</p>
+    </div>
+
+    <div class="subtopic-title">Biomass Characteristics</div>
+    <ul>
+      <li>Huge quantity and renewable</li>
+      <li>Does not produce environmental pollution</li>
+      <li>Gives fuels of high calorific value</li>
+      <li>Available everywhere</li>
+      <li>Very cheap</li>
+      <li>Can be burned → liquid or gaseous fuel</li>
+      <li>Biomass is a carbonic material</li>
+    </ul>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Advantages of Biomass Energy</h4>
+        <ul>
+          <li>Perennial (plants grow continuously)</li>
+          <li>No pollution, no global warming contribution</li>
+          <li>Very cheap, available everywhere</li>
+          <li>Good potential for rural areas</li>
+          <li>Simple technology, unskilled persons can use</li>
+          <li>Methane used as domestic fuel and to run engines</li>
+          <li>Can be grown in nearby seas/lakes (saves land)</li>
+          <li>Gives good quality manures (byproducts as fertiliser)</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>❌ Disadvantages of Biomass Energy</h4>
+        <ul>
+          <li>Contains 50–90% water → heavy, difficult to transport</li>
+          <li>Direct combustion produces smoke and smell</li>
+          <li>Very low calorific value if burnt in raw form</li>
+          <li>Biogas plants need large land areas</li>
+          <li>Biogas plants need lots of care and maintenance</li>
+          <li>Cannot be used in urban areas (limited space)</li>
+          <li>Biogas plants may have odour and insect problems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Uses of Biomass Energy</div>
+    <ul>
+      <li>Waste organic biomass directly used as domestic fuel</li>
+      <li>Biogas used for heating water</li>
+      <li>Biogas used as domestic fuel in gas stoves (like LPG)</li>
+      <li>Biogas to run engines, boilers, turbines</li>
+      <li>Biogas (methane) to run farm machinery</li>
+    </ul>
+
+    <div class="note">
+      <p><strong>Pyrolysis</strong> = process using <strong>dry biomass</strong>. Pyrolysis process provides fuel in <strong>all forms</strong> (solid, liquid, gas). Biomass is a <strong>renewable</strong> energy source.</p>
+    </div>
+  </div>
+
+  <!-- GEOTHERMAL ENERGY -->
+  <div class="topic">
+    <div class="topic-title">🌋 Geothermal Energy</div>
+    <p>Heat energy from inside the Earth. As depth increases, temperature increases: for every <strong>125 m depth, temperature rises by 1°C</strong>. Interior temperature: <strong>600°C to 6000°C</strong>.</p>
+    <p>Rain water penetrates deep → heated by Earth → becomes vapour → comes to surface as <strong>hot water springs</strong>.</p>
+
+    <div class="fact-row">
+      <div class="fact-pill">Gujarat hot water springs: <strong>Tulsishyam, Lasundra, Tuva</strong></div>
+      <div class="fact-pill">Himachal Pradesh: 5 kW plant at <strong>Manikarnam</strong></div>
+      <div class="fact-pill">Ladakh: thermal wells → salt, sulphur, borex</div>
+    </div>
+
+    <div class="subtopic-title">4 Ways Geothermal Energy is Used</div>
+    <div class="fact-row">
+      <div class="fact-pill">1. Hot water method</div>
+      <div class="fact-pill">2. Wet vapour method</div>
+      <div class="fact-pill">3. Dry vapour method</div>
+      <div class="fact-pill">4. Hot rock method</div>
+    </div>
+
+    <div class="subtopic-title">Uses of Geothermal Energy</div>
+    <ul>
+      <li>To generate electric power</li>
+      <li>For greenhouses</li>
+      <li>For fisheries</li>
+      <li>In paper industry</li>
+    </ul>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Advantages</h4>
+        <ul>
+          <li>Renewable, available 24/7</li>
+          <li>No fuel required</li>
+          <li>Low operational cost</li>
+          <li>Small land footprint</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>❌ Limitations</h4>
+        <ul>
+          <li>Hot water contains sulphur, ammonia, salts → corrosion of pipes</li>
+          <li>Vapour from earth produces sharp noise when released</li>
+          <li>Difficult to obtain sufficient pressure from such vapour</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIDAL ENERGY -->
+  <div class="topic">
+    <div class="topic-title">🌊 Tidal Energy</div>
+    <p>Periodic rise and fall of sea water = <strong>tide</strong>. Caused by <strong>gravitational forces of sun and moon</strong> on Earth.</p>
+    <p>During high tide → water fills tidal basin → turbine gates open when low tide outside → water flows through turbines → electricity generated.</p>
+
+    <div class="fact-row">
+      <div class="fact-pill">France tidal plant: <strong>230 MW</strong></div>
+      <div class="fact-pill">India (IIT Chennai): <strong>150 MW in Kerala</strong></div>
+      <div class="fact-pill">India sites: Gulf of Kutch, Cambay, Sundarbans</div>
+      <div class="fact-pill">Minimum head required: <strong>5 m</strong></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Advantages</h4>
+        <ul>
+          <li>Power generation is cheaper (no fuel needed)</li>
+          <li>Does not produce harmful waste</li>
+          <li>Pollution-free</li>
+          <li>Power by natural process of tides</li>
+          <li>No raw material required</li>
+          <li>Does not occupy costly land</li>
+          <li>Site can be used for fishing</li>
+          <li>Tidal power is inexhaustible</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>❌ Disadvantages</h4>
+        <ul>
+          <li>Power generation not continuous (tide cycles)</li>
+          <li>If insufficient water head → stop generation</li>
+          <li>Only in coastal areas</li>
+          <li>Very low efficiency</li>
+          <li>High capital investment</li>
+          <li>Operational problems during cyclones/storms</li>
+          <li>Costly transmission</li>
+          <li>Heavy silting → frequent dredging needed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- HYDROGEN ENERGY -->
+  <div class="topic">
+    <div class="topic-title">💧 Hydrogen Energy</div>
+    <p>Hydrogen is a <strong>clean fuel</strong> and the <strong>most abundant element in the universe</strong> (90% of all atoms). The sun and stars are composed largely of hydrogen. Water is the most abundant compound of hydrogen on Earth.</p>
+
+    <p>Hydrogen is considered an alternative fuel due to its ability to power <strong>fuel cells</strong> in zero-emission electric vehicles. A fuel cell coupled with electric motor is <strong>2–3 times more efficient</strong> than internal combustion engine on gasoline.</p>
+
+    <div class="card blue">
+      <h4>Fuel Cell</h4>
+      <p>An electrochemical conversion device that converts hydrogen + oxygen → water, producing electricity and heat. Works like a battery but doesn't need recharging. Hydrogen burns in fuel cell → electricity.</p>
+    </div>
+
+    <div class="important">
+      <p>Energy in <strong>1 kg of hydrogen</strong> ≈ energy in <strong>2.8 kg of gasoline</strong>. Hydrogen fuel cell works like a battery, does not require recharging, produces no harmful emissions.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Advantages</h4>
+        <ul>
+          <li>Readily available</li>
+          <li>No harmful emissions</li>
+          <li>Environmentally friendly</li>
+          <li>Renewable</li>
+          <li>Lighter and smaller unit</li>
+          <li>Can be used as fuel in rockets</li>
+          <li>Higher fuel efficiency</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h4>❌ Disadvantages</h4>
+        <ul>
+          <li>High initial cost</li>
+          <li>Low voltage</li>
+          <li>Low service life</li>
+          <li>Difficult to store</li>
+          <li>Highly flammable</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subtopic-title">Potential Applications of Hydrogen</div>
+    <ul>
+      <li>Production of electricity, heat and water</li>
+      <li>Industrial applications</li>
+      <li>Vehicular transportation</li>
+      <li>Residential applications</li>
+      <li>Commercial applications (telecom towers backup power)</li>
+    </ul>
+  </div>
+
+  <!-- HYDRO ENERGY -->
+  <div class="topic">
+    <div class="topic-title">🏞️ Hydro Energy (Brief)</div>
+    <p>Energy generated by the flow of water. Includes large dams (hydroelectric power plants) and small-scale run-of-the-river plants. Clean, renewable, and reliable. Used widely in India (e.g., Bhakra Nangal, Tehri Dam).</p>
+  </div>
+
+  <!-- ENERGY MCQs -->
+  <div class="mcq-section">
+    <div class="mcq-title">📝 Renewable Energy – Practice MCQs</div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">1. For sustainable development, recommended energy is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Nuclear energy</div>
+        <div class="mcq-opt correct">(b) Renewable energy ✓</div>
+        <div class="mcq-opt">(c) Conventional energy</div>
+        <div class="mcq-opt">(d) Natural gas</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">2. By using conventional energy sources?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Does not produce pollution</div>
+        <div class="mcq-opt">(b) Reduce pollution</div>
+        <div class="mcq-opt correct">(c) Produce pollution ✓</div>
+        <div class="mcq-opt">(d) All the above</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">3. Which of the following is NOT a renewable energy source?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Wind energy</div>
+        <div class="mcq-opt">(b) Solar energy</div>
+        <div class="mcq-opt">(c) Ocean energy</div>
+        <div class="mcq-opt correct">(d) Fossil fuels ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">4. Which type of energy is continuously available?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Solar energy ✓</div>
+        <div class="mcq-opt">(b) Natural gas</div>
+        <div class="mcq-opt">(c) Petroleum</div>
+        <div class="mcq-opt">(d) Nuclear energy</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">5. Which is a renewable source of energy?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Petroleum</div>
+        <div class="mcq-opt correct">(b) Forests and vegetation ✓</div>
+        <div class="mcq-opt">(c) Natural gas</div>
+        <div class="mcq-opt">(d) None of the above</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">6. In HAWT, where is the generator placed?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) In the nacelle (nessel) ✓</div>
+        <div class="mcq-opt">(b) Above the tower</div>
+        <div class="mcq-opt">(c) At ground level</div>
+        <div class="mcq-opt">(d) In the gear box</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">7. Large size wind turbine rotor rotates by?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Drag force</div>
+        <div class="mcq-opt correct">(b) Lift force ✓</div>
+        <div class="mcq-opt">(c) Resultant of drag and lift force</div>
+        <div class="mcq-opt">(d) Reactive force</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">8. In Savonious wind turbine, rotor axis is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Horizontal</div>
+        <div class="mcq-opt">(b) Inclined</div>
+        <div class="mcq-opt correct">(c) Vertical ✓</div>
+        <div class="mcq-opt">(d) Connected to nacelle</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">9. In India, which state has maximum wind energy installed capacity?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Tamil Nadu ✓</div>
+        <div class="mcq-opt">(b) Gujarat</div>
+        <div class="mcq-opt">(c) Maharashtra</div>
+        <div class="mcq-opt">(d) Karnataka</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">10. Wind farm converts?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Wind energy into solar energy</div>
+        <div class="mcq-opt">(b) Wind energy into tidal energy</div>
+        <div class="mcq-opt">(c) Wind energy into physical energy</div>
+        <div class="mcq-opt correct">(d) Wind energy into electrical energy ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">11. Which gas has maximum content in biogas?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Carbon dioxide</div>
+        <div class="mcq-opt">(b) Oxygen</div>
+        <div class="mcq-opt">(c) Nitrogen</div>
+        <div class="mcq-opt correct">(d) Methane ✓</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">12. Biomass is a _______ energy source.</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Conventional</div>
+        <div class="mcq-opt">(b) Alternate</div>
+        <div class="mcq-opt correct">(c) Renewable ✓</div>
+        <div class="mcq-opt">(d) Modern</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">13. In biogas plant, digestion takes place in absence of?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Oxygen ✓</div>
+        <div class="mcq-opt">(b) Carbon dioxide</div>
+        <div class="mcq-opt">(c) Hydrogen</div>
+        <div class="mcq-opt">(d) Methane</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">14. In which process is dry biomass used?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) Pyrolysis ✓</div>
+        <div class="mcq-opt">(b) Hydrogeneration</div>
+        <div class="mcq-opt">(c) Hydrogasification</div>
+        <div class="mcq-opt">(d) All the above</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">15. To produce tidal energy, minimum difference in water levels of high and low tide is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt correct">(a) 5 m ✓</div>
+        <div class="mcq-opt">(b) 10 m</div>
+        <div class="mcq-opt">(c) 15 m</div>
+        <div class="mcq-opt">(d) 20 m</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">16. Hydrogen fuel cell?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Produces electric power by burning hydrogen gas</div>
+        <div class="mcq-opt correct">(b) Works like a battery ✓</div>
+        <div class="mcq-opt">(c) Does not require recharging</div>
+        <div class="mcq-opt">(d) All the above</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">17. Value of solar constant is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) 1327 W/m²·μm</div>
+        <div class="mcq-opt">(b) 1447 W/m²·μm</div>
+        <div class="mcq-opt correct">(c) 1367 W/m²·μm ✓</div>
+        <div class="mcq-opt">(d) 1587 W/m²·μm</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">18. Normally _____ is used to manufacture ethanol?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) Ethasis</div>
+        <div class="mcq-opt correct">(b) Molasses ✓</div>
+        <div class="mcq-opt">(c) Methanol</div>
+        <div class="mcq-opt">(d) Waste</div>
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">19. Minimum average annual wind speed to set up wind mill is?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt">(a) 25 km/hr</div>
+        <div class="mcq-opt">(b) 35 km/hr</div>
+        <div class="mcq-opt correct">(c) 15 km/hr ✓</div>
+        <div class="mcq-opt">(d) 45 km/hr</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUICK REVISION SHEET -->
+<section id="mcq-all" class="chapter-block">
+  <div class="chapter-heading">
+    <div class="chapter-num" style="background:var(--accent5);">★</div>
+    <div>
+      <h2>Quick Revision Cheatsheet</h2>
+      <div style="color:var(--text2);font-size:13px;">All key facts and numbers at a glance — read this before exam</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card green">
+      <h4>🌿 Ecosystem Key Facts</h4>
+      <ul>
+        <li>Largest ecosystem = <strong>Sea</strong></li>
+        <li>Artificial ecosystem = <strong>Fish house / Aquarium / Farm</strong></li>
+        <li>Producers = <strong>Autotrophs</strong></li>
+        <li>Consumers = <strong>Heterotrophs</strong></li>
+        <li>Decomposers = <strong>Reducers/Saprotrophs</strong></li>
+        <li>Herbivores = <strong>Primary/1st order consumers</strong></li>
+        <li>Carnivores = <strong>Secondary/2nd order</strong></li>
+        <li>Tertiary = <strong>3rd order</strong> (lion, tiger)</li>
+        <li>Humans in food web = <strong>Primary + Secondary consumer</strong></li>
+        <li>N₂ in atmosphere = <strong>78%</strong></li>
+        <li>O₂ in atmosphere = <strong>20.95%</strong></li>
+        <li>CO₂ in atmosphere = <strong>0.03%</strong></li>
+        <li>Carbon in organisms = <strong>49%</strong></li>
+        <li>Pyramid max population = <strong>Producers</strong></li>
+        <li>IUCN location = <strong>Switzerland</strong></li>
+        <li>Earths needed = <strong>1.75</strong></li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h4>💨 Pollution Key Facts</h4>
+      <ul>
+        <li>Minamata disease = <strong>Mercury</strong></li>
+        <li>Bhopal gas = <strong>Methyl Isocyanate (MIC)</strong></li>
+        <li>Taj Mahal gas = <strong>SO₂</strong></li>
+        <li>Blood oxygen reducer = <strong>CO</strong></li>
+        <li>Ozone depleter = <strong>CFC</strong></li>
+        <li>GHG (refrigerator/AC) = <strong>CFC</strong></li>
+        <li>Vulture death drug = <strong>Diclofenac</strong></li>
+        <li>BOD = <strong>Biochemical Oxygen Demand</strong></li>
+        <li>Acidic water pH = <strong>&lt; 7</strong></li>
+        <li>Noise unit = <strong>Decibel (dB)</strong></li>
+        <li>Urban noise limit = <strong>35–45 dBA</strong></li>
+        <li>Hearing loss sound = <strong>150 dB</strong></li>
+        <li>Biodegradable = <strong>Paper, Wood, Sewage</strong></li>
+        <li>Non-biodegradable = <strong>DDT, Plastic, Aluminium</strong></li>
+        <li>Max pollutants component = <strong>Hydrosphere</strong></li>
+        <li>India E-waste rank = <strong>4th</strong></li>
+        <li>E-waste max material = <strong>Ferrous metal (50%)</strong></li>
+        <li>E-waste top city = <strong>Mumbai</strong></li>
+        <li>E-waste top state = <strong>Maharashtra</strong></li>
+        <li>Computer in e-waste = <strong>70%</strong></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h4>🌡️ Climate Change Key Facts</h4>
+      <ul>
+        <li>Ozone layer height = <strong>15–30 km (Stratosphere)</strong></li>
+        <li>Ozone absorbs = <strong>UV rays</strong></li>
+        <li>Ozone depleted by = <strong>CFC</strong></li>
+        <li>CFC contains = <strong>C, H, Cl, F</strong></li>
+        <li>GHG not = <strong>O₂</strong></li>
+        <li>GHGs = CO₂, CH₄, N₂O, CFC, O₃, H₂O vapour</li>
+        <li>50% greenhouse effect = <strong>CO₂</strong></li>
+        <li>Sea level rise cause = <strong>Global warming</strong></li>
+        <li>Global temp rise (last century) = <strong>~1°C</strong></li>
+        <li>Ozone in stratosphere = <strong>90%</strong></li>
+        <li>UV-B range = <strong>200–280 nm</strong></li>
+        <li>Main GHG (exam) = <strong>CFC</strong></li>
+      </ul>
+    </div>
+    <div class="card yellow">
+      <h4>⚡ Renewable Energy Key Facts</h4>
+      <ul>
+        <li>Wind speed min = <strong>&gt;6.5 m/sec</strong></li>
+        <li>Min avg annual wind = <strong>15 km/hr</strong></li>
+        <li>Max wind state = <strong>Tamil Nadu</strong></li>
+        <li>Gujarat wind farms = <strong>Mandvi-Kutch, Lambha near Dwarka</strong></li>
+        <li>HAWT generator in = <strong>Nacelle (Nessel)</strong></li>
+        <li>Large rotor force = <strong>Lift force</strong></li>
+        <li>Savonious axis = <strong>Vertical</strong></li>
+        <li>Wind farm → <strong>Electrical energy</strong></li>
+        <li>Solar constant = <strong>1367 W/m²·μm</strong></li>
+        <li>Free electrons for solar = <strong>N-type</strong></li>
+        <li>Biogas main gas = <strong>Methane (CH₄)</strong></li>
+        <li>Biogas digestion = without <strong>Oxygen</strong></li>
+        <li>Ethanol from = <strong>Molasses</strong></li>
+        <li>Pyrolysis uses = <strong>dry biomass</strong></li>
+        <li>1 kg H₂ = 2.8 kg gasoline</li>
+        <li>Tidal min head = <strong>5 m</strong></li>
+        <li>France tidal = <strong>230 MW</strong></li>
+        <li>India tidal sites = <strong>Gulf of Kutch, Cambay, Sundarbans</strong></li>
+        <li>Geothermal: 125 m = <strong>+1°C</strong></li>
+        <li>Gujarat hot springs = <strong>Tulsishyam, Lasundra, Tuva</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>🌿 Environmental Sciences – DDCET 2026 Complete Notes</p>
+  <p style="margin-top:6px;font-size:12px;">Chapter 10 | BE-01 Basics of Science and Engineering | 10% Weightage</p>
+  <p style="margin-top:6px;font-size:11px;color:#484f58;">All content based on DDCET 2024-25 study material. Study well! 💪</p>
+</div>
+
+<script>
+  // Smooth scroll for nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Active nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navBtns.forEach(b => {
+          b.classList.toggle('active', b.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+
+
+<script id="hub-comm">
+// Fix sticky nav anchor links
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var id = this.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+});
+window.addEventListener('message', function(e) {
+  if (!e.data || typeof e.data !== 'object') return;
+  if (e.data.action === 'navigate' || e.data.action === 'scroll') {
+    var el = document.getElementById(e.data.id);
+    if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+  if (e.data.action === 'back') { window.parent.postMessage('closeSubject', '*'); }
+});
+</script>
+
+</div><!-- /ddcet-main -->
+
+<script id="evs-switch-js">
+function evsScroll(id, n){
+  var el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  [1,2,3,4].forEach(function(i){
+    var btn=document.getElementById('sbch'+i);
+    var chips=document.getElementById('sbchips'+i);
+    if(btn)   btn.classList[i===n?'add':'remove']('active');
+    if(chips) chips.classList[i===n?'add':'remove']('open');
+  });
+}
+// watch scroll to update active sidebar chapter
+(function(){
+  var chapters = ['evs-ch1','evs-ch2','evs-ch3','evs-ch4'];
+  window.addEventListener('scroll', function(){
+    var best=1, bestDist=99999;
+    chapters.forEach(function(id,i){
+      var el=document.getElementById(id);
+      if(el){
+        var dist=Math.abs(el.getBoundingClientRect().top);
+        if(dist<bestDist){bestDist=dist;best=i+1;}
+      }
+    });
+    [1,2,3,4].forEach(function(i){
+      var btn=document.getElementById('sbch'+i);
+      if(btn) btn.classList[i===best?'add':'remove']('active');
+    });
+  }, {passive:true});
+})();
+</script>
+
+<script id="ddcet-chip-js">
+(function(){
+// initChips: 1-click=scroll, 2-click=purple, 3-click=green
+function initChips(){
+  var saved = {};
+  try{saved = JSON.parse(localStorage.getItem('ddcet-chip-states')||'{}');}catch(e){}
+  document.querySelectorAll('.chip[data-target]').forEach(function(chip){
+    var key = (chip.textContent||'').trim();
+    if(saved[key]==='active') chip.classList.add('chip-active');
+    if(saved[key]==='done')   chip.classList.add('chip-done');
+    var clicks=0, timer=null;
+    chip.addEventListener('click',function(e){
+      e.stopPropagation();
+      clicks++;
+      clearTimeout(timer);
+      var c=clicks;
+      timer=setTimeout(function(){
+        if(c===1){
+          var tid=chip.getAttribute('data-target');
+          var el=document.getElementById(tid);
+          if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('sec-flash');setTimeout(function(){el.classList.remove('sec-flash');},700);}
+        } else if(c===2){
+          chip.classList.toggle('chip-active');
+          chip.classList.remove('chip-done');
+          saveChip(chip);
+        } else {
+          chip.classList.toggle('chip-done');
+          chip.classList.remove('chip-active');
+          saveChip(chip);
+        }
+        clicks=0;
+      },250);
+    });
+  });
+}
+function saveChip(chip){
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem('ddcet-chip-states')||'{}');}catch(e){}
+  var key=(chip.textContent||'').trim().replace(/[↗●✓]/g,'').trim();
+  if(chip.classList.contains('chip-done'))       saved[key]='done';
+  else if(chip.classList.contains('chip-active')) saved[key]='active';
+  else delete saved[key];
+  try{localStorage.setItem('ddcet-chip-states',JSON.stringify(saved));}catch(e){}
+}
+// ── Mobile nav ──
+function initMobileMenu(){
+  var sb = document.getElementById('ddcet-sb');
+  var backdrop = document.getElementById('mob-backdrop');
+  function openDrawer(){
+    sb.classList.add('mob-open');
+    if(backdrop) backdrop.style.display='block';
+    document.body.style.overflow='hidden';
+  }
+  function closeDrawer(){
+    sb.classList.remove('mob-open');
+    if(backdrop) backdrop.style.display='none';
+    document.body.style.overflow='';
+  }
+  // topbar open button
+  var openBtn = document.getElementById('mob-open-btn');
+  if(openBtn) openBtn.onclick = openDrawer;
+  // close btn inside drawer
+  var closeBtn = document.getElementById('mob-close-btn');
+  if(closeBtn) closeBtn.onclick = closeDrawer;
+  // backdrop tap closes drawer
+  if(backdrop) backdrop.onclick = closeDrawer;
+  // clicking a chapter inside drawer closes drawer (after a tiny delay)
+  if(sb){
+    sb.querySelectorAll('.sb-ch-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        setTimeout(closeDrawer, 220);
+      });
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded',function(){
+  initChips();
+  initMobileMenu();
+});
+})();
+</script>
+
+
+<script id="mobile-nav-js">
+(function(){
+  function initMob(){
+    var sb = document.getElementById('ddcet-sb');
+    var backdrop = document.getElementById('mob-backdrop');
+    var openBtn = document.getElementById('mob-open-btn');
+    var closeBtn = document.getElementById('mob-close-btn');
+    if(!sb) return;
+
+    function open_(){
+      sb.classList.add('mob-open');
+      if(backdrop){ backdrop.classList.remove('hidden'); }
+      document.body.style.overflow='hidden';
+    }
+    function close_(){
+      sb.classList.remove('mob-open');
+      if(backdrop){ backdrop.classList.add('hidden'); }
+      document.body.style.overflow='';
+    }
+
+    if(openBtn){
+      openBtn.addEventListener('click', function(e){ e.stopPropagation(); open_(); });
+      openBtn.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); open_(); });
+    }
+    if(closeBtn){
+      closeBtn.addEventListener('click', function(e){ e.stopPropagation(); close_(); });
+      closeBtn.addEventListener('touchend', function(e){ e.preventDefault(); close_(); });
+    }
+    if(backdrop){
+      backdrop.classList.add('hidden');
+      backdrop.addEventListener('click', close_);
+      backdrop.addEventListener('touchend', function(e){ e.preventDefault(); close_(); });
+    }
+
+    // close drawer when a chapter button is tapped
+    sb.querySelectorAll('.sb-ch-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ setTimeout(close_, 200); });
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initMob);
+  } else {
+    initMob();
+  }
+})();
+</script>
+
+</body>
+</html>

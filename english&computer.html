@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DDCET 2026 — English & Computer Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--border:#30363d;
+  --text:#e6edf3;--text2:#8b949e;--accent:#f0a500;--accent2:#58a6ff;
+  --green:#3fb950;--red:#f85149;--purple:#bc8cff;
+  --eng1:#f0a500;--eng2:#58a6ff;--eng3:#3fb950;--eng4:#bc8cff;--eng5:#f85149;
+  --comp:#39c5f5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.8;}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1rem;display:flex;align-items:center;overflow-x:auto;}
+.topbar-title{font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--accent);white-space:nowrap;margin-right:1.5rem;padding:1rem 0;}
+.nav-tab{padding:0.9rem 1.1rem;cursor:pointer;font-family:'Source Serif 4',serif;font-size:0.8rem;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.2s;color:var(--text2);background:none;border-top:none;border-left:none;border-right:none;}
+.nav-tab:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+.nav-tab.active{color:var(--text);}
+.nav-tab[data-ch="e1"].active{border-bottom-color:var(--eng1);}
+.nav-tab[data-ch="e2"].active{border-bottom-color:var(--eng2);}
+.nav-tab[data-ch="e3"].active{border-bottom-color:var(--eng3);}
+.nav-tab[data-ch="e4"].active{border-bottom-color:var(--eng4);}
+.nav-tab[data-ch="e5"].active{border-bottom-color:var(--eng5);}
+.nav-tab[data-ch="cp"].active{border-bottom-color:var(--comp);}
+.chapter-page{display:none;}
+.chapter-page.active{display:block;}
+.ch-hero{padding:2.5rem 2rem 1.5rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--ch-color,var(--accent));text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;}
+.ch-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.2;margin-bottom:0.5rem;}
+.ch-hero p{color:var(--text2);max-width:700px;font-size:0.92rem;}
+.ch-topics-list{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.ch-topic-pill{padding:0.25rem 0.7rem;border-radius:20px;font-size:0.75rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);color:var(--text2);background:var(--bg2);}
+.ch-content{max-width:1100px;margin:0 auto;padding:2rem;}
+.section{margin-bottom:3rem;scroll-margin-top:70px;}
+.section-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:0.2rem 0.5rem;border-radius:4px;border:1px solid;}
+.section h2{font-family:'Playfair Display',serif;font-size:1.4rem;}
+.subsection{margin-bottom:1.75rem;}
+.subsection h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.7rem;padding-left:0.75rem;border-left:3px solid;}
+p{margin-bottom:0.85rem;color:var(--text);}
+.formula{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:0.9rem 1.3rem;margin:0.9rem 0;font-family:'JetBrains Mono',monospace;font-size:0.88rem;position:relative;}
+.formula::before{content:'★ KEY';position:absolute;top:-0.55rem;left:1rem;font-size:0.62rem;letter-spacing:0.1em;background:var(--bg2);padding:0 0.35rem;color:var(--accent);}
+.formula .eq{font-size:0.98rem;color:var(--accent);margin:0.25rem 0;}
+.formula .desc{color:var(--text2);font-size:0.8rem;margin-top:0.35rem;}
+.example{background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:1.1rem 1.4rem;margin:1.1rem 0;}
+.example-head{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;}
+.example-sol{background:var(--bg3);border-radius:6px;padding:0.7rem 0.9rem;margin-top:0.65rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--green);line-height:1.7;}
+.keypoint{background:rgba(63,185,80,0.06);border:1px solid rgba(63,185,80,0.25);border-radius:8px;padding:0.85rem 1.1rem;margin:0.7rem 0;color:var(--text);}
+.keypoint::before{content:'★ ';color:var(--green);}
+.note{background:rgba(248,81,73,0.07);border:1px solid rgba(248,81,73,0.25);border-radius:8px;padding:0.85rem 1.1rem;margin:0.7rem 0;}
+.note::before{content:'⚠ ';color:var(--red);}
+.def{background:var(--bg2);border-radius:8px;padding:0.9rem 1.1rem;margin:0.7rem 0;border-left:3px solid var(--purple);}
+.def strong{color:var(--purple);}
+.tbl-wrap{overflow-x:auto;margin:0.9rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.86rem;}
+th{background:var(--bg3);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;padding:0.65rem 0.9rem;border:1px solid var(--border);text-align:left;}
+td{padding:0.6rem 0.9rem;border:1px solid var(--border);color:var(--text);vertical-align:top;}
+tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+tr:hover td{background:rgba(240,165,0,0.04);}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;margin:0.9rem 0;}
+@media(max-width:600px){.compare-grid{grid-template-columns:1fr;}}
+.compare-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:0.9rem;}
+.compare-card h4{font-family:'JetBrains Mono',monospace;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.65rem;color:var(--accent2);}
+.compare-card ul{list-style:none;padding:0;}
+.compare-card li{padding:0.28rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.88rem;}
+.compare-card li:last-child{border-bottom:none;}
+.steps{counter-reset:step;padding-left:0;list-style:none;}
+.steps li{counter-increment:step;padding:0.5rem 0 0.5rem 2.8rem;position:relative;border-left:1px dashed var(--border);margin-left:1rem;}
+.steps li::before{content:counter(step);position:absolute;left:-1rem;top:0.45rem;width:1.8rem;height:1.8rem;background:var(--bg3);border:1px solid var(--border);border-radius:50%;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent);text-align:center;line-height:1.8rem;}
+.accordion{margin:0.9rem 0;}
+.acc-head{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:0.8rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;transition:background 0.2s;font-size:0.92rem;}
+.acc-head:hover{background:var(--bg3);}
+.acc-head::after{content:'▸';color:var(--text2);transition:transform 0.2s;}
+.acc-head.open::after{transform:rotate(90deg);}
+.acc-body{display:none;background:var(--bg);border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;padding:0.9rem 1.3rem;margin-bottom:6px;font-size:0.9rem;}
+.acc-body.open{display:block;}
+.remember{background:linear-gradient(135deg,rgba(240,165,0,0.08),rgba(88,166,255,0.08));border:1px solid rgba(240,165,0,0.3);border-radius:10px;padding:1.1rem 1.4rem;margin:1.4rem 0;}
+.remember-head{font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--accent);margin-bottom:0.65rem;}
+.remember ul{padding-left:1.4rem;}
+.remember li{margin-bottom:0.38rem;}
+.back-top{position:fixed;bottom:2rem;right:2rem;background:var(--accent);color:#000;border:none;border-radius:50%;width:42px;height:42px;font-size:1.1rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:200;box-shadow:0 4px 20px rgba(240,165,0,0.3);}
+.back-top.visible{display:flex;}
+.progress-band{height:3px;background:var(--bg3);position:fixed;top:60px;left:0;right:0;z-index:99;}
+.progress-fill{height:100%;background:var(--accent);width:0;transition:width 0.1s;}
+.hi-y{background:rgba(240,165,0,0.15);color:var(--accent);padding:0.1em 0.3em;border-radius:3px;}
+.hi-b{background:rgba(88,166,255,0.15);color:var(--accent2);padding:0.1em 0.3em;border-radius:3px;}
+.hi-g{background:rgba(63,185,80,0.15);color:var(--green);padding:0.1em 0.3em;border-radius:3px;}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg3);color:var(--purple);padding:0.1em 0.4em;border-radius:3px;font-size:0.86em;}
+ul.bullet-list{padding-left:1.5rem;margin-bottom:0.9rem;}
+ul.bullet-list li{margin-bottom:0.4rem;}
+.spelling-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.6rem;margin:0.9rem 0;}
+.spell-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:0.6rem 0.9rem;font-family:'JetBrains Mono',monospace;font-size:0.82rem;}
+.spell-card .wrong{color:var(--red);text-decoration:line-through;}
+.spell-card .right{color:var(--green);}
+.shortcut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.5rem;margin:0.7rem 0;}
+.sc-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:0.5rem 0.8rem;display:flex;justify-content:space-between;align-items:center;font-size:0.84rem;}
+.sc-key{font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:0.15rem 0.5rem;border-radius:4px;border:1px solid var(--border);color:var(--accent);font-size:0.78rem;white-space:nowrap;}
+/* Chapter colour overrides */
+#ech1 .section-num{color:var(--eng1);background:rgba(240,165,0,0.1);border-color:rgba(240,165,0,0.3);}
+#ech1 .subsection h3{color:var(--eng1);border-color:var(--eng1);}
+#ech2 .section-num{color:var(--eng2);background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.3);}
+#ech2 .subsection h3{color:var(--eng2);border-color:var(--eng2);}
+#ech2 .formula{border-left-color:var(--eng2);}#ech2 .formula .eq{color:var(--eng2);}
+#ech3 .section-num{color:var(--eng3);background:rgba(63,185,80,0.1);border-color:rgba(63,185,80,0.3);}
+#ech3 .subsection h3{color:var(--eng3);border-color:var(--eng3);}
+#ech3 .formula{border-left-color:var(--eng3);}#ech3 .formula .eq{color:var(--eng3);}
+#ech4 .section-num{color:var(--eng4);background:rgba(188,140,255,0.1);border-color:rgba(188,140,255,0.3);}
+#ech4 .subsection h3{color:var(--eng4);border-color:var(--eng4);}
+#ech4 .formula{border-left-color:var(--eng4);}#ech4 .formula .eq{color:var(--eng4);}
+#ech5 .section-num{color:var(--eng5);background:rgba(248,81,73,0.1);border-color:rgba(248,81,73,0.3);}
+#ech5 .subsection h3{color:var(--eng5);border-color:var(--eng5);}
+#cp .section-num{color:var(--comp);background:rgba(57,197,245,0.1);border-color:rgba(57,197,245,0.3);}
+#cp .subsection h3{color:var(--comp);border-color:var(--comp);}
+#cp .formula{border-left-color:var(--comp);}#cp .formula .eq{color:var(--comp);}
+</style>
+
+<style id="gujlish-style">
+.gjl{
+  display:block;
+  margin-top:7px;
+  padding:4px 10px;
+  background:rgba(139,92,246,0.10);
+  border-left:3px solid #7c3aed;
+  border-radius:0 6px 6px 0;
+  font-size:12.5px;
+  color:#c4b5fd;
+  font-style:italic;
+  line-height:1.5;
+}
+.gjl::before{content:'🗣 '; font-style:normal;}
+</style>
+
+<style id="ddcet-sb-style">
+:root{--sw:248px}
+*{box-sizing:border-box}
+body{display:flex;min-height:100vh;background:#0f172a;color:#e2e8f0}
+.ddcet-sb{
+  width:var(--sw);min-width:var(--sw);background:#080f1e;
+  border-right:1px solid #1e2a3a;
+  position:fixed;top:0;left:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;z-index:200;
+  scrollbar-width:thin;scrollbar-color:#1e2a3a transparent;
+}
+.ddcet-sb::-webkit-scrollbar{width:3px}
+.ddcet-sb::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:2px}
+.ddcet-main{margin-left:var(--sw);flex:1;min-width:0;overflow-x:hidden}
+.sb-back-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 16px 10px;
+  color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;
+  border-bottom:1px solid #1e2a3a;
+  transition:color .15s;letter-spacing:.03em;
+}
+.sb-back-btn:hover{color:#e2e8f0}
+.sb-head{padding:16px 16px 8px}
+.sb-subject{font-size:1.1rem;font-weight:800;color:#f1f5f9;margin-bottom:2px}
+.sb-subject-sub{font-size:11px;color:#64748b;font-weight:500}
+.sb-label{padding:10px 16px 4px;font-size:10px;color:#475569;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.sb-ch-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;margin:2px 8px;
+  border-radius:10px;cursor:pointer;
+  transition:all .15s;
+}
+.sb-ch-btn:hover{background:rgba(79,70,229,.12)}
+.sb-ch-btn.active{background:rgba(79,70,229,.18);border-left:3px solid #6366f1;padding-left:11px}
+.sb-ch-num{
+  min-width:26px;height:26px;border-radius:6px;
+  background:#1e293b;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#94a3b8;
+}
+.sb-ch-btn.active .sb-ch-num{background:#4f46e5;color:#fff}
+.sb-ch-info{flex:1;min-width:0}
+.sb-ch-name{font-size:12.5px;font-weight:600;color:#cbd5e1;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-ch-btn.active .sb-ch-name{color:#a5b4fc}
+.sb-ch-wt{font-size:10px;color:#475569;margin-top:1px}
+.sb-chips-wrap{padding:4px 12px 10px;display:none}
+.sb-chips-wrap.open{display:flex;flex-wrap:wrap;gap:5px}
+/* chips */
+.chip{padding:5px 11px;border-radius:16px;font-size:11.5px;font-weight:500;
+  background:#1e293b;border:1px solid #334155;color:#94a3b8;
+  cursor:pointer;transition:all .18s;user-select:none;display:inline-flex;align-items:center;gap:4px}
+.chip:hover{background:rgba(79,70,229,.12);border-color:rgba(99,102,241,.5);color:#a5b4fc}
+.chip[data-target]::after{content:'↗';font-size:9px;opacity:.35}
+.chip.chip-active{background:rgba(79,70,229,.25)!important;border-color:#818cf8!important;color:#a5b4fc!important;box-shadow:0 0 0 2px rgba(79,70,229,.15)}
+.chip.chip-active::after{content:'●';color:#818cf8;opacity:1}
+.chip.chip-done{background:rgba(16,185,129,.18)!important;border-color:#10b981!important;color:#6ee7b7!important}
+.chip.chip-done::after{content:'✓';color:#10b981;font-weight:700;opacity:1}
+.sb-foot{margin-top:auto;padding:14px 16px;border-top:1px solid #1e2a3a;font-size:11px;color:#475569}
+.sb-foot strong{color:#818cf8}
+/* hide original nav elements replaced by sidebar */
+.orig-nav-hide{display:none!important}
+/* responsive */
+@media(max-width:768px){
+  /* sidebar becomes full-screen drawer */
+  .ddcet-sb{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    width:100%!important;height:100vh;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    z-index:500;overflow-y:auto;
+    padding-bottom:60px;
+  }
+  .ddcet-sb.mob-open{transform:translateX(0)!important}
+  .ddcet-main{margin-left:0!important;padding-top:54px}
+  /* hide desktop back btn in sidebar, show mob topbar */
+  .sb-back-btn{display:none!important}
+  .mob-topbar{display:flex!important}
+  /* drawer close button */
+  .mob-close-btn{display:flex!important}
+  /* backdrop */
+  .mob-backdrop{display:block!important}
+}
+/* ── Sticky top bar (mobile only) ── */
+.mob-topbar{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:400;
+  height:52px;
+  background:#080f1e;
+  border-bottom:1px solid #1e2a3a;
+  align-items:center;
+  padding:0 12px;
+  gap:10px;
+}
+.mob-topbar-back{
+  background:none;border:none;color:#94a3b8;
+  font-size:14px;font-weight:600;cursor:pointer;
+  padding:8px 10px 8px 4px;
+  white-space:nowrap;
+}
+.mob-topbar-back:active{color:#e2e8f0}
+.mob-topbar-title{
+  flex:1;font-size:13px;font-weight:700;color:#e2e8f0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.mob-topbar-chapters{
+  background:#1e293b;border:1px solid #334155;color:#a5b4fc;
+  font-size:12px;font-weight:700;cursor:pointer;
+  padding:7px 14px;border-radius:8px;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.mob-topbar-chapters:active{background:#334155}
+/* ── Drawer close button ── */
+.mob-close-btn{
+  display:none;
+  width:100%;padding:14px 16px;
+  background:#0d1526;border:none;border-bottom:1px solid #1e2a3a;
+  color:#94a3b8;font-size:14px;font-weight:700;cursor:pointer;
+  text-align:left;align-items:center;gap:8px;
+}
+.mob-close-btn:active{background:#1e293b}
+/* ── Backdrop ── */
+.mob-backdrop{
+  display:none;
+  position:fixed;inset:0;z-index:499;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(2px);
+}
+/* ── MOBILE OVERRIDES ── */
+@media(max-width:768px){
+  :root{--sw:0px}
+  .ddcet-sb{
+    position:fixed!important;
+    top:0!important;left:0!important;
+    width:85vw!important;max-width:320px;
+    height:100vh!important;
+    transform:translateX(-100%)!important;
+    transition:transform .28s ease!important;
+    z-index:600!important;
+    overflow-y:auto!important;
+    padding-bottom:80px!important;
+  }
+  .ddcet-sb.mob-open{transform:translateX(0)!important}
+  .ddcet-main{margin-left:0!important;padding-top:0!important}
+  .sb-back-btn{display:none!important}
+  .mob-topbar{display:flex!important}
+  .mob-close-btn{display:flex!important}
+  .mob-backdrop{display:block!important;opacity:1!important}
+  .mob-backdrop.hidden{display:none!important}
+  /* body padding from back-to-hub bar */
+  body{padding-top:46px!important}
+  /* make chips wrap nicely */
+  .sb-chips-wrap.open{display:flex!important}
+  /* full width content */
+  .ch-page,.chapter-page,.chapter-content{width:100%!important;padding:12px!important}
+  /* fix overflow */
+  html,body{overflow-x:hidden!important}
+}
+@media(min-width:769px){
+  .mob-topbar{display:none!important}
+  .mob-backdrop{display:none!important}
+  .mob-close-btn{display:none!important}
+}
+
+/* section highlight flash */
+.sec-flash{animation:flash-sec .7s ease}
+@keyframes flash-sec{0%,100%{background:transparent}50%{background:rgba(79,70,229,.15)}}
+</style>
+
+<style id="diagram-css">
+/* Gujlish tip box */
+.g-tip{display:flex;gap:10px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:#c4b5fd;line-height:1.5}
+.g-tip-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.g-tip-text{flex:1}
+/* viz boxes */
+.viz-box{background:#0d1829;border:1px solid #1e3a5f;border-radius:14px;padding:18px 20px;margin:16px 0;overflow:hidden}
+.viz-title{font-size:13px;font-weight:700;color:#93c5fd;margin-bottom:14px;letter-spacing:.02em}
+/* pH scale */
+.ph-bar{display:flex;border-radius:8px;overflow:hidden;height:68px;margin-bottom:6px}
+.ph-seg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:6px 3px;font-size:11px;font-weight:800;color:#fff;text-align:center;line-height:1.2}
+.ph-lbl{font-size:9px;font-weight:400;margin-top:3px;opacity:.9}
+.ph-arrows{display:flex;justify-content:space-between;font-size:11px;font-weight:600;padding:2px 4px}
+/* reactivity ladder */
+.react-ladder{display:flex;flex-direction:column;gap:3px;max-width:400px}
+.rl-item{display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:6px;font-size:12.5px}
+.rl-sym{font-weight:800;min-width:32px;font-family:'Fira Code',monospace;font-size:14px}
+.rl-name{flex:1;color:#e2e8f0}
+.rl-note{font-size:10px;color:#94a3b8;font-style:italic}
+.rl-top{background:rgba(229,62,62,.15);border-left:3px solid #e53e3e;}.rl-top .rl-sym{color:#fc8181}
+.rl-high{background:rgba(237,137,54,.12);border-left:3px solid #ed8936;}.rl-high .rl-sym{color:#fbd38d}
+.rl-mid{background:rgba(68,211,161,.1);border-left:3px solid #48bb78;}.rl-mid .rl-sym{color:#9ae6b4}
+.rl-h2{background:rgba(99,102,241,.15);border-left:3px solid #6366f1;}.rl-h2 .rl-sym{color:#a5b4fc}
+.rl-low{background:rgba(59,130,246,.1);border-left:3px solid #3b82f6;}.rl-low .rl-sym{color:#93c5fd}
+.rl-bot{background:rgba(245,158,11,.1);border-left:3px solid #f59e0b;}.rl-bot .rl-sym{color:#fcd34d}
+/* food chain */
+.food-chain{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.fc-box{padding:10px 14px;border-radius:10px;font-size:12.5px;font-weight:700;text-align:center;min-width:100px}
+.fc-sub{font-size:10px;font-weight:400;margin-top:4px;line-height:1.3}
+.fc-arrow{font-size:16px;color:#64748b;font-weight:700}
+.fc-prod{background:rgba(16,185,129,.12);border:1px solid #10b981;color:#6ee7b7}
+.fc-herb{background:rgba(251,191,36,.1);border:1px solid #f59e0b;color:#fcd34d}
+.fc-carn{background:rgba(239,68,68,.1);border:1px solid #ef4444;color:#fca5a5}
+.fc-top{background:rgba(139,92,246,.12);border:1px solid #8b5cf6;color:#c4b5fd}
+.fc-decomp{background:rgba(107,114,128,.1);border:1px solid #374151;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#9ca3af;margin-top:6px}
+/* temperature scales */
+.temp-compare{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.tc-col{display:flex;flex-direction:column;gap:6px;min-width:100px}
+.tc-head{font-weight:800;font-size:13px;text-align:center;padding:5px;border-radius:6px}
+.tc-c{background:rgba(239,68,68,.15);color:#fca5a5}
+.tc-k{background:rgba(59,130,246,.15);color:#93c5fd}
+.tc-val{padding:7px 10px;border-radius:6px;font-size:12px;font-weight:600;text-align:center;background:rgba(255,255,255,.04)}
+.tc-label{font-size:9.5px;font-weight:400;color:#94a3b8;margin-top:2px}
+.tc-hot{border:1px solid #ef4444;color:#fca5a5}
+.tc-cold{border:1px solid #60a5fa;color:#93c5fd}
+.tc-abs{border:1px solid #475569;color:#64748b}
+.tc-formula{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:10px}
+.tc-eq{font-size:12px;color:#e2e8f0;font-family:'Fira Code',monospace}
+.tc-bar{flex:1;min-height:20px;background:linear-gradient(to bottom,#ef4444,#60a5fa);border-radius:4px;margin:4px auto;width:6px}
+/* Newton's laws */
+.newton-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:600px){.newton-grid{grid-template-columns:1fr;}.food-chain{flex-direction:column;}.temp-compare{flex-direction:column}}
+.nl-card{border-radius:12px;padding:14px;border:1px solid #1e2a3a}
+.nl-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.nl-name{font-size:14px;font-weight:800;margin-bottom:8px}
+.nl-desc{font-size:12px;line-height:1.5;color:#cbd5e1;margin-bottom:8px}
+.nl-ex{font-size:11.5px;color:#94a3b8;font-style:italic}
+.nl-1{background:rgba(239,68,68,.06);border-color:#b91c1c;}.nl-1 .nl-num{color:#f87171;}.nl-1 .nl-name{color:#fca5a5}
+.nl-2{background:rgba(251,146,60,.06);border-color:#c2410c;}.nl-2 .nl-num{color:#fb923c;}.nl-2 .nl-name{color:#fed7aa}
+.nl-3{background:rgba(52,211,153,.06);border-color:#065f46;}.nl-3 .nl-num{color:#34d399;}.nl-3 .nl-name{color:#a7f3d0}
+</style>
+</head>
+<body>
+<style id="back-btn-style">
+#back-to-hub{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:#080f1e;border-bottom:1px solid #1e2a3a;
+  padding:10px 16px;
+  display:flex;align-items:center;gap:12px;
+  font-family:'Segoe UI',system-ui,sans-serif;
+}
+#back-to-hub a{
+  color:#94a3b8;text-decoration:none;font-size:13px;font-weight:700;
+  padding:6px 14px;border-radius:8px;border:1px solid #334155;
+  background:#0f172a;display:inline-flex;align-items:center;gap:6px;
+  transition:all .2s;
+}
+#back-to-hub a:hover{color:#e2e8f0;border-color:#475569;background:#1e293b}
+#back-to-hub .hub-label{
+  font-size:12px;color:#475569;font-weight:600;
+}
+/* push content down so back bar doesn't cover it */
+body{padding-top:46px!important}
+/* on desktop with sidebar, move back bar to not overlap sidebar */
+@media(min-width:769px){
+  #back-to-hub{left:var(--sw,248px)}
+  body{padding-top:46px!important}
+}
+</style>
+<div id="back-to-hub">
+  <a href="index.html">← All Subjects</a>
+  <span class="hub-label">DDCET 2026</span>
+</div>
+
+<div class="mob-topbar" id="mob-topbar">
+  <button class="mob-topbar-back" href="index.html">⬅</button>
+  <div class="mob-topbar-title">📝 Eng & Comp</div>
+  <button class="mob-topbar-chapters" id="mob-open-btn">☰ Chapters</button>
+</div>
+<div class="mob-backdrop" id="mob-backdrop"></div>
+<div class="ddcet-sb" id="ddcet-sb">
+  <button class="mob-close-btn" id="mob-close-btn">✕ &nbsp; Close Menu</button>
+  <a class="sb-back-btn" href="index.html">← All Subjects</a>
+  <div class="sb-head">
+    <div class="sb-subject">📝 English & Computers</div>
+    <div class="sb-subject-sub">6 Sections · DDCET 2026</div>
+  </div>
+  <div class="sb-label">Sections</div>
+  <div class="sb-ch-btn active" id="sbch-e1" onclick="engSwitch('ech1','e1','sbch-e1','sbchips-e1')">
+    <div class="sb-ch-num">E1</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Comprehension</div><div class="sb-ch-wt">10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap open" id="sbchips-e1">
+    <span class="chip" data-target="eng-e1s1">Reading Strategy</span>
+    <span class="chip" data-target="eng-e1s1">Question Types</span>
+    <span class="chip" data-target="eng-e1s2">Main Idea</span>
+    <span class="chip" data-target="eng-e1s2">Inference</span>
+    <span class="chip" data-target="eng-e1s3">Vocabulary in Context</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch-e2" onclick="engSwitch('ech2','e2','sbch-e2','sbchips-e2')">
+    <div class="sb-ch-num">E2</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Communication</div><div class="sb-ch-wt">10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips-e2">
+    <span class="chip" data-target="eng-e2s1">Communication Process</span>
+    <span class="chip" data-target="eng-e2s1">Verbal Communication</span>
+    <span class="chip" data-target="eng-e2s2">Non-Verbal</span>
+    <span class="chip" data-target="eng-e2s3">Barriers</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch-e3" onclick="engSwitch('ech3','e3','sbch-e3','sbchips-e3')">
+    <div class="sb-ch-num">E3</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Writing Techniques</div><div class="sb-ch-wt">10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips-e3">
+    <span class="chip" data-target="eng-e3s1">Letter Writing</span>
+    <span class="chip" data-target="eng-e3s1">Email Format</span>
+    <span class="chip" data-target="eng-e3s2">Inquiry Letter</span>
+    <span class="chip" data-target="eng-e3s3">Complaint Letter</span>
+    <span class="chip" data-target="eng-e3s4">Notice Writing</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch-e4" onclick="engSwitch('ech4','e4','sbch-e4','sbchips-e4')">
+    <div class="sb-ch-num">E4</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Grammar</div><div class="sb-ch-wt">10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips-e4">
+    <span class="chip" data-target="eng-e4s1">Parts of Speech</span>
+    <span class="chip" data-target="eng-e4s1">Tenses</span>
+    <span class="chip" data-target="eng-e4s2">Active / Passive</span>
+    <span class="chip" data-target="eng-e4s3">Direct / Indirect</span>
+    <span class="chip" data-target="eng-e4s4">Subject-Verb Agreement</span>
+    <span class="chip" data-target="eng-e4s5">Articles</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch-e5" onclick="engSwitch('ech5','e5','sbch-e5','sbchips-e5')">
+    <div class="sb-ch-num">E5</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Word & Sentence</div><div class="sb-ch-wt">10% weightage</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips-e5">
+    <span class="chip" data-target="eng-e5s1">Word Correction</span>
+    <span class="chip" data-target="eng-e5s1">Sentence Correction</span>
+    <span class="chip" data-target="eng-e5s2">One-Word Substitution</span>
+    <span class="chip" data-target="eng-e5s3">Synonyms / Antonyms</span>
+  </div>
+  <div class="sb-ch-btn" id="sbch-cp" onclick="engSwitch('cp','cp','sbch-cp','sbchips-cp')">
+    <div class="sb-ch-num">CP</div>
+    <div class="sb-ch-info"><div class="sb-ch-name">Computer Practice</div><div class="sb-ch-wt">Important</div></div>
+  </div>
+  <div class="sb-chips-wrap" id="sbchips-cp">
+    <span class="chip" data-target="eng-cp1">Computer Basics</span>
+    <span class="chip" data-target="eng-cp1">Hardware / Software</span>
+    <span class="chip" data-target="eng-cp2">Input / Output</span>
+    <span class="chip" data-target="eng-cp3">Networks & Internet</span>
+    <span class="chip" data-target="eng-cp4">MS Office</span>
+  </div>
+  <div class="sb-foot"><strong>Eng+Comp</strong> = 60% of English paper</div>
+</div>
+
+
+<div class="ddcet-main">
+
+<div class="progress-band"><div class="progress-fill" id="prog"></div></div>
+
+<nav class="topbar">
+  <div class="topbar-title">📚 DDCET 2026 — English &amp; Computer</div>
+  <button class="nav-tab active" data-ch="e1" onclick="showCh('ech1','e1')">E1 · Comprehension</button>
+  <button class="nav-tab" data-ch="e2" onclick="showCh('ech2','e2')">E2 · Communication</button>
+  <button class="nav-tab" data-ch="e3" onclick="showCh('ech3','e3')">E3 · Writing Techniques</button>
+  <button class="nav-tab" data-ch="e4" onclick="showCh('ech4','e4')">E4 · Grammar</button>
+  <button class="nav-tab" data-ch="e5" onclick="showCh('ech5','e5')">E5 · Word &amp; Sentence Correction</button>
+  <button class="nav-tab" data-ch="cp" onclick="showCh('cp','cp')">CP · Computer Practice</button>
+</nav>
+
+<!-- ============================================================
+     E1 — COMPREHENSION OF UNSEEN PASSAGE
+============================================================ -->
+<div class="chapter-page active" id="ech1">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">E1 = Comprehension — Unseen passage ma answer PASSAGE MA THI j aavse, apni knowledge thi nahi! Reading strategy: first skim karo → questions vaacho → phir detail ma vaacho. Time management important chhe — 10-12 mins max.</div></div>
+<div class="ch-hero" style="--ch-color:var(--eng1)">
+  <div class="ch-badge">English · Chapter 01 · 10%</div>
+  <h1>Comprehension of Unseen Passage</h1>
+  <p>An unseen passage is given followed by 5 questions. You must read carefully and answer from the passage only.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Reading Strategy</span>
+    <span class="ch-topic-pill">Types of Questions</span>
+    <span class="ch-topic-pill">Finding Main Idea</span>
+    <span class="ch-topic-pill">Inference Questions</span>
+    <span class="ch-topic-pill">Vocabulary in Context</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<div class="section">
+  <div class="section-header"><span class="section-num">1.1</span><h2>What is an Unseen Passage?</h2></div>
+  <div class="def"><strong>Unseen Passage:</strong> A reading passage that you have NOT studied before the exam. You read it during the exam and answer questions based only on what the passage says.<span class="gjl">Unseen passage ma answer PASSAGE MA THI j aape — apni general knowledge thi nahi. Passage dhyan thi vaacho!</span> Your own general knowledge is secondary — the answer must be from the passage.</div>
+  <p>In DDCET, you get <span class="hi-y">1 passage followed by 5 MCQ questions</span>. The passage is usually 150–300 words about a general topic (nature, science, communication, society, etc.).</p>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">1.2</span><h2>Step-by-Step Reading Strategy</h2></div>
+  <ol class="steps">
+    <li><strong>Read the questions first (30 seconds)</strong> — Before reading the passage, skim the 5 questions. This tells you what to look for.</li>
+    <li><strong>Read the passage once fully</strong> — Don't stop at difficult words. Get the overall meaning and topic.</li>
+    <li><strong>Read again and underline key information</strong> — Focus on names, dates, causes, effects, and definitions.</li>
+    <li><strong>Answer each question</strong> — Go back to the passage to find the answer. Do NOT answer from memory or general knowledge.</li>
+    <li><strong>Check your answers</strong> — Verify each answer against the passage text.</li>
+  </ol>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">1.3</span><h2>Types of Questions and How to Answer</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Question Type</th><th>How to Identify</th><th>Strategy</th></tr>
+    <tr><td>Factual / Direct</td><td>"According to the passage…", "What does the passage say about…"</td><td>Find the exact sentence in the passage with the answer. The answer is directly stated.</td></tr>
+    <tr><td>Main Idea / Title</td><td>"What is the best title for this passage?", "The passage is mainly about…"</td><td>The main idea covers the WHOLE passage, not just one part. Ask: what is the author's central point?</td></tr>
+    <tr><td>Inference / Implied</td><td>"We can conclude that…", "It can be inferred that…", "The author suggests…"</td><td>The answer is not directly stated but implied. Use clues from the text to reason.</td></tr>
+    <tr><td>Vocabulary in Context</td><td>"The word '___' in the passage means…"</td><td>Read the sentence around the word. Choose the meaning that fits best in that context.</td></tr>
+    <tr><td>True / False / Not Given</td><td>"Which of the following is true/false according to the passage?"</td><td>Check each option against the passage carefully. "Not Given" means the passage doesn't mention it.</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">1.4</span><h2>Tips for Scoring Full Marks</h2></div>
+  <ul class="bullet-list">
+    <li><strong>Never guess without reading</strong> — All answers are in the passage.</li>
+    <li><strong>Beware of "close but wrong" options</strong> — Examiners include options that sound correct but have one wrong word.</li>
+    <li><strong>For vocabulary questions</strong> — The correct answer is a synonym that makes sense in that exact sentence.</li>
+    <li><strong>For main idea questions</strong> — Avoid options that are too specific (only one paragraph) or too broad (beyond the passage).</li>
+    <li><strong>Stay focused on the passage</strong> — Even if you know more about the topic, only what the passage says counts.</li>
+    <li><strong>Avoid extreme options</strong> — Options with words like "always", "never", "all", "none" are usually wrong unless the passage clearly states so.</li>
+  </ul>
+  <div class="keypoint">Practice Tip: Read one newspaper article or short story every day. This trains your brain to quickly understand passages and find key information.</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">1.5</span><h2>Sample Passage + Questions</h2></div>
+  <div class="example">
+    <div class="example-head">Sample Passage</div>
+    <p style="font-style:italic;color:var(--text2)">"Communication is a fundamental human need. It allows people to share thoughts, express feelings, and coordinate actions. Humans communicate not only through words but also through gestures, facial expressions, and body language. Even silence can be a form of communication. When we listen carefully to another person, we show respect and build stronger relationships. Good communication skills are essential for success in both personal and professional life."</p>
+    <div class="example-sol">
+Q1. What is the passage mainly about?<br>
+→ (A) The importance of communication — ✓ CORRECT (covers whole passage)<br><br>
+Q2. According to the passage, how do humans communicate?<br>
+→ (D) Through words, gestures, facial expressions, body language, and silence — ✓ CORRECT<br><br>
+Q3. The word 'fundamental' in the passage most likely means:<br>
+→ (B) Basic and essential — ✓ CORRECT (context: "fundamental human need")<br><br>
+Q4. Which of the following can be inferred from the passage?<br>
+→ (C) Listening is as important as speaking — ✓ CORRECT (implied by "listen carefully = show respect")<br><br>
+Q5. The passage suggests good communication is important for:<br>
+→ (D) Both personal and professional life — ✓ CORRECT (last sentence)
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     E2 — THEORY OF COMMUNICATION
+============================================================ -->
+<div class="chapter-page" id="ech2">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">E2 = Communication — Sender → Message → Channel → Receiver → Feedback. Verbal (words), Non-verbal (body language, gestures). Barriers: noise, language, cultural differences. Formal vs Informal communication — difference yaad karo!</div></div>
+<div class="ch-hero" style="--ch-color:var(--eng2)">
+  <div class="ch-badge">English · Chapter 02 · 10%</div>
+  <h1>Theory of Communication</h1>
+  <p>Understanding how communication works, its types, and what blocks it. This chapter is directly tested with MCQs and fill-in-the-blanks.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Process of Communication</span>
+    <span class="ch-topic-pill">Verbal Communication</span>
+    <span class="ch-topic-pill">Non-Verbal Communication</span>
+    <span class="ch-topic-pill">Barriers to Communication</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<div class="section">
+  <div class="section-header"><span class="section-num">2.1</span><h2>What is Communication?</h2></div>
+  <div class="def"><strong>Communication:</strong> A branch of knowledge dealing with the principles and methods by which information is conveyed. It is the process of transferring information from the <em>sender</em> to the <em>recipient</em>.</div>
+  <div class="def"><strong>Communication is an integral <span class="hi-b">instinct</span> present in all living beings.</strong> Every organism — humans, animals, plants — communicates in some way.</div>
+
+  <div class="subsection">
+    <h3>Why Do We Communicate?</h3>
+    <ul class="bullet-list">
+      <li>To express our feelings, thoughts, and desires</li>
+      <li>To pass on information to others</li>
+      <li>To share knowledge and ideas</li>
+      <li>Communication is a <span class="hi-y">dreadful need of survival</span> — without it, we cannot express our desires.</li>
+    </ul>
+    <div class="keypoint">If you have no power of communication, you cannot express your desire — this is the most important loss.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Communication in Nature</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Entity</th><th>How they communicate</th></tr>
+      <tr><td>Plants</td><td>Through visible changes in the colour of leaves, and the falling of leaves and flowers</td></tr>
+      <tr><td>Animals</td><td>By sounds and several movements — to indicate they are hungry, unwell, or need medical attention</td></tr>
+      <tr><td>Very young children</td><td>By crying</td></tr>
+      <tr><td>Parents showing anger</td><td>By not speaking for some times (silent treatment)</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">2.2</span><h2 id="eng-e2s1">Process of Communication</h2></div>
+  <!-- SVG diagram of communication process -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.2rem 0;text-align:center;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text2);margin-bottom:1rem;">Communication Process</div>
+    <svg viewBox="0 0 600 80" style="width:100%;max-width:600px" font-family="JetBrains Mono, monospace">
+      <defs>
+        <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#58a6ff"/></marker>
+      </defs>
+      <!-- Boxes -->
+      <rect x="5" y="20" width="80" height="40" rx="6" fill="#1e3355" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="45" y="44" fill="#58a6ff" font-size="11" text-anchor="middle">SENDER</text>
+      <line x1="85" y1="40" x2="115" y2="40" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="115" y="20" width="80" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1.5"/>
+      <text x="155" y="44" fill="#e6edf3" font-size="10" text-anchor="middle">ENCODING</text>
+      <line x1="195" y1="40" x2="225" y2="40" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="225" y="20" width="80" height="40" rx="6" fill="#21262d" stroke="#f0a500" stroke-width="1.5"/>
+      <text x="265" y="44" fill="#f0a500" font-size="11" text-anchor="middle">MESSAGE</text>
+      <line x1="305" y1="40" x2="335" y2="40" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="335" y="20" width="80" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1.5"/>
+      <text x="375" y="44" fill="#e6edf3" font-size="10" text-anchor="middle">DECODING</text>
+      <line x1="415" y1="40" x2="445" y2="40" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="445" y="20" width="100" height="40" rx="6" fill="#1e3355" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="495" y="44" fill="#3fb950" font-size="11" text-anchor="middle">RECIPIENT</text>
+      <!-- Feedback arrow -->
+      <path d="M 545,60 Q 300,80 55,60" fill="none" stroke="#bc8cff" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ar)"/>
+      <text x="300" y="78" fill="#bc8cff" font-size="9" text-anchor="middle">← FEEDBACK</text>
+    </svg>
+  </div>
+
+  <div class="subsection">
+    <h3>Key Elements of Communication</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Element</th><th>Definition</th></tr>
+      <tr><td>Sender</td><td>Person who initiates the message; encodes the idea</td></tr>
+      <tr><td>Message</td><td>The idea, information or emotion being transmitted</td></tr>
+      <tr><td>Channel / Medium</td><td>The method used — spoken word, letter, email, gesture, phone, etc.</td></tr>
+      <tr><td>Recipient / Receiver</td><td>Person who receives and decodes the message</td></tr>
+      <tr><td>Feedback</td><td>The receiver's response to the message — confirms whether communication was successful</td></tr>
+      <tr><td>Noise / Barrier</td><td>Anything that interferes with the message being understood correctly</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">2.3</span><h2>Types of Communication: Verbal vs Non-Verbal</h2></div>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>Verbal Communication</h4>
+      <ul>
+        <li>Uses words — spoken or written</li>
+        <li><strong>Oral:</strong> face-to-face conversation, phone calls, speeches, lectures</li>
+        <li><strong>Written:</strong> letters, emails, reports, text messages</li>
+        <li>Precise and can be documented</li>
+        <li>Example: "Please come at 10 AM"</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h4 id="eng-e2s2">Non-Verbal Communication</h4>
+      <ul>
+        <li>Does NOT use words — uses body language, signals</li>
+        <li><strong>Gesture:</strong> raising eyebrow, waving to a friend, nodding</li>
+        <li><strong>Facial expression:</strong> smile, frown, surprise</li>
+        <li><strong>Body language:</strong> posture, eye contact, distance</li>
+        <li>Often more powerful than words — conveys emotion instantly</li>
+      </ul>
+    </div>
+  </div>
+  <div class="keypoint">A <strong>gesture</strong> like raising an eyebrow or waving to a friend can be used as a means to communicate — this is a key fact in DDCET questions.</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">2.4</span><h2 id="eng-e2s3">Barriers to Communication</h2></div>
+  <div class="def"><strong>Barriers:</strong> Factors that block or interfere with <em>the message that someone is trying to send</em>, preventing effective communication.</div>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Type of Barrier</th><th>Examples &amp; Explanation</th></tr>
+    <tr><td><strong>Physical Barriers</strong></td><td>Distance, noise, poor lighting, faulty equipment</td></tr>
+    <tr><td><strong>Language Barriers</strong></td><td>Using unfamiliar technical terms or over-complicated language that cannot be understood well. Also: difference in dialects of different regions, unfamiliar accents.</td></tr>
+    <tr><td><strong>Physiological Barriers</strong></td><td>If the receiver has hearing problems, or the speaker has speech disabilities, then communication will not be effective.</td></tr>
+    <tr><td><strong>Psychological Barriers</strong></td><td>Stress, emotions, prejudice, lack of interest — distort how message is sent or received</td></tr>
+    <tr><td><strong>Cultural Barriers</strong></td><td>Different customs, values, and assumptions between sender and receiver</td></tr>
+    <tr><td><strong>Semantic Barriers</strong></td><td>Same word meaning different things to different people; jargon; ambiguous language</td></tr>
+  </table>
+  </div>
+
+  <div class="subsection">
+    <h3>Key DDCET Facts on Barriers</h3>
+    <ul class="bullet-list">
+      <li><span class="hi-y">Unfamiliar accents</span> can make it difficult to understand the message sent.</li>
+      <li>The difference in <span class="hi-y">dialects of different regions</span> can also be a barrier.</li>
+      <li>Barriers block or interfere with <strong>the message that someone is trying to send</strong>.</li>
+      <li>If the receiver has hearing problems → communication will <strong>not be effective</strong>.</li>
+      <li>Using unfamiliar terms or over-complicated <strong>technical terms</strong> → message cannot be understood well.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>How to Overcome Barriers</h3>
+    <ul class="bullet-list">
+      <li>Use simple, clear language</li>
+      <li>Give and seek feedback</li>
+      <li>Be a good listener — active listening</li>
+      <li>Choose appropriate channel for the message</li>
+      <li>Be aware of cultural differences</li>
+      <li>Minimize physical distractions and noise</li>
+    </ul>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Chapter 2 — MCQ Answer Key</div>
+  <div class="gjl" style="margin-bottom:8px">MCQ na answers verify karo — same pattern ni questions exam ma aave chhe!</div>
+    <ul>
+      <li>Without communication → cannot express our desire</li>
+      <li>Plants communicate → changes in colour of leaves, falling of leaves and flowers</li>
+      <li>Animals communicate → by sound and several movements (to indicate hungry/unwell)</li>
+      <li>Children communicate anger → by crying | Parents anger → by not speaking</li>
+      <li>Communication is a dreadful need of survival</li>
+      <li>Barriers block → the message that someone is trying to send</li>
+      <li>Hearing problems → communication will not be effective</li>
+      <li>Unfamiliar accents → can make it difficult to understand the message</li>
+      <li>A gesture (raising eyebrow, waving) → means of communication</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     E3 — TECHNIQUES OF WRITING
+============================================================ -->
+<div class="chapter-page" id="ech3">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">E3 = Letter Writing — Formal letter: receiver address, date, subject, body, yours faithfully/sincerely. Email: To, CC, Subject, Salutation, Body, Signature. Complaint letter ane Inquiry letter format alag alag chhe — dono yaad karo!</div></div>
+<div class="ch-hero" style="--ch-color:var(--eng3)">
+  <div class="ch-badge">English · Chapter 03 · 10%</div>
+  <h1>Techniques of Writing</h1>
+  <p>Business letters, email writing, formal formats and abbreviations — the practical tools of professional written communication.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Parts of a Letter</span>
+    <span class="ch-topic-pill">Parts of an Email</span>
+    <span class="ch-topic-pill">Inquiry Letter</span>
+    <span class="ch-topic-pill">Complaint Letter</span>
+    <span class="ch-topic-pill">Order Letter</span>
+    <span class="ch-topic-pill">Common Abbreviations</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<div class="section">
+  <div class="section-header"><span class="section-num">3.1</span><h2>Parts of a Business Letter</h2></div>
+  <p>A formal business letter has <strong>8 standard parts</strong>, written in a specific order.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>#</th><th>Part</th><th>What it Contains</th><th>Example</th></tr>
+    <tr><td>1</td><td>Sender's Address</td><td>Your address (NOT your name)</td><td>12, MG Road, Surat – 395001</td></tr>
+    <tr><td>2</td><td>Date</td><td>Date the letter is written</td><td>13th April 2026 or 13/04/2026</td></tr>
+    <tr><td>3</td><td>Receiver's Address (Inside Address)</td><td>Name and address of the person you're writing to</td><td>The Manager, XYZ Ltd., Ahmedabad</td></tr>
+    <tr><td>4</td><td>Subject</td><td>Brief statement of the letter's purpose (1 line)</td><td>Subject: Inquiry regarding product prices</td></tr>
+    <tr><td>5</td><td>Salutation</td><td>Formal greeting</td><td>Dear Sir/Madam, To Whom It May Concern,</td></tr>
+    <tr><td>6</td><td>Body</td><td>Main content — Opening, Middle (main message), Closing (action required)</td><td>3 short paragraphs</td></tr>
+    <tr><td>7</td><td>Complimentary Close</td><td>Formal goodbye</td><td>Yours faithfully, / Yours sincerely,</td></tr>
+    <tr><td>8</td><td>Signature</td><td>Your name, designation</td><td>Ramesh Patel, Manager</td></tr>
+  </table>
+  </div>
+  <div class="keypoint">Use <strong>Yours faithfully</strong> when salutation is "Dear Sir/Madam" (you don't know the name). Use <strong>Yours sincerely</strong> when salutation uses the person's name (Dear Mr. Patel).</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">3.2</span><h2>Parts of an Email</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Part</th><th>Description</th></tr>
+    <tr><td>To:</td><td>Email address of the primary recipient</td></tr>
+    <tr><td>CC:</td><td>Carbon Copy — others who receive a copy of the email (they can see each other)</td></tr>
+    <tr><td>BCC:</td><td>Blind Carbon Copy — hidden recipients (others cannot see BCC recipients)</td></tr>
+    <tr><td>Subject:</td><td>Brief, clear title of the email's purpose</td></tr>
+    <tr><td>Salutation</td><td>Dear Sir/Madam, Dear [Name],</td></tr>
+    <tr><td>Body</td><td>Opening → Main message → Closing request</td></tr>
+    <tr><td>Closing</td><td>Regards, / Best regards, / Yours sincerely,</td></tr>
+    <tr><td>Signature</td><td>Full name, designation, contact, company name</td></tr>
+    <tr><td>Attachment</td><td>Files attached to the email (indicated with 📎)</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">3.3</span><h2>Types of Business Letters</h2></div>
+
+  <div class="subsection">
+    <h3>1. Inquiry Letter</h3>
+    <div class="def"><strong>Purpose:</strong> To ask for information about products, services, prices, availability, or terms.</div>
+    <div class="keypoint">Key phrases: "We would like to inquire about…", "Please provide us with details regarding…", "Kindly send us your latest catalogue and price list…"</div>
+  </div>
+
+  <div class="subsection">
+    <h3>2. Reply to Inquiry Letter</h3>
+    <div class="def"><strong>Purpose:</strong> To respond to an inquiry with the requested information.</div>
+    <div class="keypoint">Key phrases: "Thank you for your inquiry dated…", "We are pleased to inform you that…", "Please find enclosed our catalogue/price list…"</div>
+  </div>
+
+  <div class="subsection">
+    <h3>3. Order Letter</h3>
+    <div class="def"><strong>Purpose:</strong> To officially place an order for goods or services. Should include quantity, product name, price, delivery terms, and payment method.</div>
+    <div class="keypoint">Key phrases: "Please supply us with the following…", "Please arrange delivery to our address by…", "Payment will be made by DD/NEFT within 30 days."</div>
+  </div>
+
+  <div class="subsection">
+    <h3>4. Complaint Letter</h3>
+    <div class="def"><strong>Purpose:</strong> To formally express dissatisfaction about a product, service, or situation and request a remedy.</div>
+    <div class="keypoint">Key phrases: "We regret to inform you that…", "The goods received were damaged/wrong/incomplete…", "We request you to replace/refund/rectify…", "We expect a prompt response."</div>
+  </div>
+
+  <div class="subsection">
+    <h3>5. Adjustment Letter</h3>
+    <div class="def"><strong>Purpose:</strong> Written in response to a complaint letter. It accepts the complaint and offers a solution (replacement, refund, apology).</div>
+    <div class="keypoint">Key phrases: "We sincerely apologize for the inconvenience caused…", "We are taking immediate steps to rectify…", "A replacement will be dispatched within 3 working days."</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">3.4</span><h2>Common Abbreviations in Business Letters</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Abbreviation</th><th>Full Form</th><th>Use</th></tr>
+    <tr><td>Attn.</td><td>Attention</td><td>Directing letter to a specific person</td></tr>
+    <tr><td>CC / c.c.</td><td>Carbon Copy</td><td>Others who receive a copy</td></tr>
+    <tr><td>BCC</td><td>Blind Carbon Copy</td><td>Hidden copy recipients</td></tr>
+    <tr><td>Enc. / Encl.</td><td>Enclosure</td><td>Documents attached with the letter</td></tr>
+    <tr><td>Ref.</td><td>Reference</td><td>Referring to a previous letter/document</td></tr>
+    <tr><td>Re.</td><td>Regarding</td><td>Subject of the letter</td></tr>
+    <tr><td>P.S.</td><td>Post Script</td><td>Additional note after signature</td></tr>
+    <tr><td>P.T.O.</td><td>Please Turn Over</td><td>Letter continues on next page</td></tr>
+    <tr><td>E.O.D.</td><td>End of Day</td><td>Deadline — by end of working day</td></tr>
+    <tr><td>ASAP</td><td>As Soon As Possible</td><td>Urgency</td></tr>
+    <tr><td>W.e.f.</td><td>With Effect From</td><td>Starting from a date</td></tr>
+    <tr><td>N/A</td><td>Not Applicable</td><td>Does not apply</td></tr>
+    <tr><td>i.e.</td><td>That is (Latin: id est)</td><td>Clarifying/explaining</td></tr>
+    <tr><td>e.g.</td><td>For example (Latin: exempli gratia)</td><td>Giving examples</td></tr>
+    <tr><td>etc.</td><td>And so on (Latin: et cetera)</td><td>Continuing a list</td></tr>
+    <tr><td>vs. / v/s</td><td>Versus</td><td>Comparing two things</td></tr>
+    <tr><td>approx.</td><td>Approximately</td><td>About, roughly</td></tr>
+    <tr><td>dept.</td><td>Department</td><td>Section of a company</td></tr>
+    <tr><td>mgr.</td><td>Manager</td><td>Title</td></tr>
+    <tr><td>pp.</td><td>Pages</td><td>Referring to multiple pages</td></tr>
+    <tr><td>no.</td><td>Number</td><td>Quantity</td></tr>
+    <tr><td>qty.</td><td>Quantity</td><td>Amount/number of items</td></tr>
+    <tr><td>amt.</td><td>Amount</td><td>Monetary value</td></tr>
+    <tr><td>a.m. / p.m.</td><td>Ante Meridiem / Post Meridiem</td><td>Before/after noon</td></tr>
+    <tr><td>A.S.A.P / ETA</td><td>As Soon As Possible / Estimated Time of Arrival</td><td>Urgency / timing</td></tr>
+    <tr><td>FYI</td><td>For Your Information</td><td>Sharing information informally</td></tr>
+    <tr><td>R.S.V.P.</td><td>Respondez S'il Vous Plait (French)</td><td>Please reply to the invitation</td></tr>
+  </table>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     E4 — GRAMMAR
+============================================================ -->
+<div class="chapter-page" id="ech4">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">E4 = Grammar — DDCET ma most questions aa section thi aave chhe! Tenses (12 types), Active/Passive voice, Direct/Indirect speech, Subject-verb agreement, Articles (a, an, the). Rules clear karva → practice sentences solve karo!</div></div>
+<div class="ch-hero" style="--ch-color:var(--eng4)">
+  <div class="ch-badge">English · Chapter 04 · 10%</div>
+  <h1>Grammar</h1>
+  <p>Parts of speech, tenses, and subject-verb agreement — the core grammatical rules you need to know for DDCET.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Parts of Speech</span>
+    <span class="ch-topic-pill">Nouns</span>
+    <span class="ch-topic-pill">Pronouns</span>
+    <span class="ch-topic-pill">Adjective &amp; Adverb</span>
+    <span class="ch-topic-pill">Verb</span>
+    <span class="ch-topic-pill">Preposition</span>
+    <span class="ch-topic-pill">Tenses</span>
+    <span class="ch-topic-pill">Subject-Verb Agreement</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<div class="section">
+  <div class="section-header"><span class="section-num">4.1</span><h2>Parts of Speech</h2></div>
+  <p>Every word in English belongs to one of 8 Parts of Speech based on its function in a sentence.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>#</th><th>Part of Speech</th><th>Definition</th><th>Examples</th></tr>
+    <tr><td>1</td><td><strong>Noun</strong></td><td>Name of a person, place, thing, idea, or quality</td><td>Rahul, Surat, book, honesty, team</td></tr>
+    <tr><td>2</td><td><strong>Pronoun</strong></td><td>Replaces a noun to avoid repetition</td><td>I, he, she, it, they, we, who, which, this</td></tr>
+    <tr><td>3</td><td><strong>Adjective</strong></td><td>Describes or modifies a noun or pronoun</td><td>big, blue, happy, three, best</td></tr>
+    <tr><td>4</td><td><strong>Adverb</strong></td><td>Modifies a verb, adjective, or another adverb — tells how, when, where, how much</td><td>quickly, yesterday, here, very, too</td></tr>
+    <tr><td>5</td><td><strong>Verb</strong></td><td>Shows an action, occurrence, or state of being</td><td>run, is, has, went, seems, play</td></tr>
+    <tr><td>6</td><td><strong>Preposition</strong></td><td>Shows relationship between a noun/pronoun and another word (position, time, direction)</td><td>in, on, at, by, for, with, under, above, between</td></tr>
+    <tr><td>7</td><td><strong>Conjunction / Connector</strong></td><td>Joins words, phrases, or clauses</td><td>and, but, or, because, although, however, therefore</td></tr>
+    <tr><td>8</td><td><strong>Interjection</strong></td><td>Express sudden feeling or emotion; grammatically independent</td><td>Oh! Wow! Ouch! Hey! Alas!</td></tr>
+  </table>
+  </div>
+
+  <div class="subsection">
+    <h3>Nouns — Types</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Definition</th><th>Examples</th></tr>
+      <tr><td>Proper Noun</td><td>Specific name of a person, place, or thing — always capitalised</td><td>Rahul, Mumbai, Monday, Tata</td></tr>
+      <tr><td>Common Noun</td><td>General name of a class of persons, places, or things</td><td>boy, city, company, day</td></tr>
+      <tr><td>Collective Noun</td><td>Name of a group of persons, animals, or things</td><td>team, flock, class, jury, committee</td></tr>
+      <tr><td>Abstract Noun</td><td>Name of quality, state, action, or idea — cannot be touched or seen</td><td>honesty, happiness, justice, knowledge</td></tr>
+      <tr><td>Material Noun</td><td>Name of a material or substance</td><td>gold, water, wood, iron</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Pronouns — Types</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Examples</th><th>Use</th></tr>
+      <tr><td>Personal</td><td>I, you, he, she, it, we, they, me, him, her, us, them</td><td>Refer to persons or things</td></tr>
+      <tr><td>Possessive</td><td>my, your, his, her, its, our, their, mine, yours, his, hers</td><td>Show ownership</td></tr>
+      <tr><td>Reflexive</td><td>myself, yourself, himself, herself, itself, ourselves, themselves</td><td>When subject and object are same person</td></tr>
+      <tr><td>Relative</td><td>who, whom, whose, which, that</td><td>Connect clauses; refer to nouns just mentioned</td></tr>
+      <tr><td>Demonstrative</td><td>this, that, these, those</td><td>Point to specific nouns</td></tr>
+      <tr><td>Interrogative</td><td>who, what, which, whose, whom</td><td>Ask questions</td></tr>
+    </table>
+    </div>
+    <div class="note">Common mistake: "Me and my brother decided..." → WRONG. Correct: "My brother and I decided..." — Use subject pronouns (I, he, she, we, they) as subject of verb.<span class="gjl">Yaad rakho: "Me and my brother" GALAT chhe — "My brother and I" SACHU chhe. Subject ma "I" j vaparay!</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">4.2</span><h2 id="eng-e4s1">Tenses</h2></div>
+  <p>Tenses show <em>when</em> an action takes place. There are <strong>3 main tenses × 4 aspects = 12 tenses</strong> in English.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Tense</th><th>Structure</th><th>Example</th></tr>
+    <tr><td>Simple Present</td><td>Subject + V1 (s/es for he/she/it)</td><td>She reads every day.</td></tr>
+    <tr><td>Present Continuous</td><td>am/is/are + V-ing</td><td>She is reading now.</td></tr>
+    <tr><td>Present Perfect</td><td>has/have + V3 (past participle)</td><td>She has read the book.</td></tr>
+    <tr><td>Present Perfect Continuous</td><td>has/have been + V-ing</td><td>She has been reading for 2 hours.</td></tr>
+    <tr><td>Simple Past</td><td>Subject + V2 (past form)</td><td>She read the book yesterday.</td></tr>
+    <tr><td>Past Continuous</td><td>was/were + V-ing</td><td>She was reading when I called.</td></tr>
+    <tr><td>Past Perfect</td><td>had + V3</td><td>She had read the book before the exam.</td></tr>
+    <tr><td>Past Perfect Continuous</td><td>had been + V-ing</td><td>She had been reading for 2 hours when I arrived.</td></tr>
+    <tr><td>Simple Future</td><td>will/shall + V1</td><td>She will read tomorrow.</td></tr>
+    <tr><td>Future Continuous</td><td>will be + V-ing</td><td>She will be reading at 8 PM.</td></tr>
+    <tr><td>Future Perfect</td><td>will have + V3</td><td>She will have read by then.</td></tr>
+    <tr><td>Future Perfect Continuous</td><td>will have been + V-ing</td><td>She will have been reading for 3 hours.</td></tr>
+  </table>
+  </div>
+  <div class="keypoint">Signal words: Present perfect → "since, for, already, just, yet, ever, never". Past perfect → "before, after, by the time, already, when". Simple past → "yesterday, last week, ago, in 1990".</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">4.3</span><h2 id="eng-e4s4">Subject-Verb Agreement</h2></div>
+  <p>The verb must agree with its subject in <strong>number</strong> (singular/plural) and <strong>person</strong> (1st/2nd/3rd).</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Rule</th><th>Correct</th><th>Wrong</th></tr>
+    <tr><td>Singular subject → singular verb (add s/es)</td><td>He <strong>reads</strong> books.</td><td>He read books. ✗</td></tr>
+    <tr><td>Plural subject → plural verb (no s/es)</td><td>They <strong>read</strong> books.</td><td>They reads books. ✗</td></tr>
+    <tr><td>I and You take plural verb</td><td>I <strong>write</strong>. You <strong>write</strong>.</td><td>I writes. ✗</td></tr>
+    <tr><td>Two subjects joined by 'and' → plural</td><td>Ram and Shyam <strong>are</strong> here.</td><td>Ram and Shyam is here. ✗</td></tr>
+    <tr><td>Either/Neither/Each/Every/None → singular</td><td>Each student <strong>has</strong> a book.</td><td>Each student have ✗</td></tr>
+    <tr><td>Collective nouns (team, class, jury) → singular in India</td><td>The team <strong>has</strong> won.</td><td>The team have won. ✗</td></tr>
+    <tr><td>Subject joined by "or/nor" → verb agrees with nearest subject</td><td>Neither he nor they <strong>are</strong> ready.</td><td>Neither he nor they is ready. ✗</td></tr>
+    <tr><td>Indefinite pronouns (everyone, nobody, someone) → singular</td><td>Everyone <strong>needs</strong> food.</td><td>Everyone need food. ✗</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">4.4</span><h2>Prepositions</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Preposition</th><th>Use</th><th>Examples</th></tr>
+    <tr><td>in</td><td>Inside a space; months, years, seasons</td><td>in the room, in January, in 2026</td></tr>
+    <tr><td>on</td><td>Surface; days; specific dates</td><td>on the table, on Monday, on 5th April</td></tr>
+    <tr><td>at</td><td>Specific time; specific place</td><td>at 9 AM, at the station</td></tr>
+    <tr><td>for</td><td>Duration of time; purpose</td><td>for two hours, for my health</td></tr>
+    <tr><td>since</td><td>From a specific point in time (used with perfect tenses)</td><td>since Monday, since 2020</td></tr>
+    <tr><td>by</td><td>Deadline; beside; agent in passive</td><td>by Friday, by the river, written by Tagore</td></tr>
+    <tr><td>between</td><td>Among two things</td><td>between 5 and 7 PM, between you and me</td></tr>
+    <tr><td>among</td><td>Among three or more</td><td>among the students</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="remember">
+  <div class="remember-head">Grammar Quick Rules</div>
+  <div class="gjl" style="margin-bottom:8px">Grammar na rules fast yaad karva maate aa shortcuts use karo — exam ma time bachshe!</div>
+  <ul>
+    <li>Subject pronoun (I/he/she/we/they) → used as subject | Object pronoun (me/him/her/us/them) → after verbs/prepositions</li>
+    <li>Myself, yourself etc. → only used when subject and object are same person</li>
+    <li>Present perfect: have/has + V3 (not "I have went" → WRONG; "I have gone" → correct)</li>
+    <li>Conditional: "If I had known… I would have gone" (NOT "would of" — that's WRONG)</li>
+    <li>their = possession | there = place | they're = they are</li>
+    <li>its = possession | it's = it is</li>
+    <li>your = possession | you're = you are</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     E5 — CORRECTION OF INCORRECT WORDS AND SENTENCES
+============================================================ -->
+<div class="chapter-page" id="ech5">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">E5 = Word & Sentence Correction — Common mistakes pakka karo: "fewer" vs "less", "who" vs "whom", "lay" vs "lie". One-word substitutions ane synonyms/antonyms ma vocabulary important chhe — daily 5 new words yaad karo!</div></div>
+<div class="ch-hero" style="--ch-color:var(--eng5)">
+  <div class="ch-badge">English · Chapter 05 · 10%</div>
+  <h1>Correction of Incorrect Words &amp; Sentences</h1>
+  <p>Choose the correct spelling from options, and identify grammatically correct/incorrect sentences — directly from DDCET past papers.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Spelling Correction</span>
+    <span class="ch-topic-pill">Grammar Correction</span>
+    <span class="ch-topic-pill">Punctuation</span>
+    <span class="ch-topic-pill">Common Mistakes</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<div class="section">
+  <div class="section-header"><span class="section-num">5.1</span><h2>Correct Spellings — Most Tested Words</h2></div>
+  <div class="spelling-grid">
+    <div class="spell-card"><div class="wrong">Millenium / Millinium</div><div class="right">✓ Millennium</div></div>
+    <div class="spell-card"><div class="wrong">Hieraarchy / Hieriarchy</div><div class="right">✓ Hierarchy</div></div>
+    <div class="spell-card"><div class="wrong">Athest / Athist</div><div class="right">✓ Atheist</div></div>
+    <div class="spell-card"><div class="wrong">Priveledge / Privilidge</div><div class="right">✓ Privilege</div></div>
+    <div class="spell-card"><div class="wrong">Playrite / Playright</div><div class="right">✓ Playwright</div></div>
+    <div class="spell-card"><div class="wrong">Exaggearate / Exagjerate</div><div class="right">✓ Exaggerate</div></div>
+    <div class="spell-card"><div class="wrong">Compitend / Compitent</div><div class="right">✓ Competent</div></div>
+    <div class="spell-card"><div class="wrong">Inconvenice / Inconvinence</div><div class="right">✓ Inconvenience</div></div>
+    <div class="spell-card"><div class="wrong">Enterpeneur / Entreprneeur</div><div class="right">✓ Entrepreneur</div></div>
+    <div class="spell-card"><div class="wrong">Acquatance / Acquaintence</div><div class="right">✓ Acquaintance</div></div>
+    <div class="spell-card"><div class="wrong">Pneumnoia</div><div class="right">✓ Pneumonia</div></div>
+    <div class="spell-card"><div class="wrong">Breif / Recieve</div><div class="right">✓ Brief / Receive</div></div>
+    <div class="spell-card"><div class="wrong">Strenth / Compitend</div><div class="right">✓ Strength / Competent</div></div>
+    <div class="spell-card"><div class="wrong">Neccessary / Insistance</div><div class="right">✓ Necessary / Insistence</div></div>
+    <div class="spell-card"><div class="wrong">Advurtise / Liesure</div><div class="right">✓ Advertise / Leisure</div></div>
+    <div class="spell-card"><div class="wrong">Plesant / Runer</div><div class="right">✓ Pleasant / Runner</div></div>
+    <div class="spell-card"><div class="wrong">Preceeding</div><div class="right">✓ Preceding</div></div>
+    <div class="spell-card"><div class="wrong">Faithfuly / Truely</div><div class="right">✓ Faithfully / Truly</div></div>
+    <div class="spell-card"><div class="wrong">Discribe</div><div class="right">✓ Describe</div></div>
+    <div class="spell-card"><div class="wrong">Diceive</div><div class="right">✓ Deceive</div></div>
+  </div>
+  <div class="keypoint">Memory Rule for ie/ei: "i before e except after c" (believe, receive, perceive). But exceptions exist: seize, leisure, weird.</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">5.2</span><h2>Common Grammatical Errors — From DDCET Papers</h2></div>
+  
+  <div class="subsection">
+    <h3>Their / There / They're</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Word</th><th>Meaning</th><th>Correct Example</th></tr>
+      <tr><td><strong>Their</strong></td><td>Possession (belonging to them)</td><td><strong>Their</strong> dog ran away while they were in the park. ✓</td></tr>
+      <tr><td><strong>There</strong></td><td>Place / exists</td><td>There is a dog <strong>there</strong>. ✓</td></tr>
+      <tr><td><strong>They're</strong></td><td>They are (contraction)</td><td><strong>They're</strong> going to the park. ✓</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>It's vs Its | You're vs Your | We're vs Were</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Contraction</th><th>Possessive</th></tr>
+      <tr><td>it's = it is → <em>It's been three weeks</em></td><td>its = belonging to it → <em>The cat licked its paw</em></td></tr>
+      <tr><td>you're = you are</td><td>your = belonging to you</td></tr>
+      <tr><td>we're = we are</td><td>were = past tense of "be"</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Sentence Correction — Practice Questions &amp; Answers</h3>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)">1. Choose grammatically correct: "It's been three weeks since we last ___ him."</div>
+      <div class="acc-body">✓ CORRECT: <strong>"It's been three weeks since we last <u>saw</u> him."</strong><br>Reason: Use simple past (saw) after "since" with present perfect (it's been).</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">2. Pick grammatically correct sentence about the dog</div>
+      <div class="acc-body">✓ CORRECT: <strong>"Their dog ran away while they were in the park."</strong><br>Reason: "Their" = possession. "Were" = past of "be" (they were in the park).</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">3. Incorrect punctuation: coffee question</div>
+      <div class="acc-body">✓ INCORRECT: <strong>"Can you please pick me up a coffee, while you are out."</strong><br>Reason: A question must end with (?) not a period (.). Should be: "Can you please pick me up a coffee while you are out?"</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">4. "He ____ the train to get to work." — Choose correct</div>
+      <div class="acc-body">✓ CORRECT: <strong>"He took the train to get to work."</strong><br>Reason: Use simple past (took) for a habitual past action. "He takes" is also possible for present habit. "He take" ✗ (missing s). "He taking" ✗ (no auxiliary verb).</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">5. Grammatically incorrect sentence about "best"</div>
+      <div class="acc-body">✓ INCORRECT: <strong>"My car ran more better than hers."</strong><br>Reason: "more better" is a double comparative — WRONG. Should be just "better".</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">6. "If I had known about the party, I would have ___"</div>
+      <div class="acc-body">✓ CORRECT: <strong>"If I had known about the party, I would have gone to it."</strong><br>Reason: Conditional type 3 = "If + past perfect, would have + past participle". NEVER "would of" — that is wrong.</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">7. Apostrophe error: The cat's ran away</div>
+      <div class="acc-body">✓ INCORRECT: <strong>"The cat's ran away when the dog's arrived."</strong><br>Reason: "cat's" and "dog's" are possessive forms — wrongly used here. Should be "cats ran away when the dogs arrived." (plural, no apostrophe needed for simple plural).</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">8. "Me and my brother" vs "My brother and I"</div>
+      <div class="acc-body">✓ INCORRECT: "Me and my brother decided to get our parents a gift."<br>✓ CORRECT: <strong>"My brother and I decided to get our parents a gift."</strong><br>Reason: "I" is a subject pronoun. "Me" is an object pronoun — cannot be the subject of a verb.</div>
+      
+      <div class="acc-head" onclick="toggleAcc(this)">9. Dangling modifier: "at eight years old"</div>
+      <div class="acc-body">✓ INCORRECT: <strong>"My father decided to give me a pony for Christmas, at eight years old."</strong><br>Reason: The phrase "at eight years old" appears to modify "father" (making him eight years old) — but the intended meaning is that I was eight. This is a dangling modifier. Correct: "At eight years old, I received a pony from my father for Christmas."</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">5.3</span><h2>Key Grammar Rules to Remember</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Rule</th><th>Wrong ✗</th><th>Correct ✓</th></tr>
+    <tr><td>Subject pronoun as subject</td><td>Me and John went</td><td>John and I went</td></tr>
+    <tr><td>Past perfect conditional</td><td>I would of gone</td><td>I would have gone</td></tr>
+    <tr><td>Past tense of "bring"</td><td>We bringed</td><td>We brought</td></tr>
+    <tr><td>Past tense of "go"</td><td>I have went</td><td>I have gone</td></tr>
+    <tr><td>Double comparative</td><td>more better</td><td>better</td></tr>
+    <tr><td>Double negative</td><td>I don't have no pets</td><td>I have no pets / I don't have any pets</td></tr>
+    <tr><td>Question form</td><td>Do you doing?</td><td>What do you do? / What are you doing?</td></tr>
+    <tr><td>Comma splice</td><td>Rachel is smart she began reading early</td><td>Rachel is smart; she began reading early.</td></tr>
+    <tr><td>Colon for explanation</td><td>He thought it was great: his manager didn't agree (needs conjunction after colon)</td><td>He thought it was great; however, his manager didn't agree.</td></tr>
+    <tr><td>Commas in lists</td><td>cat and bird to see the vet (no comma)</td><td>She took her dog, cat, and bird to see the vet.</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="remember">
+  <div class="remember-head">Ch 5 — Most Tested Words (Correct Spellings)</div>
+  <ul>
+    <li>Millennium | Hierarchy | Atheist | Privilege | Playwright</li>
+    <li>Exaggerate | Competent | Inconvenience | Entrepreneur | Acquaintance</li>
+    <li>Necessary | Insistence | Advertise | Leisure | Pleasant</li>
+    <li>Preceding | Faithful<strong>ly</strong> | Tru<strong>ly</strong> | Describe | Deceive</li>
+    <li>Pneumonia | Brief | Receive | Strength | Runner</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<!-- ============================================================
+     COMPUTER PRACTICE
+============================================================ -->
+<div class="chapter-page" id="cp">
+<div class="g-tip"><span class="g-tip-icon">🗣</span><div class="g-tip-text">CP = Computer Practice — Input devices (keyboard, mouse), Output devices (monitor, printer), Storage (RAM, ROM, HDD, SSD). OS types, MS Office (Word, Excel, PowerPoint). Network types: LAN, WAN, MAN. Internet vs Intranet difference yaad karo!</div></div>
+<div class="ch-hero" style="--ch-color:var(--comp)">
+  <div class="ch-badge">Computer Practice · Chapter 09 · 10%</div>
+  <h1>Computer Practice</h1>
+  <p>Complete coverage of computer basics, MS Office suite and HTML/Web Design — all tested in DDCET with MCQs.</p>
+  <div class="ch-topics-list">
+    <span class="ch-topic-pill">Computer Basics</span>
+    <span class="ch-topic-pill">Generations</span>
+    <span class="ch-topic-pill">Memory &amp; Storage</span>
+    <span class="ch-topic-pill">MS Word</span>
+    <span class="ch-topic-pill">MS Excel</span>
+    <span class="ch-topic-pill">MS PowerPoint</span>
+    <span class="ch-topic-pill">HTML &amp; CSS</span>
+    <span class="ch-topic-pill">Internet &amp; Networking</span>
+  </div>
+</div>
+<div class="ch-content">
+
+<!-- 9.1 Computer Basics -->
+<div class="section">
+  <div class="section-header"><span class="section-num">9.1</span><h2>Computer Basics</h2></div>
+
+  <div class="subsection">
+    <h3>Key Inventors &amp; Inventions</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Invention</th><th>Inventor</th><th>Year / Notes</th></tr>
+      <tr><td>Logarithm</td><td>John Napier</td><td>—</td></tr>
+      <tr><td>Slide Rule</td><td>Edmund Gunter</td><td>—</td></tr>
+      <tr><td>Mechanical Calculator (Pascaline)</td><td>Blaise Pascal</td><td>1642</td></tr>
+      <tr><td>Difference Engine / General purpose computer</td><td>Charles Babbage</td><td>Father of Computer</td></tr>
+      <tr><td>Napier's Bones (sets of 11 rods)</td><td>John Napier</td><td>—</td></tr>
+      <tr><td>ENIAC (first general purpose computer)</td><td>J.P. Eckert &amp; J.W. Mauchy</td><td>1945, University of Pennsylvania, USA</td></tr>
+      <tr><td>ABACUS (first mechanical calculator)</td><td>—</td><td>First mechanical calculator</td></tr>
+      <tr><td>Vacuum tube</td><td>Lee de Forest</td><td>1906</td></tr>
+      <tr><td>LOGO programming language</td><td>Dr. Seymour Aubrey Papert</td><td>—</td></tr>
+      <tr><td>WWW (World Wide Web)</td><td>Tim Berners-Lee</td><td>HTML proposed 1990</td></tr>
+      <tr><td>Theoretical definition of general purpose computer</td><td>Allen Turing</td><td>—</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Generations of Computers</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Generation</th><th>Year</th><th>Technology</th><th>Language</th><th>I/O</th></tr>
+      <tr><td>1st Generation</td><td>1945–1958</td><td>Vacuum Tubes and Valves</td><td>Machine language</td><td>Punched cards; magnetic drum memory</td></tr>
+      <tr><td>2nd Generation</td><td>1959–1964</td><td>Transistors</td><td>COBOL (started in 2nd gen)</td><td>Magnetic tape &amp; disk</td></tr>
+      <tr><td>3rd Generation</td><td>1965–1970</td><td>Integrated Circuit (IC) — SSI/MSI</td><td>FORTRAN II-IV, BASIC, PASCAL, ALGOL</td><td>All (keyboard, disk)</td></tr>
+      <tr><td>4th Generation</td><td>1971+</td><td>Microprocessor (VLSI — Very Large Scale Integration)</td><td>C++, C</td><td>Hard disk, floppy, CD</td></tr>
+      <tr><td>5th Generation</td><td>Present</td><td>ULSI (Ultra Large Scale Integration), AI</td><td>C#, Java (both a&amp;b)</td><td>All — keyboard, touch, scanner, CD/DVD, hard disk</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">ENIAC used <strong>vacuum tube</strong> technology. ENIAC was created in <strong>1945</strong>, designed by <strong>J.P. Eckert &amp; J.W. Mauchy</strong> at <strong>University of Pennsylvania, USA</strong>. ENIAC used <strong>punched cards</strong> for output and used more than <strong>5000 kW</strong> of electric power.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Memory Units</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Unit</th><th>Size</th></tr>
+      <tr><td>1 Bit</td><td>Smallest unit — stores 0 or 1</td></tr>
+      <tr><td>1 Nibble</td><td>4 bits</td></tr>
+      <tr><td>1 Byte</td><td>8 bits</td></tr>
+      <tr><td>1 KB (Kilobyte)</td><td>1024 Bytes</td></tr>
+      <tr><td>1 MB (Megabyte)</td><td>1024 KB = 1,048,576 Bytes</td></tr>
+      <tr><td>1 GB (Gigabyte)</td><td>1024 MB</td></tr>
+      <tr><td>1 TB (Terabyte)</td><td>1024 GB = 1024 MB</td></tr>
+      <tr><td>1 PB (Petabyte)</td><td>1024 TB (largest common unit)</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">Order (smallest to largest): Bit → Nibble → Byte → KB → MB → GB → TB → PB. For CPU speed: Hz → KHz → MHz → GHz → THz</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Computer Components and Terminology</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Term</th><th>Full Form / Meaning</th></tr>
+      <tr><td>CPU</td><td>Central Processing Unit — brain of the computer; does all processing</td></tr>
+      <tr><td>ALU</td><td>Arithmetic Logical Unit — part of CPU for calculating and comparing</td></tr>
+      <tr><td>Control Unit</td><td>Part of CPU that selects, interprets, and executes program instructions</td></tr>
+      <tr><td>RAM</td><td>Random Access Memory — primary, volatile memory (lost on power off)</td></tr>
+      <tr><td>ROM</td><td>Read Only Memory — non-volatile; stores BIOS</td></tr>
+      <tr><td>BIOS</td><td>Basic Input Output System — first program run on startup</td></tr>
+      <tr><td>CMOS</td><td>Complementary Metal Oxide Semiconductor</td></tr>
+      <tr><td>ASCII</td><td>American Standard Code for Information Interchange</td></tr>
+      <tr><td>DMA</td><td>Direct Memory Access</td></tr>
+      <tr><td>SRAM</td><td>Static Random Access Memory</td></tr>
+      <tr><td>DRAM</td><td>Dynamic Random Access Memory</td></tr>
+      <tr><td>USB</td><td>Universal Serial Bus</td></tr>
+      <tr><td>CPU cycle</td><td>Time required for fetching and execution of one machine instruction</td></tr>
+      <tr><td>1 millisecond</td><td>1/1000th of a second (1000th of a second)</td></tr>
+      <tr><td>Hardware</td><td>Physical components of a computer (consume electric power, occupy space)</td></tr>
+      <tr><td>Software</td><td>Programs/instructions (does not occupy physical space)</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Types of Computers</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Description</th></tr>
+      <tr><td>Mainframe Computer</td><td>Largest computer; supports 100–200 concurrent users</td></tr>
+      <tr><td>Mini Computer</td><td>Mid-range; supports many users</td></tr>
+      <tr><td>Micro Computer / Personal Computer (PC)</td><td>Most common at homes &amp; offices; also called micro-computer</td></tr>
+      <tr><td>Workstation Computer</td><td>For professional CAD/CAM, animation, high-power gaming</td></tr>
+      <tr><td>ABC</td><td>Atanasoff-Berry Computer — special purpose computer</td></tr>
+      <tr><td>ENIAC</td><td>Electronic Numerical Integrator and Computer — first general purpose</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Input / Output / Storage Devices</h3>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h4>Input Devices</h4>
+        <ul>
+          <li>Keyboard (Caps Lock toggles capital letters; Print Screen saves screenshot; Num Lock toggles number pad)</li>
+          <li>Mouse</li>
+          <li>Scanner (processes drawings/characters on paper)</li>
+          <li>Light pen</li>
+          <li>Digital tablet (converts handwriting to computer input)</li>
+          <li>Joystick, Trackball</li>
+          <li>O.M.R (Optical Mark Reader — reads pencil marks on paper)</li>
+          <li>Badge reader (reads info from plastic cards)</li>
+          <li>Digitizer (converts graphics/pictures to binary)</li>
+          <li>Web cam</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <h4>Output Devices</h4>
+        <ul>
+          <li>Monitor (most common) — CRT, LCD, LED, TFT, Plasma (&gt;32")</li>
+          <li>Printer — Laser (best quality graphics), Plotter (pictorial form), Dot matrix (impact type), Ink jet</li>
+          <li>Plotter (translates computer data into pictorial form on paper)</li>
+        </ul>
+        <h4 style="margin-top:1rem;">Storage Devices</h4>
+        <ul>
+          <li>Hard disk (maximum data storage; primary storage)</li>
+          <li>Floppy disk (3", 5.25", 8"; high density = 1.44 MB)</li>
+          <li>CD/DVD</li>
+          <li>Backing store (secondary/auxiliary storage)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="keypoint">Plotter = best quality graphics. Laser printer = second best. Dot matrix = impact type printer. Modem = performs signal conversion (modulation/demodulation).</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Display Resolutions &amp; Aspect Ratios</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Resolution</th><th>Aspect Ratio</th><th>Name</th></tr>
+      <tr><td>800 × 600</td><td>4:3</td><td>—</td></tr>
+      <tr><td>1280 × 720</td><td>16:9</td><td>HD</td></tr>
+      <tr><td>768 × 576</td><td>576p</td><td>—</td></tr>
+      <tr><td>1920 × 1080</td><td>16:9</td><td>Full HD</td></tr>
+      <tr><td>CRT monitors (old)</td><td>4:3</td><td>—</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">PPI = Pixels Per Inch (number of pixels per inch of monitor length). HD = High Definition. TFT = Thin Film Transistor. LCD = Liquid Crystal Display. LED = Light Emitting Diode.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>Programming Languages</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Language</th><th>Notes</th></tr>
+      <tr><td>FORTRAN</td><td>More suited to structured programs; used in 1st gen computers</td></tr>
+      <tr><td>COBOL</td><td>Data division language; started from 2nd gen; program structure has data division</td></tr>
+      <tr><td>PASCAL</td><td>Structured language; data division is third division</td></tr>
+      <tr><td>BASIC</td><td>Beginner's language; started 2nd gen</td></tr>
+      <tr><td>LOGO</td><td>Devised by Dr. Seymour Aubrey Papert</td></tr>
+      <tr><td>PROLOG</td><td>Used for artificial intelligence</td></tr>
+      <tr><td>Assembly Language</td><td>Low-level language; uses Mnemonics (memory tricks); translated by Assembler</td></tr>
+      <tr><td>Machine Language</td><td>First gen computer programming language; binary 0s and 1s</td></tr>
+      <tr><td>C++, Java, C#</td><td>4th/5th generation languages</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">Compiler = converts entire program to machine language at once. Assembler = converts assembly language to machine language. Interpreter = converts line by line.</div>
+  </div>
+</div>
+
+<!-- 9.2 MS Word -->
+<div class="section">
+  <div class="section-header"><span class="section-num">9.2</span><h2>MS Word</h2></div>
+
+  <div class="subsection">
+    <h3>Key Facts</h3>
+    <ul class="bullet-list">
+      <li>MS Word = software for preparation of <strong>documents</strong></li>
+      <li>MS Excel = spreadsheets | MS Access = databases | MS PowerPoint = presentations</li>
+      <li>Default extension: <strong>.docx</strong> (also .doc — both valid)</li>
+      <li>Template extension: <strong>.dotx</strong></li>
+      <li>WYSIWYG = <strong>What You See What You Get</strong></li>
+      <li>Spelling errors: highlighted by <strong>red underline</strong></li>
+      <li>Grammar errors: highlighted by <strong>green underline</strong></li>
+      <li>Thesaurus tool: for <strong>Synonyms and Antonyms</strong></li>
+      <li>Mail Merge: creates customized correspondence targeting different recipients</li>
+      <li>Mailing list in Word: called <strong>Data source</strong></li>
+      <li>Default alignment: <strong>Left</strong></li>
+      <li>Default header/footer: printed on <strong>every page</strong></li>
+      <li>Font not a font style: <strong>Superscript</strong> (Bold, Italic, Regular are font styles)</li>
+      <li>Portrait and Landscape are <strong>Page orientation</strong></li>
+      <li>OFFICE VISTA is <strong>not a valid version</strong> of MS Office</li>
+      <li>Pressing F8 three times → selects <strong>a sentence</strong></li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>MS Word Keyboard Shortcuts</h3>
+    <div class="shortcut-grid">
+      <div class="sc-card"><span>New document</span><span class="sc-key">Ctrl+N</span></div>
+      <div class="sc-card"><span>Open file</span><span class="sc-key">Ctrl+O / Alt+F+O</span></div>
+      <div class="sc-card"><span>Save</span><span class="sc-key">Ctrl+S / Alt+F+S</span></div>
+      <div class="sc-card"><span>Save As</span><span class="sc-key">Alt+F+A</span></div>
+      <div class="sc-card"><span>Print</span><span class="sc-key">Ctrl+P / Alt+F+P</span></div>
+      <div class="sc-card"><span>Close</span><span class="sc-key">Alt+F+C</span></div>
+      <div class="sc-card"><span>Exit</span><span class="sc-key">Alt+F+X</span></div>
+      <div class="sc-card"><span>Help</span><span class="sc-key">Alt+F+H or F1</span></div>
+      <div class="sc-card"><span>Open Office Menu</span><span class="sc-key">Alt+F</span></div>
+      <div class="sc-card"><span>Open dialog box</span><span class="sc-key">Ctrl+F12</span></div>
+      <div class="sc-card"><span>Bold</span><span class="sc-key">Ctrl+B / Alt+H+1</span></div>
+      <div class="sc-card"><span>Italic</span><span class="sc-key">Ctrl+I / Alt+H+2</span></div>
+      <div class="sc-card"><span>Underline</span><span class="sc-key">Ctrl+U / Alt+H+3</span></div>
+      <div class="sc-card"><span>Subscript</span><span class="sc-key">Ctrl+Plus / Alt+H+5</span></div>
+      <div class="sc-card"><span>Superscript</span><span class="sc-key">Ctrl+Shift+Plus / Alt+H+6</span></div>
+      <div class="sc-card"><span>Font name</span><span class="sc-key">Alt+H+FF</span></div>
+      <div class="sc-card"><span>Font size</span><span class="sc-key">Alt+H+FS</span></div>
+      <div class="sc-card"><span>Strikethrough</span><span class="sc-key">Alt+H+4</span></div>
+      <div class="sc-card"><span>Apply Bullets</span><span class="sc-key">Alt+H+U</span></div>
+      <div class="sc-card"><span>Search and Find</span><span class="sc-key">Ctrl+F / Alt+H+FD</span></div>
+      <div class="sc-card"><span>Cut</span><span class="sc-key">Ctrl+X / Alt+H+X</span></div>
+      <div class="sc-card"><span>Copy</span><span class="sc-key">Ctrl+C / Alt+H+C</span></div>
+      <div class="sc-card"><span>Paste</span><span class="sc-key">Ctrl+V / Alt+H+V</span></div>
+      <div class="sc-card"><span>Undo</span><span class="sc-key">Ctrl+Z</span></div>
+      <div class="sc-card"><span>Redo</span><span class="sc-key">Ctrl+Y</span></div>
+      <div class="sc-card"><span>Insert Header/Footer</span><span class="sc-key">Insert Menu</span></div>
+      <div class="sc-card"><span>Home Menu</span><span class="sc-key">Alt+H</span></div>
+      <div class="sc-card"><span>Insert Menu</span><span class="sc-key">Alt+N</span></div>
+      <div class="sc-card"><span>Page Layout Menu</span><span class="sc-key">Alt+P</span></div>
+      <div class="sc-card"><span>References Menu</span><span class="sc-key">Alt+S</span></div>
+      <div class="sc-card"><span>Page Setup</span><span class="sc-key">Alt+P+SP (PageLayout menu)</span></div>
+    </div>
+    <div class="keypoint">File that starts MS Word: <strong>Winword.exe</strong>. Smallest/largest font on toolbar: <strong>8 and 72</strong>. MS Word automates repeated tasks using <strong>Macros</strong>. Clipboard group is in the <strong>Home</strong> tab. Bullets and Numbering is in <strong>Home Tab → Status bar? No → Home Tab</strong>. Cut, Copy, Paste is in <strong>Clipboard</strong> group in Home tab.</div>
+  </div>
+</div>
+
+<!-- 9.3 MS Excel -->
+<div class="section">
+  <div class="section-header"><span class="section-num">9.3</span><h2>MS Excel</h2></div>
+
+  <div class="subsection">
+    <h3>Key Facts</h3>
+    <ul class="bullet-list">
+      <li>MS Excel = software for <strong>spreadsheets</strong></li>
+      <li>Each file in MS Excel = <strong>workbook</strong></li>
+      <li>A worksheet is a collection of <strong>workbook</strong> (Excel is a collection of worksheets)</li>
+      <li>By default, worksheets named: <strong>Sheet1, Sheet2, Sheet3...</strong></li>
+      <li>Columns: named in <strong>alphabets (A, B, C...)</strong></li>
+      <li>Rows: named in <strong>numbers (1, 2, 3...)</strong></li>
+      <li>Intersection of row and column = <strong>Cell</strong></li>
+      <li>All formulas begin with <strong>= (equals sign)</strong></li>
+      <li>Absolute cell reference: <strong>$A$1</strong></li>
+      <li>Default extension (no macros): <strong>.xlsx</strong></li>
+      <li>Extension for Excel 2007 workbook: <strong>.xlsx</strong></li>
+      <li>MS Excel based on: <strong>Windows</strong> software</li>
+      <li>Common type of data: <strong>General</strong></li>
+      <li>Data in a spreadsheet organized by: <strong>Rows and columns</strong></li>
+      <li>Latest version: <strong>10,48,576 rows</strong> and <strong>16,384 columns</strong></li>
+      <li>1 MB = <strong>1024 KB</strong></li>
+      <li>1 TB = <strong>1024 MB</strong> (wait — 1 TB = 1024 GB; 1 GB = 1024 MB)</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Important Functions</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Function</th><th>Purpose</th><th>Syntax</th></tr>
+      <tr><td>=TODAY()</td><td>Returns today's date (date value for day according to system clock)</td><td>=TODAY()</td></tr>
+      <tr><td>=NOW()</td><td>Returns current time</td><td>=NOW()</td></tr>
+      <tr><td>=SUM()</td><td>Adds values in range</td><td>=SUM(A1:A5)</td></tr>
+      <tr><td>=AND()</td><td>Returns TRUE only if ALL conditions are true</td><td>=AND(A1&gt;0, B1&gt;0)</td></tr>
+      <tr><td>=OR()</td><td>Returns TRUE if even ONE condition is true</td><td>=OR(A1&gt;0, B1&gt;0)</td></tr>
+      <tr><td>=ABS()</td><td>Returns positive value regardless of sign</td><td>=ABS(-5) → 5</td></tr>
+      <tr><td>=MOD()</td><td>Returns remainder after division</td><td>=MOD(10,3) → 1</td></tr>
+      <tr><td>=ISBLANK()</td><td>Returns TRUE if cell is blank</td><td>=ISBLANK(A1)</td></tr>
+      <tr><td>=ISEVEN()</td><td>Returns TRUE if cell contains even number</td><td>=ISEVEN(4) → TRUE</td></tr>
+      <tr><td>=ISODD()</td><td>Returns TRUE if cell contains odd number</td><td>=ISODD(3) → TRUE</td></tr>
+      <tr><td>=DATE()</td><td>Takes year, month, date values and displays given date</td><td>=DATE(2026,4,13)</td></tr>
+      <tr><td>=DAY()</td><td>Takes a date value and returns the day of month</td><td>=DAY(A1)</td></tr>
+      <tr><td>=DATEVALUE()</td><td>Takes a date string and returns parsed date value</td><td>=DATEVALUE("13/4/2026")</td></tr>
+      <tr><td>=WEEKDAY()</td><td>Returns day of week for given date</td><td>=WEEKDAY(A1)</td></tr>
+      <tr><td>=WORKDAY()</td><td>Returns date after given number of working days</td><td>=WORKDAY(A1,5)</td></tr>
+      <tr><td>=YEARFRAC()</td><td>Returns fractional year between given dates</td><td>=YEARFRAC(A1,B1)</td></tr>
+      <tr><td>=MINUTES()</td><td>Returns minutes from a time value</td><td>=MINUTE(A1)</td></tr>
+      <tr><td>=SECOND()</td><td>Returns seconds from a time value</td><td>=SECOND(A1)</td></tr>
+      <tr><td>=CONCATENATE()</td><td>Joins text strings together</td><td>=CONCATENATE(A1,B1)</td></tr>
+      <tr><td>=N()</td><td>Returns number equivalent of text value</td><td>=N(A1)</td></tr>
+      <tr><td>=NA()</td><td>Returns #NA error number</td><td>=NA()</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>MS Excel Shortcuts</h3>
+    <div class="shortcut-grid">
+      <div class="sc-card"><span>Edit selected cell</span><span class="sc-key">F2</span></div>
+      <div class="sc-card"><span>Create chart</span><span class="sc-key">F11</span></div>
+      <div class="sc-card"><span>Enter current date</span><span class="sc-key">Ctrl+;</span></div>
+      <div class="sc-card"><span>Enter current time</span><span class="sc-key">Ctrl+Shift+;</span></div>
+      <div class="sc-card"><span>Insert new worksheet</span><span class="sc-key">Alt+Shift+F1</span></div>
+      <div class="sc-card"><span>Select entire row</span><span class="sc-key">Shift+Space</span></div>
+      <div class="sc-card"><span>Select entire column</span><span class="sc-key">Ctrl+Space</span></div>
+      <div class="sc-card"><span>Insert link</span><span class="sc-key">Ctrl+K</span></div>
+      <div class="sc-card"><span>Undo last action</span><span class="sc-key">Ctrl+Z</span></div>
+      <div class="sc-card"><span>Redo last action</span><span class="sc-key">Ctrl+Y</span></div>
+      <div class="sc-card"><span>Move cell pointer to A1</span><span class="sc-key">Ctrl+Home</span></div>
+    </div>
+    <div class="keypoint">Sort option: Data menu. Fill option: Edit menu. Macro options: Tools menu. Currency option: Formatting Toolbar. Formula error sign: <strong>#</strong></div>
+  </div>
+</div>
+
+<!-- 9.4 MS PowerPoint -->
+<div class="section">
+  <div class="section-header"><span class="section-num">9.4</span><h2>MS PowerPoint</h2></div>
+
+  <div class="subsection">
+    <h3>Key Facts</h3>
+    <ul class="bullet-list">
+      <li>MS PowerPoint = tool for preparation of <strong>presentations</strong></li>
+      <li>Command line to open: <strong>powerpnt</strong></li>
+      <li>Extension of presentation: <strong>.PPT</strong></li>
+      <li>Template extension: N/A (save as .pot)</li>
+      <li>Suitable for: <strong>all types</strong> — educational, business, strategic (military)</li>
+      <li>Views: Slide Show, Slide Sorter, Normal — <strong>Outline view is NOT a standard view</strong>... wait — Outline view IS a view, but the question asks which is NOT. According to PDF: "Outline view" is not a view? Let me re-check — PDF says NOT = Outline view. ✓</li>
+      <li>Speaker Notes option: <strong>Notes View</strong></li>
+      <li>Shadow, text color, box color: <strong>Color schemes</strong></li>
+      <li>Stop slide show: <strong>Press Esc button</strong></li>
+      <li>Font for presentation: from <strong>Home → Font</strong> menu</li>
+      <li>Paragraph style: from <strong>Home → Paragraph</strong> menu</li>
+      <li>Drawing: from <strong>Home → Drawing</strong> menu</li>
+      <li>Slide Design task pane: shows <strong>slide design</strong> currently used</li>
+      <li>Handout Master: defined by <strong>Layout of handout</strong></li>
+      <li>Motion path: A <strong>method of moving items on a slide</strong></li>
+      <li>Default page orientation: <strong>Landscape</strong></li>
+      <li>Objects on slide that hold text: <strong>Placeholders</strong></li>
+      <li>Optimum presentation duration: <strong>22 to 35 minutes</strong></li>
+      <li>Sound files for PPT: <strong>.wav files and .mid files</strong></li>
+      <li>Video recording: record in <strong>video</strong> to find mistakes</li>
+      <li>To make effective presentation: minimize text, maximize <strong>all of them (images, videos, graphs)</strong></li>
+      <li>Slide Transition = effect when slides change in slide show view</li>
+      <li>Lines, curve, freeform, scribble = <strong>Types of custom motion paths</strong></li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>MS PowerPoint Shortcuts</h3>
+    <div class="shortcut-grid">
+      <div class="sc-card"><span>New file</span><span class="sc-key">Ctrl+N</span></div>
+      <div class="sc-card"><span>Insert new slide</span><span class="sc-key">Ctrl+M</span></div>
+      <div class="sc-card"><span>Save while working</span><span class="sc-key">Ctrl+S</span></div>
+      <div class="sc-card"><span>Save with new name</span><span class="sc-key">F5 (F12 for Save As)</span></div>
+      <div class="sc-card"><span>Start slideshow</span><span class="sc-key">F5 / Slide Show menu → View Show</span></div>
+      <div class="sc-card"><span>Stop slideshow</span><span class="sc-key">Esc</span></div>
+      <div class="sc-card"><span>Insert hyperlink</span><span class="sc-key">Ctrl+K</span></div>
+      <div class="sc-card"><span>First slide</span><span class="sc-key">Ctrl+Home</span></div>
+      <div class="sc-card"><span>Insert media</span><span class="sc-key">Insert → Media</span></div>
+    </div>
+    <div class="keypoint">Action buttons: Slide Show menu. Slide sorter: View menu. Slide Design, Slide Layout: Format menu. Select multiple slides: Shift+Click. Slide Sorter view shows slides as miniatures. Outline view shows only text (title and bullets).</div>
+  </div>
+</div>
+
+<!-- 9.5 Web Design (HTML) -->
+<div class="section">
+  <div class="section-header"><span class="section-num">9.5</span><h2>Web Design — HTML &amp; CSS</h2></div>
+
+  <div class="subsection">
+    <h3>HTML Fundamentals</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Term</th><th>Full Form / Meaning</th></tr>
+      <tr><td>HTML</td><td>Hyper Text Markup Language</td></tr>
+      <tr><td>DHTML</td><td>Dynamic Hyper Text Markup Language</td></tr>
+      <tr><td>W3C</td><td>World Wide Web Consortium (defines web standards)</td></tr>
+      <tr><td>WWW</td><td>World Wide Web (father: Tim Berners-Lee, HTML proposed 1990)</td></tr>
+      <tr><td>DOM</td><td>Document Object Model — convention for representing and interacting with objects in HTML</td></tr>
+      <tr><td>CSS</td><td>Cascading Style Sheet (latest version: CSS3)</td></tr>
+      <tr><td>DTD</td><td>Document Type Definition</td></tr>
+      <tr><td>SGML</td><td>Standard Generalized Markup Language (HTML is a subset of SGML)</td></tr>
+      <tr><td>RGB</td><td>Red-Green-Blue</td></tr>
+      <tr><td>SVG</td><td>Scalable Vector Graphics</td></tr>
+      <tr><td>DDL</td><td>Data Description Library</td></tr>
+      <tr><td>HSL</td><td>Hue Saturation Lightness</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">HTML type: <strong>Markup Language</strong> (not programming, not scripting). Web browser reads HTML. Fundamental HTML block = <strong>HTML Tag</strong>. Tags not displayed on page are written in &lt;HEAD&gt; section. File starts with &lt;!doctype html&gt;. Default extension: <strong>.html</strong></div>
+  </div>
+
+  <div class="subsection">
+    <h3>Essential HTML Tags</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Tag</th><th>Purpose</th></tr>
+      <tr><td>&lt;html&gt;...&lt;/html&gt;</td><td>Root element; document starts and ends with this</td></tr>
+      <tr><td>&lt;head&gt;...&lt;/head&gt;</td><td>Contains meta information, title, CSS links</td></tr>
+      <tr><td>&lt;body&gt;...&lt;/body&gt;</td><td>Visible page content</td></tr>
+      <tr><td>&lt;H1&gt; to &lt;H6&gt;</td><td>Headings: H1 = biggest, H6 = smallest</td></tr>
+      <tr><td>&lt;p&gt;</td><td>Paragraph</td></tr>
+      <tr><td>&lt;b&gt; or &lt;strong&gt;</td><td>Bold text</td></tr>
+      <tr><td>&lt;i&gt;</td><td>Italic text</td></tr>
+      <tr><td>&lt;u&gt;</td><td>Underline text</td></tr>
+      <tr><td>&lt;br&gt;</td><td>Line break</td></tr>
+      <tr><td>&lt;img src="..."&gt;</td><td>Display image</td></tr>
+      <tr><td>&lt;a href="..."&gt;</td><td>Hyperlink</td></tr>
+      <tr><td>&lt;ul&gt;&lt;li&gt;</td><td>Unordered (bulleted) list</td></tr>
+      <tr><td>&lt;ol&gt;&lt;li&gt;</td><td>Ordered (numbered) list</td></tr>
+      <tr><td>&lt;DL&gt;</td><td>Descriptive list starts here</td></tr>
+      <tr><td>&lt;table&gt;&lt;tr&gt;&lt;td&gt;</td><td>Table → row → cell</td></tr>
+      <tr><td>&lt;th&gt;</td><td>Table heading cell</td></tr>
+      <tr><td>&lt;thead&gt;</td><td>Table headings group</td></tr>
+      <tr><td>&lt;caption&gt;</td><td>Table caption</td></tr>
+      <tr><td>&lt;form&gt;</td><td>Form — attributes: method, action</td></tr>
+      <tr><td>&lt;marquee&gt;</td><td>Scrolling text (behaviour property: alternate, blur, scroll — NOT "slide")</td></tr>
+      <tr><td>&lt;style&gt;</td><td>CSS definitions inside this tag</td></tr>
+      <tr><td>&lt;bdo&gt;</td><td>Supports Non-English language (bidirectional text)</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">Biggest heading = &lt;H1&gt;. Apart from &lt;b&gt;, &lt;strong&gt; also makes text bold. Body background: &lt;body bgcolor="yellow"&gt;. Bulleted list with numbers = &lt;ol&gt;. Background image: &lt;body background="sun.gif"&gt;. HTML tag begins with &lt;. HTML tag ends with &gt;.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>HTML Colour Codes</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Hex Code</th><th>Colour</th></tr>
+      <tr><td>#FF0000</td><td>Red</td></tr>
+      <tr><td>#00FF00</td><td>Green</td></tr>
+      <tr><td>#0000FF</td><td>Blue</td></tr>
+      <tr><td>#000000</td><td>Black</td></tr>
+      <tr><td>#FFFFFF</td><td>White</td></tr>
+    </table>
+    </div>
+    <div class="keypoint">Hex color ranges from <strong>00 to FF</strong> for each colour (0-FF). Each colour (R, G, B) has 2 hex digits.</div>
+  </div>
+
+  <div class="subsection">
+    <h3>CSS Essentials</h3>
+    <ul class="bullet-list">
+      <li>CSS = <strong>Cascading Style Sheet</strong> — controls the appearance of HTML elements</li>
+      <li>Latest version: <strong>CSS3</strong>. First official W3C recommendation: <strong>CSS Level 1</strong></li>
+      <li>3 ways to add CSS: (1) header section &lt;style&gt; tag, (2) separate file (.css), (3) inline as attribute</li>
+      <li>CSS tag has <strong>3 components</strong>: Selector, Property, Value (called Declaration)</li>
+      <li>In CSS: h1 = <strong>Selector</strong>. font-size = <strong>Property</strong>. color:red = <strong>Declaration</strong></li>
+      <li>Correct syntax: <code>body { color: black }</code></li>
+      <li>Class selector: matches element based on its class attribute</li>
+      <li>font-family property: changes the <strong>face</strong> of a font</li>
+      <li>CSS screen media type: for use with <strong>color computer screens</strong></li>
+      <li>background-image property sets a background image</li>
+      <li>CSS property for align attribute = <strong>text-align</strong></li>
+      <li>CSS property for &lt;center&gt; = <strong>margin</strong></li>
+      <li>CSS extension prefixes for WebKit: <strong>-webkit</strong></li>
+      <li>Web font format: <strong>WOFF</strong> | TTF developed by Apple &amp; Microsoft late 1980s | First CSS = EOT</li>
+      <li>HSL = <strong>Hue Saturation Lightness</strong></li>
+      <li>SVG = <strong>Scalable Vector Graphics</strong></li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>Internet &amp; Networking</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>WWW model</td><td>Client-server model</td></tr>
+      <tr><td>Web pages stored on</td><td>Web server (remote host)</td></tr>
+      <tr><td>Web browser</td><td>Application used by client to view web pages</td></tr>
+      <tr><td>HTTP</td><td>Hypertext Transfer Protocol — features: media independent, connectionless, stateless (NOT responsive)</td></tr>
+      <tr><td>URL</td><td>Uniform Resource Locator — specifies: protocol, host computer, port, and path</td></tr>
+      <tr><td>DOM</td><td>Document Object Model</td></tr>
+      <tr><td>IP Address</td><td>32-bit number</td></tr>
+      <tr><td>ICMP</td><td>Internet Control Message Protocol — sends notification of datagram problems</td></tr>
+      <tr><td>MIME</td><td>Supplementary protocol allowing non-ASCII data to be sent through email</td></tr>
+      <tr><td>LAN topology</td><td>Star topology (most common in local area networks)</td></tr>
+      <tr><td>Mesh topology</td><td>n(n-1)/2 duplex mode links needed</td></tr>
+      <tr><td>Telephone network</td><td>Example of Full duplex communication</td></tr>
+      <tr><td>Ajax</td><td>Client-side scripting system</td></tr>
+      <tr><td>Joomla</td><td>Content Management System based on PHP (Paid source, uses Apache server)</td></tr>
+      <tr><td>RJ45 UTP cable</td><td>4 pairs (8 cables)</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="remember">
+    <div class="remember-head">Computer Practice — Critical Facts Summary</div>
+    <ul>
+      <li>CPU = brain | ALU = calculating &amp; comparing | Control Unit = interprets instructions</li>
+      <li>RAM+ROM = Primary Memory | Hard disk, Floppy = Secondary (backing store)</li>
+      <li>ENIAC: 1945, J.P.Eckert &amp; Mauchy, Univ. of Pennsylvania, vacuum tubes, punched cards</li>
+      <li>1st gen = vacuum tube | 2nd = transistor | 3rd = IC | 4th = VLSI/microprocessor | 5th = ULSI/AI</li>
+      <li>Nibble=4bits | Byte=8bits | KB=1024B | MB=1024KB | GB=1024MB | TB=1024GB | PB=largest</li>
+      <li>Word file = .docx | Excel = .xlsx | PPT = .ppt | Word template = .dotx</li>
+      <li>Spelling error = red underline | Grammar error = green underline in MS Word</li>
+      <li>HTML = Markup Language | CSS = Cascading Style Sheet | WWW father = Tim Berners-Lee (1990)</li>
+      <li>#FF0000=Red | #00FF00=Green | #0000FF=Blue | #000000=Black | #FFFFFF=White</li>
+      <li>Ctrl+Z=Undo | Ctrl+Y=Redo | Ctrl+B=Bold | Ctrl+I=Italic | Ctrl+F=Find | F2=Edit cell</li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showCh(id, ch) {
+  document.querySelectorAll('.chapter-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector('[data-ch="'+ch+'"]').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleAcc(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const s = doc.scrollTop || document.body.scrollTop;
+  const t = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+  document.getElementById('prog').style.width = (t>0?(s/t)*100:0)+'%';
+  const btn = document.getElementById('backTop');
+  s > 400 ? btn.classList.add('visible') : btn.classList.remove('visible');
+});
+</script>
+
+
+
+<script id="hub-comm">
+window.addEventListener('message', function(e) {
+  if (!e.data || typeof e.data !== 'object') return;
+  if (e.data.action === 'navigate') {
+    var parts = e.data.id.split('|');
+    showCh(parts[0], parts[1]);
+  }
+  if (e.data.action === 'scroll') {
+    var el = document.getElementById(e.data.id);
+    if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+  if (e.data.action === 'back') { window.parent.postMessage('closeSubject', '*'); }
+});
+</script>
+
+</div><!-- /ddcet-main -->
+
+<script id="eng-switch-js">
+function engSwitch(pageId, tabId, btnId, chipsId){
+  // call original showCh if exists
+  if(typeof showCh==='function') showCh(pageId, tabId);
+  // update sidebar state
+  document.querySelectorAll('.sb-ch-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.sb-chips-wrap').forEach(function(c){ c.classList.remove('open'); });
+  var btn=document.getElementById(btnId);
+  var chips=document.getElementById(chipsId);
+  if(btn)   btn.classList.add('active');
+  if(chips) chips.classList.add('open');
+  window.scrollTo(0,0);
+}
+</script>
+
+<script id="ddcet-chip-js">
+(function(){
+// initChips: 1-click=scroll, 2-click=purple, 3-click=green
+function initChips(){
+  var saved = {};
+  try{saved = JSON.parse(localStorage.getItem('ddcet-chip-states')||'{}');}catch(e){}
+  document.querySelectorAll('.chip[data-target]').forEach(function(chip){
+    var key = (chip.textContent||'').trim();
+    if(saved[key]==='active') chip.classList.add('chip-active');
+    if(saved[key]==='done')   chip.classList.add('chip-done');
+    var clicks=0, timer=null;
+    chip.addEventListener('click',function(e){
+      e.stopPropagation();
+      clicks++;
+      clearTimeout(timer);
+      var c=clicks;
+      timer=setTimeout(function(){
+        if(c===1){
+          var tid=chip.getAttribute('data-target');
+          var el=document.getElementById(tid);
+          if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('sec-flash');setTimeout(function(){el.classList.remove('sec-flash');},700);}
+        } else if(c===2){
+          chip.classList.toggle('chip-active');
+          chip.classList.remove('chip-done');
+          saveChip(chip);
+        } else {
+          chip.classList.toggle('chip-done');
+          chip.classList.remove('chip-active');
+          saveChip(chip);
+        }
+        clicks=0;
+      },250);
+    });
+  });
+}
+function saveChip(chip){
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem('ddcet-chip-states')||'{}');}catch(e){}
+  var key=(chip.textContent||'').trim().replace(/[↗●✓]/g,'').trim();
+  if(chip.classList.contains('chip-done'))       saved[key]='done';
+  else if(chip.classList.contains('chip-active')) saved[key]='active';
+  else delete saved[key];
+  try{localStorage.setItem('ddcet-chip-states',JSON.stringify(saved));}catch(e){}
+}
+// ── Mobile nav ──
+function initMobileMenu(){
+  var sb = document.getElementById('ddcet-sb');
+  var backdrop = document.getElementById('mob-backdrop');
+  function openDrawer(){
+    sb.classList.add('mob-open');
+    if(backdrop) backdrop.style.display='block';
+    document.body.style.overflow='hidden';
+  }
+  function closeDrawer(){
+    sb.classList.remove('mob-open');
+    if(backdrop) backdrop.style.display='none';
+    document.body.style.overflow='';
+  }
+  // topbar open button
+  var openBtn = document.getElementById('mob-open-btn');
+  if(openBtn) openBtn.onclick = openDrawer;
+  // close btn inside drawer
+  var closeBtn = document.getElementById('mob-close-btn');
+  if(closeBtn) closeBtn.onclick = closeDrawer;
+  // backdrop tap closes drawer
+  if(backdrop) backdrop.onclick = closeDrawer;
+  // clicking a chapter inside drawer closes drawer (after a tiny delay)
+  if(sb){
+    sb.querySelectorAll('.sb-ch-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        setTimeout(closeDrawer, 220);
+      });
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded',function(){
+  initChips();
+  initMobileMenu();
+});
+})();
+</script>
+
+
+<script id="mobile-nav-js">
+(function(){
+  function initMob(){
+    var sb = document.getElementById('ddcet-sb');
+    var backdrop = document.getElementById('mob-backdrop');
+    var openBtn = document.getElementById('mob-open-btn');
+    var closeBtn = document.getElementById('mob-close-btn');
+    if(!sb) return;
+
+    function open_(){
+      sb.classList.add('mob-open');
+      if(backdrop){ backdrop.classList.remove('hidden'); }
+      document.body.style.overflow='hidden';
+    }
+    function close_(){
+      sb.classList.remove('mob-open');
+      if(backdrop){ backdrop.classList.add('hidden'); }
+      document.body.style.overflow='';
+    }
+
+    if(openBtn){
+      openBtn.addEventListener('click', function(e){ e.stopPropagation(); open_(); });
+      openBtn.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); open_(); });
+    }
+    if(closeBtn){
+      closeBtn.addEventListener('click', function(e){ e.stopPropagation(); close_(); });
+      closeBtn.addEventListener('touchend', function(e){ e.preventDefault(); close_(); });
+    }
+    if(backdrop){
+      backdrop.classList.add('hidden');
+      backdrop.addEventListener('click', close_);
+      backdrop.addEventListener('touchend', function(e){ e.preventDefault(); close_(); });
+    }
+
+    // close drawer when a chapter button is tapped
+    sb.querySelectorAll('.sb-ch-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ setTimeout(close_, 200); });
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initMob);
+  } else {
+    initMob();
+  }
+})();
+</script>
+
+</body>
+</html>

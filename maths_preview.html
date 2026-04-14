@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DDCET 2026 – Maths Notes Preview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --primary-dark: #3730a3;
+      --secondary: #06b6d4;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card2: #263248;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --sidebar-w: 280px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: #0a0f1e;
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-logo {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-light);
+      letter-spacing: 0.5px;
+    }
+    .sidebar-logo p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .sidebar-nav { padding: 12px 0; flex: 1; }
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 12px 20px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      border-left: 3px solid transparent;
+    }
+    .nav-item:hover {
+      background: var(--bg-card);
+      color: var(--text);
+      border-left-color: var(--primary-light);
+    }
+    .nav-item.active {
+      background: rgba(79,70,229,0.15);
+      color: var(--primary-light);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+    .nav-item .badge {
+      margin-left: auto;
+      background: var(--primary-dark);
+      color: var(--primary-light);
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .nav-item .icon { font-size: 15px; }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 0;
+    }
+
+    /* Top Banner */
+    .chapter-banner {
+      background: linear-gradient(135deg, #1e1b4b 0%, #1e3a5f 50%, #0f172a 100%);
+      padding: 48px 48px 40px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .chapter-banner::after {
+      content: "∑";
+      position: absolute;
+      right: 60px; top: 10px;
+      font-size: 160px;
+      color: rgba(99,102,241,0.07);
+      font-weight: 900;
+    }
+    .chapter-tag {
+      display: inline-block;
+      background: rgba(79,70,229,0.2);
+      border: 1px solid var(--primary);
+      color: var(--primary-light);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .chapter-banner h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .chapter-banner p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    .chapter-meta {
+      display: flex;
+      gap: 20px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .meta-pill span:first-child { color: var(--text-muted); }
+    .meta-pill strong { color: var(--accent); }
+
+    /* Content */
+    .content { padding: 40px 48px; max-width: 900px; }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 20px;
+    }
+    .section-header .num {
+      width: 36px; height: 36px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--primary-light);
+      margin: 28px 0 12px;
+      padding-left: 12px;
+      border-left: 3px solid var(--primary);
+    }
+
+    p { font-size: 14.5px; line-height: 1.85; color: var(--text); margin-bottom: 14px; }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .card.primary { border-color: var(--primary); background: rgba(79,70,229,0.08); }
+    .card.success  { border-color: var(--success); background: rgba(16,185,129,0.08); }
+    .card.warning  { border-color: var(--accent);  background: rgba(245,158,11,0.08); }
+    .card.danger   { border-color: var(--danger);  background: rgba(239,68,68,0.08); }
+    .card.secondary{ border-color: var(--secondary);background: rgba(6,182,212,0.08); }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .card.primary .card-title  { color: var(--primary-light); }
+    .card.success .card-title  { color: var(--success); }
+    .card.warning .card-title  { color: var(--accent); }
+    .card.danger  .card-title  { color: var(--danger); }
+    .card.secondary .card-title{ color: var(--secondary); }
+
+    /* Formula Box */
+    .formula-box {
+      background: #0d1117;
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
+      color: #a5f3fc;
+      text-align: center;
+      line-height: 2;
+    }
+    .formula-box .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: left;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Matrix Visual */
+    .matrix-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .matrix {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 10px;
+      position: relative;
+      font-family: 'Fira Code', monospace;
+      font-size: 15px;
+    }
+    .matrix::before, .matrix::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 4px;
+      border: 2px solid var(--primary-light);
+    }
+    .matrix::before { left: 0; border-right: none; border-radius: 4px 0 0 4px; }
+    .matrix::after  { right: 0; border-left: none; border-radius: 0 4px 4px 0; }
+    .matrix-row {
+      display: flex;
+      gap: 20px;
+    }
+    .matrix-cell {
+      min-width: 28px;
+      text-align: center;
+      color: var(--text);
+    }
+    .matrix-cell.highlight { color: var(--accent); font-weight: 700; }
+
+    .det-bars {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 16px;
+      position: relative;
+      font-family: 'Fira Code', monospace;
+      font-size: 15px;
+      border-left: 3px solid var(--text-muted);
+      border-right: 3px solid var(--text-muted);
+    }
+
+    .arrow { font-size: 22px; color: var(--primary-light); }
+
+    /* Step by step */
+    .steps { counter-reset: step; margin: 16px 0; }
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #fff;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-content { flex: 1; }
+    .step-content p { margin: 0; }
+    .step-content .code {
+      font-family: 'Fira Code', monospace;
+      background: #0d1117;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #a5f3fc;
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* Exam tip */
+    .exam-tip {
+      background: rgba(245,158,11,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin: 20px 0;
+    }
+    .exam-tip .icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .exam-tip p { margin: 0; font-size: 13.5px; color: #fde68a; line-height: 1.7; }
+    .exam-tip strong { color: var(--accent); }
+
+    /* Table */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .styled-table th {
+      background: var(--primary-dark);
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .styled-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .styled-table tr:nth-child(even) td { background: var(--bg-card2); }
+    .styled-table tr:hover td { background: rgba(79,70,229,0.1); }
+
+    /* Practice Q */
+    .practice-q {
+      background: var(--bg-card2);
+      border-left: 4px solid var(--secondary);
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 14px 0;
+    }
+    .practice-q .q-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .practice-q p { margin: 0; font-size: 14px; }
+
+    .answer-reveal {
+      margin-top: 12px;
+      padding: 12px 16px;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid var(--success);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #6ee7b7;
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Progress */
+    .topic-progress {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 0 0 30px;
+      padding: 0 48px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 48px;
+    }
+    .topic-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .topic-chip.done {
+      background: rgba(16,185,129,0.15);
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .topic-chip.current {
+      background: rgba(79,70,229,0.2);
+      border-color: var(--primary);
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 36px 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    .highlight-text { color: var(--accent); font-weight: 600; }
+    .blue-text { color: var(--secondary); font-weight: 600; }
+    .green-text { color: var(--success); font-weight: 600; }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: #0d1117;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #a5f3fc;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h2>📐 DDCET Maths</h2>
+    <p>Complete Notes · 2026 Exam</p>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-title">Chapters</div>
+    <a class="nav-item active" href="#">
+      <span class="icon">🔢</span> Ch 1 · Determinants & Matrices <span class="badge">8%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">📐</span> Ch 2 · Trigonometry <span class="badge">6%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">➡️</span> Ch 3 · Vectors <span class="badge">4%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">📍</span> Ch 4 · Coordinate Geometry <span class="badge">4%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">🔁</span> Ch 5 · Functions & Limits <span class="badge">6%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">📈</span> Ch 6 · Differentiation <span class="badge">8%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">∫</span> Ch 7 · Integration <span class="badge">8%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">📊</span> Ch 8 · Logarithm <span class="badge">4%</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">📉</span> Ch 9 · Statistics <span class="badge">2%</span>
+    </a>
+    <div class="nav-section-title" style="margin-top:12px;">Quick Access</div>
+    <a class="nav-item" href="#">
+      <span class="icon">⭐</span> Important Formulas
+    </a>
+    <a class="nav-item" href="#">
+      <span class="icon">📝</span> Previous Year Questions
+    </a>
+  </nav>
+</aside>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+
+  <!-- Chapter Banner -->
+  <div class="chapter-banner">
+    <div class="chapter-tag">Chapter 1 · Preview Sample</div>
+    <h1>Determinants &amp; Matrices</h1>
+    <p>Start from zero and go all the way to DDCET level. Every concept explained in the simplest possible way with visuals, formulas, and solved examples.</p>
+    <div class="chapter-meta">
+      <div class="meta-pill"><span>Weightage</span><strong>8%</strong></div>
+      <div class="meta-pill"><span>Topics</span><strong>7 Topics</strong></div>
+      <div class="meta-pill"><span>Difficulty</span><strong>Medium</strong></div>
+      <div class="meta-pill"><span>Exam Year Asked</span><strong>2024 &amp; 2025</strong></div>
+    </div>
+  </div>
+
+  <!-- Topic Progress Chips -->
+  <div class="topic-progress">
+    <span class="topic-chip current">Determinant</span>
+    <span class="topic-chip">Matrices Concept</span>
+    <span class="topic-chip">Types of Matrices</span>
+    <span class="topic-chip">Matrix Operations</span>
+    <span class="topic-chip">Product of Matrices</span>
+    <span class="topic-chip">Adjoint &amp; Inverse</span>
+    <span class="topic-chip">Linear Equations</span>
+  </div>
+
+  <!-- ── Content ── -->
+  <div class="content">
+
+    <!-- SECTION 1: What is a Determinant -->
+    <div class="section-header">
+      <div class="num">1</div>
+      <h2>What is a Determinant?</h2>
+    </div>
+
+    <p>
+      Every <span class="highlight-text">square matrix</span> (a matrix where rows = columns) has a special number attached to it. That number is called its <span class="highlight-text">Determinant</span>.
+    </p>
+    <p>
+      Think of it this way — a matrix is like a box full of numbers. The determinant is a single number you can calculate from that box. It tells you a lot about what the matrix does.
+    </p>
+
+    <div class="card primary">
+      <div class="card-title">📌 Simple Definition</div>
+      <p style="margin:0">A <strong>Determinant</strong> is a single number calculated from a square matrix. It tells us whether the matrix has an inverse or not, and helps us solve equations. We write it as <code>det(A)</code> or <code>|A|</code>.</p>
+    </div>
+
+    <!-- 1x1 Determinant -->
+    <h3>1×1 Matrix Determinant (Simplest case)</h3>
+    <p>For a 1×1 matrix, the determinant is just the number itself.</p>
+    <div class="matrix-wrap">
+      <div style="text-align:center">
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Matrix A</div>
+        <div class="matrix">
+          <div class="matrix-row"><div class="matrix-cell highlight">5</div></div>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div style="text-align:center">
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">det(A)</div>
+        <div style="font-size:28px;font-weight:800;color:var(--success);">= 5</div>
+      </div>
+    </div>
+
+    <!-- 2x2 Determinant -->
+    <h3>2×2 Matrix Determinant</h3>
+    <p>This is the most important one for your exam. Here is how it works:</p>
+
+    <div class="matrix-wrap">
+      <div style="text-align:center">
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Matrix A</div>
+        <div class="matrix">
+          <div class="matrix-row">
+            <div class="matrix-cell highlight">a</div>
+            <div class="matrix-cell">b</div>
+          </div>
+          <div class="matrix-row">
+            <div class="matrix-cell">c</div>
+            <div class="matrix-cell highlight">d</div>
+          </div>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div style="text-align:center">
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">det(A) = |A|</div>
+        <div style="font-size:20px;font-weight:700;color:var(--text);font-family:'Fira Code';">ad − bc</div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">📐 Formula · 2×2 Determinant</div>
+      |A| = (a × d) − (b × c)
+    </div>
+
+    <p>The rule is simple: <span class="blue-text">multiply the diagonal going down-right (a×d)</span>, then <span class="highlight-text">subtract the diagonal going down-left (b×c)</span>.</p>
+
+    <!-- Solved Example -->
+    <h3>✅ Solved Example — 2×2</h3>
+
+    <div class="card success">
+      <div class="card-title">✅ Solved Example</div>
+      <p>Find the determinant of:</p>
+      <div class="matrix-wrap" style="justify-content:flex-start; margin: 12px 0;">
+        <div class="matrix">
+          <div class="matrix-row">
+            <div class="matrix-cell">3</div>
+            <div class="matrix-cell">2</div>
+          </div>
+          <div class="matrix-row">
+            <div class="matrix-cell">1</div>
+            <div class="matrix-cell">4</div>
+          </div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <p>Identify: a = 3, b = 2, c = 1, d = 4</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <p>Apply the formula: <code>|A| = (a×d) − (b×c)</code></p>
+            <span class="code">|A| = (3 × 4) − (2 × 1)</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <p>Calculate:</p>
+            <span class="code">|A| = 12 − 2 = <strong style="color:#6ee7b7">10</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3x3 Determinant -->
+    <h3>3×3 Matrix Determinant</h3>
+    <p>For a 3×3 matrix, we use the <span class="highlight-text">expansion along the first row</span>. Don't worry — it looks big but it is actually just repeating the 2×2 formula 3 times!</p>
+
+    <div class="matrix-wrap">
+      <div class="matrix">
+        <div class="matrix-row">
+          <div class="matrix-cell highlight">a₁</div>
+          <div class="matrix-cell">b₁</div>
+          <div class="matrix-cell">c₁</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-cell">a₂</div>
+          <div class="matrix-cell">b₂</div>
+          <div class="matrix-cell">c₂</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-cell">a₃</div>
+          <div class="matrix-cell">b₃</div>
+          <div class="matrix-cell">c₃</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="label">📐 Formula · 3×3 Determinant (Expansion along Row 1)</div>
+      |A| = a₁(b₂c₃ − b₃c₂) − b₁(a₂c₃ − a₃c₂) + c₁(a₂b₃ − a₃b₂)
+    </div>
+
+    <div class="card warning">
+      <div class="card-title">⚡ Easy way to remember the signs</div>
+      <p style="margin:0">When expanding along the first row, the signs follow: <strong style="color:var(--success)">+ − +</strong></p>
+      <p style="margin-top:8px;">First element → <span class="green-text">+ (positive)</span>, Second → <span style="color:var(--danger);font-weight:600">− (negative)</span>, Third → <span class="green-text">+ (positive)</span></p>
+    </div>
+
+    <h3>✅ Solved Example — 3×3</h3>
+    <div class="card success">
+      <div class="card-title">✅ Solved Example</div>
+      <p>Find the determinant of:</p>
+      <div class="matrix-wrap" style="justify-content:flex-start; margin: 12px 0;">
+        <div class="matrix">
+          <div class="matrix-row">
+            <div class="matrix-cell">1</div>
+            <div class="matrix-cell">2</div>
+            <div class="matrix-cell">3</div>
+          </div>
+          <div class="matrix-row">
+            <div class="matrix-cell">4</div>
+            <div class="matrix-cell">5</div>
+            <div class="matrix-cell">6</div>
+          </div>
+          <div class="matrix-row">
+            <div class="matrix-cell">7</div>
+            <div class="matrix-cell">8</div>
+            <div class="matrix-cell">9</div>
+          </div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <p>Expand along Row 1 using elements 1, 2, 3</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <p><span class="green-text">+1 ×</span> det of minor (remove row 1, col 1):</p>
+            <span class="code">+1 × [(5×9) − (6×8)] = 1 × [45 − 48] = 1 × (−3) = −3</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <p><span style="color:var(--danger);font-weight:600">−2 ×</span> det of minor (remove row 1, col 2):</p>
+            <span class="code">−2 × [(4×9) − (6×7)] = −2 × [36 − 42] = −2 × (−6) = +12</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <p><span class="green-text">+3 ×</span> det of minor (remove row 1, col 3):</p>
+            <span class="code">+3 × [(4×8) − (5×7)] = 3 × [32 − 35] = 3 × (−3) = −9</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <p>Add all three:</p>
+            <span class="code">|A| = −3 + 12 + (−9) = <strong style="color:#6ee7b7">0</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="card warning" style="margin-top:16px;padding:12px 16px;">
+        <div class="card-title">💡 Note</div>
+        <p style="margin:0;font-size:13px;">When determinant = 0, the matrix is called a <strong>Singular Matrix</strong>. It has no inverse!</p>
+      </div>
+    </div>
+
+    <!-- Singular vs Non-Singular -->
+    <div class="divider"></div>
+    <div class="section-header">
+      <div class="num">2</div>
+      <h2>Singular vs Non-Singular Matrix</h2>
+    </div>
+    <p>The value of the determinant tells us something very important about the matrix:</p>
+
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Condition</th>
+          <th>Has Inverse?</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--danger)">Singular Matrix</strong></td>
+          <td>det(A) = 0</td>
+          <td>❌ No</td>
+          <td>det = 0</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--success)">Non-Singular Matrix</strong></td>
+          <td>det(A) ≠ 0</td>
+          <td>✅ Yes</td>
+          <td>det = 10</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="exam-tip">
+      <div class="icon">🎯</div>
+      <p><strong>DDCET Exam Tip:</strong> This is asked almost every year! If they ask "Find the value of x so that the matrix is singular" — just set det(A) = 0 and solve for x. Simple!</p>
+    </div>
+
+    <!-- Practice Question -->
+    <div class="divider"></div>
+    <div class="section-header">
+      <div class="num">3</div>
+      <h2>Practice Questions</h2>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-label">📝 Practice Q1</div>
+      <p>Find the determinant of the matrix A = [[2, 5], [1, 3]]</p>
+      <div class="answer-reveal">Answer: |A| = (2×3) − (5×1) = 6 − 5 = <strong>1</strong></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-label">📝 Practice Q2 (From DDCET 2024)</div>
+      <p>For what value of x is the matrix [[x, 2], [3, 6]] a singular matrix?</p>
+      <div class="answer-reveal">Set det = 0: (6x) − (2×3) = 0 → 6x − 6 = 0 → x = <strong>1</strong></div>
+    </div>
+
+    <div class="card secondary" style="margin-top:32px;">
+      <div class="card-title">🔔 This is just a PREVIEW</div>
+      <p style="margin:0">The full notes will cover all 9 chapters with every topic, formula, visual, solved example, and DDCET exam questions — all in this same style. Tell me if you like this design or want any changes!</p>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+</body>
+</html>
