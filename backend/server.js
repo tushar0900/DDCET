@@ -306,30 +306,41 @@ app.post('/api/get-progress', async (req, res) => {
 
 // ==================== MONGOOSE CONNECTION ====================
 
-mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log('✓ Connected to MongoDB Atlas');
-    console.log(`✓ Database: ${MONGODB_URI.split('/').pop()}`);
-
-    // Start server
-    app.listen(PORT, () => {
-      console.log(`✓ Server running on http://localhost:${PORT}`);
-      console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
+const connectDatabase = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-  })
-  .catch((err) => {
+    console.log('✓ Connected to MongoDB');
+    console.log(`✓ Database: ${MONGODB_URI.split('/').pop()}`);
+    return true;
+  } catch (err) {
     console.error('✗ MongoDB connection failed:', err.message);
-    console.error('Please check your MONGODB_URI environment variable.');
-    process.exit(1);
+    console.log('\n⚠️  Attempting to start server in fallback mode (data won\'t persist)...\n');
+    return false;
+  }
+};
+
+connectDatabase().then((isConnected) => {
+  app.listen(PORT, () => {
+    console.log(`✓ Server running on http://localhost:${PORT}`);
+    console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
+    if (!isConnected) {
+      console.log('⚠️  WARNING: Database not connected. Data will not persist.');
+      console.log('   Please set MONGODB_URI in .env and restart the server.');
+    }
   });
+}).catch((err) => {
+  console.error('✗ Fatal error:', err);
+  process.exit(1);
+});
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
   console.log('\nShutting down gracefully...');
-  await mongoose.connection.close();
+  if (mongoose.connection.readyState === 1) {
+    await mongoose.connection.close();
+  }
   process.exit(0);
 });
