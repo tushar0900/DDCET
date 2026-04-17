@@ -312,21 +312,61 @@ app.post('/api/get-progress', async (req, res) => {
 
 // ==================== MONGOOSE CONNECTION ====================
 
-const connectDatabase = async () => {
+const connectDatabase = async (retryCount = 0, maxRetries = 3) => {
   try {
-    console.log('🔄 Connecting to MongoDB...');
+    if (retryCount === 0) {
+      console.log('🔄 Connecting to MongoDB...');
+    }
+    
     await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 10000,
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 15000,
+      retryWrites: true,
     });
-    console.log('✓ Connected to MongoDB');
-    console.log(`✓ Database: ${MONGODB_URI.split('/').pop()}`);
+    
+    console.log('✓ Successfully connected to MongoDB Atlas');
+    const dbName = MONGODB_URI.split('/').pop().split('?')[0];
+    console.log(`✓ Database: ${dbName}`);
     return true;
+    
   } catch (err) {
-    console.error('✗ MongoDB connection failed:', err.message);
-    console.log('\n⚠️  Attempting to start server in fallback mode (data won\'t persist)...\n');
+    console.error(`\n✗ MongoDB connection failed (Attempt ${retryCount + 1}/${maxRetries + 1}):`);
+    console.error(`  Error: ${err.message}\n`);
+    
+    // Diagnostic information
+    if (err.message.includes('bad auth')) {
+      console.log('🔍 DIAGNOSIS: Authentication Error');
+      console.log('   Possible causes:');
+      console.log('   1. ❌ IP address not whitelisted in MongoDB Atlas');
+      console.log('   2. ❌ Incorrect username or password');
+      console.log('   3. ❌ Database user deleted or permissions removed\n');
+      console.log('   🔧 Fix:');
+      console.log('   1. Go to MongoDB Atlas → Network Access');
+      console.log('   2. Add your IP address or "0.0.0.0/0" to whitelist');
+      console.log('   3. Verify username "Tushar" and password in Database Access\n');
+    } else if (err.message.includes('ENOTFOUND') || err.message.includes('ECONNREFUSED')) {
+      console.log('🔍 DIAGNOSIS: Connection Error');
+      console.log('   Possible causes:');
+      console.log('   1. ❌ MongoDB cluster not running');
+      console.log('   2. ❌ Invalid cluster URL or region\n');
+    } else if (err.message.includes('ETIMEDOUT')) {
+      console.log('🔍 DIAGNOSIS: Connection Timeout');
+      console.log('   Possible causes:');
+      console.log('   1. ❌ IP address blocked by firewall/network');
+      console.log('   2. ❌ MongoDB cluster taking too long to respond\n');
+    }
+    
+    if (retryCount < maxRetries) {
+      const delay = 3000 * (retryCount + 1); // Exponential backoff: 3s, 6s, 9s
+      console.log(`⏳ Retrying in ${delay / 1000} seconds...\n`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return connectDatabase(retryCount + 1, maxRetries);
+    }
+    
+    console.log('❌ Failed to connect after retries.');
+    console.log('📖 Check MONGODB_AUTH_TROUBLESHOOTING.md for detailed fixes.\n');
     return false;
   }
 };
@@ -336,8 +376,9 @@ connectDatabase().then((isConnected) => {
     console.log(`✓ Server running on http://localhost:${PORT}`);
     console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
     if (!isConnected) {
-      console.log('⚠️  WARNING: Database not connected. Data will not persist.');
-      console.log('   Please set MONGODB_URI in .env and restart the server.');
+      console.log('\n⚠️  WARNING: Running in FALLBACK MODE - Database not connected');
+      console.log('   Data will NOT persist between server restarts');
+      console.log('   To fix: Whitelist your IP in MongoDB Atlas Network Access\n');
     }
   });
 }).catch((err) => {
