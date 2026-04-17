@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -7,6 +8,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 console.log('🔧 Initializing server...');
+console.log(`📁 Working directory: ${__dirname}`);
+console.log(`📁 .env file path: ${path.join(__dirname, '.env')}`);
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -16,6 +19,7 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ddcet_
 console.log('📝 Configuration loaded:');
 console.log(`   - PORT: ${PORT}`);
 console.log(`   - MONGODB_URI: ${MONGODB_URI}`);
+console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'not set'}`);
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
