@@ -1,15 +1,31 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+const fs = require('fs');
+
+console.log('🔧 Initializing server...');
+console.log(`📁 Working directory: ${__dirname}`);
+
+const envPath = path.join(__dirname, '.env');
+console.log(`📁 .env file path: ${envPath}`);
+console.log(`📁 .env file exists: ${fs.existsSync(envPath)}`);
+
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  console.log(`📄 .env file size: ${envContent.length} bytes`);
+  console.log(`📄 .env file content (first 200 chars): ${envContent.substring(0, 200)}`);
+}
+
+const dotenvResult = require('dotenv').config({ path: envPath });
+console.log(`📋 dotenv config result:`, dotenvResult.parsed ? 'SUCCESS' : 'FAILED');
+if (dotenvResult.error) {
+  console.error(`❌ dotenv error: ${dotenvResult.error.message}`);
+}
+
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
-console.log('🔧 Initializing server...');
-console.log(`📁 Working directory: ${__dirname}`);
-console.log(`📁 .env file path: ${path.join(__dirname, '.env')}`);
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -18,8 +34,10 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ddcet_
 
 console.log('📝 Configuration loaded:');
 console.log(`   - PORT: ${PORT}`);
+console.log(`   - SECRET_KEY: ${SECRET_KEY.substring(0, 20)}...`);
 console.log(`   - MONGODB_URI: ${MONGODB_URI}`);
 console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'not set'}`);
+console.log(`   - All env vars: ${Object.keys(process.env).filter(k => k.includes('MONGO') || k.includes('PORT') || k.includes('SECRET')).join(', ')}`);
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
