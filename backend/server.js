@@ -6,10 +6,16 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+console.log('🔧 Initializing server...');
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ddcet_hub';
+
+console.log('📝 Configuration loaded:');
+console.log(`   - PORT: ${PORT}`);
+console.log(`   - MONGODB_URI: ${MONGODB_URI}`);
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -308,9 +314,12 @@ app.post('/api/get-progress', async (req, res) => {
 
 const connectDatabase = async () => {
   try {
+    console.log('🔄 Connecting to MongoDB...');
     await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 10000,
     });
     console.log('✓ Connected to MongoDB');
     console.log(`✓ Database: ${MONGODB_URI.split('/').pop()}`);
