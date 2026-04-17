@@ -1,0 +1,27 @@
+# DDCET STUDY HUB - DEPLOYMENT GUIDE
+
+This project consists of two parts:
+1. FRONTEND (HTML, CSS, JS) - Can be hosted on GitHub Pages.
+2. BACKEND (Node.js + SQLite) - MUST be hosted on a service like Render.com, Railway.app, or a VPS.
+
+## 1. BACKEND DEPLOYMENT (Do this first)
+- Upload the `backend/` folder to a new GitHub repository OR push it to a hosting service.
+- Use the following settings:
+  - Build Command: `npm install`
+  - Start Command: `npm start` (or `node server.js`)
+  - Once deployed, you will get a URL (e.g., https://ddcet-backend.onrender.com).
+
+## 2. FRONTEND CONFIGURATION
+- Open the file `auth.js` in the root folder.
+- Change the `API_BASE_URL` at the top:
+  FROM: const API_BASE_URL = 'http://localhost:5001/api';
+  TO:   const API_BASE_URL = 'https://YOUR-BACKEND-URL.com/api';
+
+## 3. FRONTEND DEPLOYMENT
+- Upload all HTML files and `auth.js` to GitHub Pages.
+- Ensure the folder structure is maintained.
+
+## NOTE ON DATABASE (SQLite)
+- Note that SQLite in a free tier service (like Render) is "Ephemeral" (data resets on every restart). 
+- If you need persistent data on Render, you must use a "Disk" or switch to a PostgreSQL database.
+- For a small student project, you can use Supabase or Neon.tech for the database instead of SQLite if you want to be extra professional.

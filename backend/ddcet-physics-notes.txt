@@ -1,0 +1,1218 @@
+DDCET 2026
+Physics Notes
+Section 01 — BE-01 | Basics of Science and Engineering
+
+Chapter
+Topic
+Weightage
+1
+Units and Measurements
+12%
+2
+Classical Mechanics
+12%
+3
+Electric Current
+12%
+4
+Heat and Thermometry
+12%
+5
+Wave Motion, Optics and Acoustics
+12%
+
+Total Physics Weightage: 60%  |  Study these notes completely for DDCET 2026
+
+Chapter 1 
+Units & Measurements
+Physical quantities, SI units, conversions, Vernier, Screw Gauge, errors
+
+1.1  Physical Quantities and Units
+Physical Quantity: A quantity that can be measured and expressed in the form of laws. Represented completely by magnitude and unit. Example: 150 metres = 150 × unit of length.
+
+The 7 Fundamental (Base) Quantities — SI System
+These 7 quantities are independent of each other — cannot be derived from one another.
+Quantity
+Symbol
+SI Unit
+Unit Symbol
+Length
+l, x, r
+Metre
+m
+Mass
+m
+Kilogram
+kg
+Time
+t
+Second
+s
+Electric Current
+I
+Ampere
+A
+Thermodynamic Temp
+T
+Kelvin
+K
+Amount of Substance
+n
+Mole
+mol
+Luminous Intensity
+Iv
+Candela
+cd
+
+★  Fundamental units cannot be derived from one another and cannot be resolved into simpler units.
+
+Derived Physical Quantities
+All quantities derived from 7 base quantities. Examples:
+Quantity
+Relation
+MKS Unit
+CGS Unit
+Area
+L × B
+m²
+cm²
+Volume
+L × B × H
+m³
+cm³
+Density
+mass/volume
+kg/m³
+g/cm³
+Speed/Velocity
+distance/time
+m/s (ms⁻¹)
+cm/s
+Acceleration
+Δv/t
+m/s² (ms⁻²)
+cm/s²
+Force
+mass × accel.
+newton (N)
+dyne
+Work/Energy
+force × dist.
+joule (J)
+erg
+Power
+work/time
+watt (W) = J/s
+erg/s
+Pressure
+force/area
+pascal (Pa) = N/m²
+dyne/cm²
+Linear Momentum
+mass × velocity
+kg ms⁻¹
+g cm/s
+Frequency
+vibrations/second
+Hz (s⁻¹)
+s⁻¹
+Impulse
+force × time
+N·s (Ns)
+dyne·s
+Surface Tension
+force/length
+N/m
+dyne/cm
+Coefficient of Viscosity
+F·r/(A·v)
+Pa·s
+Pa·s
+
+Important Practical Units of Length
+Unit
+Symbol
+Value in Metres
+Angstrom
+Å
+10⁻¹⁰ m
+Nanometre
+nm
+10⁻⁹ m
+Micron (micrometre)
+μm
+10⁻⁶ m
+Fermi (femtometre)
+fm
+10⁻¹⁵ m
+Astronomical Unit
+AU
+1.496 × 10¹¹ m
+Light Year
+ly
+9.46 × 10¹⁵ m
+Atomic Mass Unit
+amu
+1.66 × 10⁻²⁷ kg (mass unit)
+
+1.2  MKS ↔ CGS Conversions
+Key relationships: 1 m = 100 cm = 10² cm  |  1 kg = 1000 g = 10³ g
+
+Conversion
+Calculation
+Result
+Area: 1 m² → cm²
+(100 cm)² = (10²)² cm²
+1 m² = 10⁴ cm²
+Volume: 1 m³ → cm³
+(100 cm)³ = 10⁶ cm³
+1 m³ = 10⁶ cm³
+Density: 1 kg/m³ → g/cm³
+10³ g / 10⁶ cm³
+1 kg/m³ = 10⁻³ g/cm³
+g: 9.8 m/s² → cm/s²
+9.8 × 100
+9.8 m/s² = 980 cm/s²
+Force: 1 N → dyne
+10³ g × 10² cm/s²
+1 N = 10⁵ dyne
+Work: 1 J → erg
+1 kg m²/s² → g cm²/s²
+1 J = 10⁷ erg
+Speed: 36 km/h → m/s
+36 × 1000 / 3600
+36 km/h = 10 m/s
+Pressure: 1 Pa
+N/m² → dyne/cm²
+1 Pa = 10 dyne/cm²
+
+🔑 KEY FORMULAS TO REMEMBER
+	•	1 m² = 10⁴ cm²  |  1 m³ = 10⁶ cm³  |  1 kg/m³ = 10⁻³ g/cm³
+	•	1 N = 10⁵ dyne  |  1 J = 10⁷ erg  |  1 Pa = 10 dyne/cm²
+	•	g = 9.8 m/s² = 980 cm/s²
+	•	1 km/h = 5/18 m/s  |  1 m/s = 18/5 km/h = 3.6 km/h
+
+1.3  Vernier Caliper
+Invented by: Pierre Vernier (French mathematician) in 1631. Measures to 0.1 mm or 0.05 mm or 0.02 mm precision.
+
+Parts
+Part
+Function
+Main Scale
+Fixed scale — upper in inches, lower in cm
+Vernier Scale
+Small sliding scale on main scale
+External Jaws (A & C)
+Measure outer dimensions (length, diameter)
+Internal Jaws (B & D)
+Measure inner dimensions (bore, slot width)
+Depth Probe/Rod
+Measures depth of holes or slots
+Locking Screws
+Fix the reading in position
+
+Principle & Least Count
+N divisions of Vernier Scale = (N−1) divisions of Main Scale
+LC = 1 MSD − 1 VSD  =  (1/N) × MSD
+Where N = number of vernier divisions, MSD = main scale division value
+For standard vernier: 1 MSD = 1 mm, N = 10  →  LC = 0.1 mm = 0.01 cm
+Reading = Main Scale Reading (MSR) + (Vernier Coincidence × LC)
+
+EXAMPLE: Taking a Vernier Reading
+MSR = 2.3 cm. The 7th vernier division coincides with a main scale mark. LC = 0.01 cm.
+Solution: Reading = 2.3 + (7 × 0.01) = 2.3 + 0.07 = 2.37 cm
+
+Zero Error
+Type
+Condition
+Correction
+No zero error
+Vernier 0 coincides with main scale 0
+No correction needed
+Positive zero error
+Vernier 0 is to the RIGHT of main scale 0
+Subtract zero error from observed reading
+Negative zero error
+Vernier 0 is to the LEFT of main scale 0
+Add magnitude of zero error to observed reading
+Correct Reading = Observed Reading − Zero Error (with sign)
+
+1.4  Micrometer Screw Gauge
+Purpose: Measures thickness of thin wire, paper, sheet, blade. More precise than Vernier — measures to 0.01 mm = 0.001 cm.
+Principle: Linear displacement of spindle is proportional to angular displacement. One full rotation = one pitch distance.
+
+Parts
+Part
+Function
+U-Frame (C-clamp)
+Rigid frame holding all components
+Anvil
+Fixed measuring face
+Spindle
+Moving face — advances toward/away from anvil
+Barrel / Sleeve
+Hollow tube with linear main scale (mm markings)
+Thimble
+Rotating drum with circular scale (50 divisions)
+Ratchet Stop
+Prevents over-tightening — clicks when proper pressure reached
+Lock Nut
+Locks the reading in place
+
+Pitch and Least Count
+Pitch Distance: Distance between two consecutive threads = distance spindle moves in one full rotation. Typical: 0.5 mm.
+
+LC = Pitch / Total circular divisions = 0.5 mm / 50 = 0.01 mm = 0.001 cm
+Reading = Barrel (Main Scale) Reading + (Thimble reading × LC)
+
+EXAMPLE: Taking a Micrometer Reading
+Barrel reads 7.5 mm (7 mm marks visible + 0.5 mm mark below datum line). Thimble: 24th division aligns with datum. LC = 0.01 mm.
+Solution: Reading = 7.5 + (24 × 0.01) = 7.5 + 0.24 = 7.74 mm
+
+1.5  Errors in Measurement
+No measurement is ever perfect. The difference between true value and measured value is the error.
+
+Types of Errors
+Type
+Direction
+Cause
+Minimized by
+Systematic Error
+Always one direction (+ or −)
+Known: instrument defects, wrong technique, personal habits, external conditions
+Improving technique, better instruments
+Random Error
+Unpredictable (+ or −)
+Unknown: random variations in temperature, pressure, voltage, vibrations
+Repeating observations many times and taking arithmetic mean
+
+Estimation of Errors (Step by Step)
+Let a quantity be measured n times, values: a₁, a₂, a₃, ..., aₙ
+
+Mean Value:  ā = (a₁ + a₂ + ... + aₙ) / n
+Arithmetic mean = best (true) value
+Absolute Error (each):  Δaᵢ = ā − aᵢ
+Can be positive or negative
+Mean Absolute Error:  Δā = (|Δa₁| + |Δa₂| + ... + |Δaₙ|) / n
+Always positive — take magnitudes
+Final Result:  a = ā ± Δā
+True value lies between ā − Δā and ā + Δā
+Relative Error = Δā / ā     |     Percentage Error = (Δā / ā) × 100 %
+
+EXAMPLE: Refractive index measurements
+Values: 1.29, 1.33, 1.34, 1.35, 1.32, 1.36, 1.30, 1.33
+Solution: Mean ā = 10.62/8 = 1.33 | Absolute errors: 0.04, 0.00, 0.01, 0.02, 0.01, 0.03, 0.03, 0.00 | Sum = 0.14 | Δā = 0.14/8 = 0.0175 ≈ 0.02 | Relative error = 0.02/1.33 = ±0.015 | Percentage error = ±1.5%
+
+Propagation of Errors
+Operation
+Error Rule
+Example
+Z = A + B  or  Z = A − B
+ΔZ = ±(ΔA + ΔB)
+Absolute errors ADD in both addition & subtraction
+Z = A × B  or  Z = A / B
+ΔZ/Z = ±(ΔA/A + ΔB/B)
+Relative errors ADD in both mult. & division
+Z = Aⁿ
+ΔZ/Z = n × (ΔA/A)
+Relative error multiplied by the power
+
+EXAMPLE: g = 4π²L/T²  — Error in g
+Error in T = 2%, error in L = 1%
+Solution: Δg/g = ΔL/L + 2(ΔT/T) = 1% + 2×2% = 5%
+EXAMPLE: Capacitors in parallel
+C₁ = (1.3 ± 0.1) μF, C₂ = (2.4 ± 0.2) μF
+Solution: Cp = 3.7 μF | ΔCp = ±(0.1+0.2) = ±0.3 μF | % error = 0.3/3.7 × 100 = ±8.1%
+EXAMPLE: Difference of lengths
+l₁ = (5.62 ± 0.01) cm, l₂ = (4.34 ± 0.02) cm
+Solution: l = 1.28 cm | Δl = ±0.03 cm | % error = 0.03/1.28 × 100 = ±2.34%
+
+Significant Figures
+Rule
+Example
+All non-zero digits are significant
+1, 2, 3... all significant
+Zeros BETWEEN non-zero digits: significant
+1003 → 4 sig figs
+Leading zeros: NOT significant
+0.005308 → 4 sig figs (5, 3, 0, 8)
+Trailing zeros AFTER decimal: significant
+2.500 → 4 sig figs
+
+🔑 KEY FORMULAS TO REMEMBER
+	•	LC (Vernier) = 1 MSD/N = 0.01 cm (N=10, 1MSD=1mm)
+	•	LC (Micrometer) = Pitch/n = 0.01 mm (pitch=0.5mm, n=50)
+	•	Mean absolute error Δā = Σ|Δaᵢ|/n | Result: a = ā ± Δā
+	•	Relative error = Δā/ā | Percentage error = (Δā/ā)×100
+	•	Z=A±B: ΔZ=ΔA+ΔB | Z=AB or A/B: ΔZ/Z=ΔA/A+ΔB/B | Z=Aⁿ: ΔZ/Z=n×ΔA/A
+	•	1 N=10⁵ dyne | 1 J=10⁷ erg | 1 m²=10⁴ cm² | 1 m³=10⁶ cm³
+
+Chapter 2 
+Classical Mechanics
+Linear motion, Newton's laws, momentum, circular motion, work and energy
+
+2.0  Linear Motion — Kinematics
+Linear motion = motion along a straight line. Kinematics describes motion without asking WHY it happens.
+
+Term
+Symbol
+Definition
+Unit
+Distance
+d
+Total path length covered (scalar)
+m
+Displacement
+s
+Shortest straight-line path from start to end (vector)
+m
+Speed
+v
+Distance per unit time (scalar)
+m/s
+Velocity
+v
+Displacement per unit time (vector)
+m/s (ms⁻¹)
+Acceleration
+a
+Rate of change of velocity (vector)
+m/s² (ms⁻²)
+Initial velocity
+u
+Velocity at t = 0
+m/s
+Final velocity
+v
+Velocity at time t
+m/s
+
+Equations of Motion — Uniform Acceleration
+⚠  Valid ONLY when: (1) acceleration a is constant, (2) motion is in a straight line.
+
+1st Equation:   v = u + at
+v = final velocity, u = initial velocity, a = acceleration, t = time
+2nd Equation:   s = ut + ½at²
+s = displacement covered in time t
+3rd Equation:   v² = u² + 2as
+Use when time t is not given or not needed
+4th Equation:   s = (u + v) × t / 2
+Use when both u and v are known; average velocity × time
+
+★  For FREE FALL under gravity: a = g = 9.8 m/s² (downward). For body dropped from rest: u = 0. For body thrown upward: v = 0 at highest point.
+
+EXAMPLE: Car starts from rest, reaches 72 km/h in 10 s
+Find: (a) acceleration, (b) distance
+Solution: u=0, v=72×5/18=20 m/s, t=10s | a=(20-0)/10 = 2 m/s² | s=0×10+½×2×100 = 100 m
+EXAMPLE: Ball thrown upward at 20 m/s
+Find: (a) time to reach top, (b) maximum height
+Solution: (a) v=0, 0=20-9.8t → t=2.04 s | (b) 0²=20²-2×9.8×h → h=400/19.6 = 20.4 m
+EXAMPLE: Brakes applied to car at 30 m/s; stops in 100 m
+Find retardation
+Solution: v=0, u=30, s=100 | 0=900+2a×100 → a = -4.5 m/s² (retardation = 4.5 m/s²)
+
+2.1  Force and Newton's Laws of Motion
+Force: An external push or pull that: (1) produces/tries to produce motion in a body at rest, (2) stops/tries to stop motion, (3) changes/tries to change direction of motion.
+
+Contact Forces
+Non-Contact (Field) Forces
+Friction force
+Gravitational force
+Normal force
+Magnetic force
+Air resistance
+Electrostatic force
+Tension force
+—
+Spring force
+—
+
+Newton's Three Laws of Motion
+Law
+Statement
+Mathematical Form
+1st Law (Inertia)
+A body stays at rest or in uniform motion unless acted upon by external force. Mass is measure of inertia.
+F_net = 0 ↔ constant velocity
+2nd Law (Force)
+Rate of change of momentum = applied force. The change occurs in the direction of force.
+F = ma = dp/dt
+1 N = 1 kg × 1 m/s²
+3rd Law (Action-Reaction)
+For every action there is equal and opposite reaction. Forces act on different bodies.
+F₁₂ = −F₂₁
+
+Units of Force
+Force = Mass × Acceleration
+System
+Unit
+Definition
+Conversion
+SI (MKS)
+Newton (N)
+Force giving 1 kg a 1 ms⁻² acceleration
+—
+CGS
+Dyne
+Force giving 1 g a 1 cm s⁻² acceleration
+1 N = 10⁵ dyne
+
+EXAMPLE: Find applied force
+Mass = 5 kg, u = 2 ms⁻¹, v = 3.5 ms⁻¹, t = 2 s
+Solution: a = (3.5-2)/2 = 0.75 ms⁻² | F = ma = 5×0.75 = 3.75 N
+EXAMPLE: Find acceleration
+F = 15 N, m = 3 kg
+Solution: a = F/m = 15/3 = 5 ms⁻²
+EXAMPLE: Find mass
+F = 20 N, a = 5 ms⁻²
+Solution: M = F/a = 20/5 = 4 kg
+
+2.2  Linear Momentum and Impulse
+Linear Momentum (p): Product of mass and velocity. Vector — direction same as velocity.
+p = m × v      SI unit: kg ms⁻¹  |  CGS unit: g cm s⁻¹
+
+Condition
+Relationship
+m constant
+p ∝ v (momentum proportional to velocity)
+v constant
+p ∝ m (momentum proportional to mass)
+Two bodies, equal momentum
+M₁v₁ = M₂v₂  →  v₂/v₁ = M₁/M₂ (heavier body: smaller velocity)
+
+Impulse of Force
+Impulse: Large force acting for a very short time. Impulse = change in momentum.
+Impulse = F × t = Δp = m·v₂ − m·v₁
+SI unit: N·s (Ns) or kg ms⁻¹  |  CGS: dyne·second  |  Vector quantity
+
+Situation
+How impulse principle applies
+Cricket player lowers hands while catching ball
+Increases time → reduces force → hands not hurt
+Person falls on sand/cushion (not cement floor)
+Sand yields → longer time → smaller force → less injury
+Glasswares wrapped in paper for packing
+Paper increases impact time → reduces average force → less breakage
+Shock absorbers in vehicles
+Increases time of impact → reduces jerk force on rider
+Train bogies provided with buffers
+Buffers increase impact time → reduce jerks during shunting
+
+2.3  Circular Motion
+Angular Velocity (ω): Angle described by rotating body per unit time. Denoted ω (omega). Unit: radians/second (rad/s).
+ω = θ/t = 2π/T = 2πf
+θ = angle in radians, T = time period, f = frequency (Hz)
+v = rω    (linear velocity = radius × angular velocity)
+r = radius of circular path
+Angular acceleration:  α = (ω₂ − ω₁)/t  [rad/s²]
+Linear acceleration:   a = rα
+
+★  All particles in a rotating body have the SAME angular velocity ω, but different linear velocities v = rω. Particles farther from axis move faster.
+
+Centripetal and Centrifugal Force
+Force
+Direction
+Nature
+Formula
+Centripetal Force
+Inward (towards centre)
+REAL force — maintains circular motion
+F = mv²/r = mω²r
+Centrifugal Force
+Outward (away from centre)
+PSEUDO/apparent force — inertia of body
+Equal in magnitude to centripetal force
+
+Centripetal Force:  F = mv²/r = mω²r
+Centripetal Acceleration: a = v²/r = ω²r
+
+Vertical Circular Motion — Tension in String
+At LOWEST point:  T = mg + mv²/r  (MAXIMUM tension)
+At HIGHEST point:  T = mv²/r − mg  (MINIMUM tension)
+
+EXAMPLE: Body in vertical circular motion
+Mass 2 kg, r = 1 m, v = 2 m/s, g = 10 m/s². Find tension at lowest point.
+Solution: T = mg + mv²/r = 2×10 + 2×4/1 = 20 + 8 = 28 N
+EXAMPLE: Angular velocity of flywheel at 180 rpm
+
+Solution: ω = 2π × (180/60) = 2π × 3 = 6π ≈ 18.85 rad/s
+EXAMPLE: Linear velocity: ω = 70 rad/s, r = 0.5 m
+
+Solution: v = rω = 0.5 × 70 = 35 m/s
+
+Banking of Roads
+tan θ = v²/(rg)   →   Safe speed: v = √(rg·tan θ)
+Minimum radius for safe turn on flat road:  r = v²/(μg)
+μ = coefficient of friction
+★  Maximum safe speed does NOT depend on mass of vehicle — only on radius, banking angle, and g.
+
+2.4  Work, Energy and Power
+Work
+Work: Done when force causes displacement in the direction of force. Scalar quantity.
+W = F × d × cos θ     SI unit: Joule (J) = N·m     CGS: erg = dyne·cm
+1 J = 10⁷ erg. Work = 0 if F=0, d=0, or θ=90°
+
+Kinetic and Potential Energy
+Kinetic Energy:  KE = ½mv²
+m = mass, v = velocity
+Potential Energy:  PE = mgh
+h = height above reference, g = 9.8 m/s²
+Work-Energy Theorem:  W = ΔKE = ½mv² − ½mu²
+Conservation of Energy:  KE + PE = constant  (no non-conservative forces)
+
+Power
+Power: Rate of doing work.
+P = W/t = F × v     SI unit: Watt (W) = J/s
+1 horsepower = 746 W | 1 kWh = 3.6 × 10⁶ J (commercial unit)
+
+🔑 KEY FORMULAS TO REMEMBER
+	•	v=u+at | s=ut+½at² | v²=u²+2as | s=(u+v)t/2
+	•	Free fall: a=g=9.8 m/s². Body dropped from rest: u=0. At top: v=0.
+	•	1 N = 10⁵ dyne | Impulse = F×t = Δp = m(v₂−v₁)
+	•	v = rω | a = rα | ω = 2πf = 2π/T
+	•	Centripetal F = mv²/r = mω²r (inward, real force)
+	•	At lowest point: T = mg + mv²/r | At highest: T = mv²/r − mg
+	•	KE = ½mv² | PE = mgh | P = W/t = Fv
+
+Chapter 3 
+Electric Current
+Charge, Coulomb's law, fields, Ohm's law, resistance, capacitance
+
+3.1  Electric Charge
+Electric Charge: Property of matter due to which electric force exists between particles. Protons: positive. Electrons: negative.
+
+Particle
+Mass
+Charge
+Electron
+9.1 × 10⁻³¹ kg
+−1.6 × 10⁻¹⁹ C
+Proton
+1.6 × 10⁻²⁷ kg
++1.6 × 10⁻¹⁹ C
+Neutron
+1.6 × 10⁻²⁷ kg
+0 (neutral)
+
+n = 1/e = 1/(1.6×10⁻¹⁹) = 6.25 × 10¹⁸ electrons per coulomb
+SI unit of charge: Coulomb (C)
+★  Only ELECTRONS are transferred during charging. Body receiving electrons → negatively charged. Body losing electrons → positively charged. Like charges repel; unlike charges attract.
+
+3.2  Coulomb's Law
+Coulomb's Law: The electric force between two stationary point charges is directly proportional to the product of their charges and inversely proportional to the square of the distance between them.
+F = k × q₁q₂ / r²      k = 1/(4πε₀) = 9 × 10⁹ N·m²·C⁻²
+ε₀ = 8.854 × 10⁻¹² C²/Nm² (permittivity of free space)
+In a medium:  Fₘ = F/εᵣ = F/K     where K = dielectric constant > 1
+So Fₘ < F — force is always less in a medium than in vacuum
+
+Change
+Effect on Force
+Distance doubled (r → 2r)
+Force becomes 1/4th (∝ 1/r²)
+Charges doubled (q₁,q₂ → 2q₁,2q₂)
+Force becomes 4 times
+Medium introduced (εᵣ > 1)
+Force decreases (Fₘ < F)
+
+EXAMPLE: Total charge on 20 extra electrons
+
+Solution: q = ne = 20 × (−1.6×10⁻¹⁹) = −3.2 × 10⁻¹⁸ C
+
+3.3  Electric Field, Potential and Flux
+Electric Field (E)
+Electric Field: Force per unit positive test charge at a point. Shows the effect of a charge in surrounding space.
+E = F/q₀ = kQ/r² = Q/(4πε₀r²)      SI unit: N/C or V/m     VECTOR quantity
+
+Properties of Electric Field Lines
+Property
+1. Start from positive charges, end at negative charges
+2. Tangent at any point = direction of field at that point
+3. Two field lines NEVER intersect
+4. Denser lines = stronger field; spaced-out lines = weaker field
+5. Uniform field lines are parallel and equidistant
+6. Field lines are imaginary; electric field is real
+7. Always perpendicular to conducting surface
+8. Do NOT form closed paths
+
+Electric Potential (V)
+Electric Potential: Work done against the electric field to bring unit positive charge from infinity to a point in the field.
+V = W/q₀ = kQ/r      Unit: Volt (V) = Joule/Coulomb     SCALAR quantity
+Potential Difference:  VB − VA = −WAB/q₀
+
+Electric Flux (φ)
+Electric Flux: Number of electric field lines passing perpendicularly through a given surface area.
+φ = E · A · cos θ      SI unit: V·m or N·m²/C     SCALAR quantity
+θ = angle between field E and normal to surface. θ=0°: φ=EA (max). θ=90°: φ=0.
+
+3.4  Ohm's Law, Resistance and Conductance
+Electric Current (I): Rate of flow of electric charge. I = Q/t. SI unit: Ampere (A). 1 A = 1 C/s.
+Ohm's Law: At constant temperature, current through a conductor is directly proportional to the potential difference across it.
+V = I × R      R = V/I      I = V/R
+V = Voltage (V), I = Current (A), R = Resistance (Ω)
+
+Resistance and Resistivity
+R = ρ × L / A
+ρ (rho) = resistivity (Ω·m), L = length (m), A = cross-sectional area (m²)
+Quantity
+Symbol
+Formula
+SI Unit
+Resistance
+R
+R = V/I
+Ohm (Ω)
+Conductance
+G
+G = 1/R
+Siemens (S) or mho
+Resistivity
+ρ
+ρ = R·A/L
+Ω·m
+Conductivity
+σ
+σ = 1/ρ
+S/m
+
+Combinations of Resistors
+Connection
+Formula
+Key Property
+Series
+Rₛ = R₁ + R₂ + R₃ + ...
+Same current. Voltage divides. Rₛ > largest individual R.
+Parallel
+1/Rₚ = 1/R₁ + 1/R₂ + 1/R₃ + ...
+Same voltage. Current divides. Rₚ < smallest individual R.
+
+Electrical Power
+P = V × I = I²R = V²/R      Unit: Watt (W) = J/s
+1 kWh = 3.6 × 10⁶ J (commercial unit of electrical energy)
+
+3.5  Capacitance and Capacitors
+Capacitance (C): Ability to store electric charge. Ratio of charge stored to potential difference. C = Q/V
+C = Q / V      SI unit: Farad (F) = Coulomb/Volt
+1 μF = 10⁻⁶ F | 1 nF = 10⁻⁹ F | 1 pF = 10⁻¹² F
+
+Parallel Plate Capacitor
+C = ε₀ × A / d         (vacuum/air as dielectric)
+ε₀ = 8.854 × 10⁻¹² F/m (absolute permittivity)
+C = K × ε₀ × A / d    (with dielectric material of constant K)
+K = εᵣ = dielectric constant. K > 1 always.
+★  Capacitance increases if: plate area A increases, gap d decreases, or dielectric constant K increases. Condition: d² << A (gap much smaller than plate dimensions).
+
+Combinations of Capacitors
+Connection
+Formula
+Key Property
+Series
+1/Cₛ = 1/C₁ + 1/C₂ + 1/C₃ + ...
+Same charge Q. Voltage divides. Cₛ < smallest individual C.
+Parallel
+Cₚ = C₁ + C₂ + C₃ + ...
+Same voltage. Charge divides. Cₚ > largest individual C.
+
+EXAMPLE: C₁=5μF, C₂=10μF, C₃=15μF
+Find series and parallel equivalent
+Solution: Series: 1/Cₛ = 1/5+1/10+1/15 = 6/30+3/30+2/30 = 11/30 → Cₛ = 30/11 = 2.72 μF | Parallel: Cₚ = 5+10+15 = 30 μF
+
+🔑 KEY FORMULAS TO REMEMBER
+	•	F = kq₁q₂/r²  |  k = 9×10⁹ Nm²C⁻²  |  e = 1.6×10⁻¹⁹ C
+	•	E = kQ/r² (N/C or V/m, vector)  |  V = kQ/r (V, scalar)  |  φ = EAcosθ
+	•	V = IR (Ohm's Law)  |  R = ρL/A  |  σ = 1/ρ  |  G = 1/R
+	•	Series R: Rₛ=R₁+R₂+...  |  Parallel R: 1/Rₚ=1/R₁+1/R₂+...
+	•	Series C: 1/Cₛ=1/C₁+1/C₂+...  |  Parallel C: Cₚ=C₁+C₂+...
+	•	C = ε₀A/d (air) | C = Kε₀A/d (with dielectric)  |  P=VI=I²R=V²/R
+
+Chapter 4 
+Heat and Thermometry
+Temperature scales, modes of heat transfer, specific heat, thermal conductivity
+
+4.1  Heat and Temperature
+Heat
+Temperature
+Form of energy that produces sensation of warmth
+Degree of hotness or coldness of a body
+Transferred between bodies due to temperature difference
+Determines direction of heat flow
+SI unit: Joule (J)  |  CGS: erg
+SI unit: Kelvin (K)  |  Practical: °C, °F
+Practical unit: Calorie (cal)
+One of 7 fundamental quantities
+1 cal = 4.186 J (Joule's equivalent)
+Flows from higher T → lower T
+
+1 calorie = heat needed to raise 1 g of water from 14.5°C to 15.5°C
+1 calorie = 4.186 joule    (Joule's Mechanical Equivalent of Heat, J = W/Q)
+
+4.2  Temperature Scales
+Scale
+Freezing Point
+Boiling Point
+Divisions
+Invented
+Celsius (°C)
+0 °C
+100 °C
+100 equal parts
+Celsius, 1710
+Fahrenheit (°F)
+32 °F
+212 °F
+180 equal parts
+Fahrenheit, 1717
+Kelvin (K)
+273 K
+373 K
+Same as Celsius
+Lord Kelvin
+
+Conversion Formulas
+°C to °F:  tF = (9/5)×tC + 32        °F to °C:  tC = (5/9)×(tF − 32)
+°C to K:  tK = tC + 273.15            K to °C:  tC = tK − 273.15
+General:  (tC − 0)/100 = (tF − 32)/180 = (tK − 273)/100
+
+EXAMPLE: Fever of 101°F
+Convert to °C and K
+Solution: tC = (5/9)(101-32) = (5/9)(69) = 38.33 °C | tK = 38.33+273 = 311.33 K
+EXAMPLE: Celsius and Fahrenheit coincide at what temperature?
+
+Solution: Let θ = tC = tF | θ/5 = (θ-32)/9 → 9θ-5θ = -160 → 4θ = -160 → θ = -40°
+EXAMPLE: Fahrenheit and Kelvin coincide at?
+
+Solution: (θ-32)/9 = (θ-273.15)/5 → 5θ-160 = 9θ-2458.35 → -4θ = -2298.35 → θ = 574.6
+★  Absolute Zero (0 K = −273.15°C): Lowest possible temperature. At 0 K, pressure and volume of ideal gas would become zero — nothing can be colder.
+
+4.3  Modes of Heat Transfer
+Mode
+Medium needed?
+Mechanism
+Examples
+Conduction
+Yes (solid)
+Heat passes atom-to-atom without movement of matter
+Iron rod heated at one end, cooking utensil handle
+Convection
+Yes (fluid)
+Actual movement of heated particles (natural or forced)
+Boiling water, sea breeze, car radiator cooling
+Radiation
+No (works in vacuum)
+Electromagnetic waves (infrared) carry energy
+Sun heating Earth, warmth near fire
+
+★  Radiation travels at speed of light (3 × 10⁸ m/s). Heat radiation wavelength: 8×10⁻⁷ m to 4×10⁻⁴ m (infrared region). Black bodies absorb and emit more radiant energy than lighter-colored bodies.
+
+4.4  Heat Capacity and Specific Heat
+Heat Capacity
+Hc = Q / ΔT      SI unit: J/K    Practical: cal/°C
+Heat capacity depends on BOTH material AND mass of the body.
+
+Specific Heat (c)
+Specific Heat: Quantity of heat required per unit mass for unit rise in temperature. Depends only on MATERIAL, not mass.
+c = ΔQ / (m × ΔT)    →    ΔQ = m × c × ΔT
+SI unit: J/(kg·K)  |  CGS: cal/(g·°C)
+
+Material
+Specific Heat (J/kg·K)
+Specific Heat (cal/g·K)
+Water (H₂O)
+4190
+1.000
+Sea water
+3900
+0.930
+Ice (−10°C)
+2220
+0.530
+Aluminium (Al)
+900
+0.2150
+Copper (Cu)
+386
+0.0923
+Silver (Ag)
+236
+0.0564
+★  Water has the highest specific heat among common substances — it absorbs/releases large amounts of heat with little temperature change. This is why oceans moderate Earth's climate.
+
+4.5  Thermal Conductivity
+Coefficient of Thermal Conductivity (K): Rate of heat flow per unit area per unit temperature gradient. Depends only on material.
+ΔQ/Δt = K × A × (T₁ − T₂) / d
+ΔQ/Δt = rate of heat flow (W) | A = area (m²) | T₁-T₂ = temp. diff. | d = thickness (m)
+SI unit of K: W m⁻¹ K⁻¹ = J s⁻¹ m⁻¹ K⁻¹      CGS unit: cal s⁻¹ cm⁻¹ °C⁻¹
+Steady State: When temperature of every cross-section of rod becomes constant. No more absorption of heat — only transmission. Specific heat has no role; only thermal conductivity matters.
+
+EXAMPLE: Copper rod
+L=19 cm=0.19 m, A=785×10⁻⁷ m², T₁=100°C, T₂=30°C, t=600 s, K=380 W/mK
+Solution: Q = 380×785×10⁻⁷×70×600/0.19 = 6594 J = 6.594 kJ
+EXAMPLE: Glass window
+A=0.5 m², d=6×10⁻³ m, T₁=23°C, T₂=2°C, t=3600 s, K=1.0 W/mK
+Solution: Q = 1×0.5×21×3600/0.006 = 6,300,000 J = 63×10⁵ J
+
+Linear, Area and Volume Thermal Expansion
+Linear:   L = L₀(1 + α·ΔT)    →    ΔL = L₀ × α × ΔT
+α = coefficient of linear expansion (°C⁻¹ or K⁻¹)
+Area:     A = A₀(1 + β·ΔT)    β = 2α  (superficial expansion)
+Volume:   V = V₀(1 + γ·ΔT)    γ = 3α  (cubical expansion)
+Relationship:  α : β : γ = 1 : 2 : 3
+★  Bimetallic strips bend when heated because two metals have different α values — one expands more, causing the strip to curve. Used in thermostats, bimetallic thermometers.
+
+🔑 KEY FORMULAS TO REMEMBER
+	•	°C to °F: tF=(9/5)tC+32 | °F to °C: tC=(5/9)(tF-32) | K=°C+273.15
+	•	Celsius & Fahrenheit coincide at −40° | Fahrenheit & Kelvin coincide at 574.6
+	•	1 calorie = 4.186 J | Q = mcΔT | Hc = Q/ΔT
+	•	ΔQ/Δt = KA(T₁−T₂)/d | SI unit of K: W m⁻¹ K⁻¹
+	•	ΔL = L₀αΔT | β = 2α | γ = 3α | α:β:γ = 1:2:3
+	•	Radiation: speed = 3×10⁸ m/s | wavelength: infrared (8×10⁻⁷ to 4×10⁻⁴ m)
+
+Chapter 5 
+Wave Motion, Optics and Acoustics
+Waves, refraction, TIR, optical fiber, LASER, echo and Sabine's formula
+
+5.1  Types of Waves
+Classification
+Type
+Description
+Examples
+By medium
+Mechanical
+Require material medium to propagate
+Sound, water waves, seismic
+By medium
+Non-mechanical (EM waves)
+Do NOT require medium — travel in vacuum
+Light, X-rays, radio, gamma rays
+By particle motion
+Transverse
+Particle vibration ⊥ wave direction (perpendicular)
+Light, water surface waves
+By particle motion
+Longitudinal
+Particle vibration ∥ wave direction — compressions & rarefactions
+Sound, P-waves
+By waveform
+Progressive (Travelling)
+Energy & waveform travel continuously forward
+Light from source, sound in open air
+By waveform
+Stationary (Standing)
+No net travel — nodes (zero) & antinodes (max) fixed in space
+Vibrating string, sound in closed pipe
+
+Progressive Wave vs Stationary Wave — Detailed Comparison
+Feature
+Progressive Wave
+Stationary Wave
+Energy transfer
+Energy travels forward
+No net energy transfer (energy stored)
+Amplitude
+Same for all particles
+Varies — zero at nodes, max at antinodes
+Waveform
+Moves with wave velocity
+Fixed in space — does not travel
+Nodes
+No nodes — all particles vibrate
+Nodes at fixed positions (zero displacement)
+Phase
+Adjacent particles have different phases
+Particles between 2 nodes are in same phase
+Formation
+Single wave from source
+Superposition of 2 identical waves in opposite directions
+
+5.2  Wave Parameters and Equations
+Parameter
+Symbol
+Definition
+Unit
+Amplitude
+A
+Maximum displacement of particle from equilibrium
+m
+Wavelength
+λ
+Distance between two consecutive points in same phase (crest to crest)
+m
+Time Period
+T
+Time for one complete oscillation
+s
+Frequency
+f or n
+Number of complete cycles per second
+Hz (s⁻¹)
+Wave Speed
+v
+Distance traveled by wave per unit time
+m/s
+Phase
+φ
+Position/state of wave at a given instant
+radians
+Intensity
+I
+Energy per unit time per unit area (∝ A²)
+W/m²
+Angular frequency
+ω
+ω = 2πf
+rad/s
+Wave number
+k
+k = 2π/λ
+rad/m
+
+v = f × λ = λ/T      (wave speed = frequency × wavelength)
+Wave Equation:  y = A sin(ωt − kx)
+y = displacement, A = amplitude, ω = 2πf, k = 2π/λ, x = position
+Intensity:  I ∝ A²  (intensity proportional to square of amplitude)
+
+Sound Waves — Frequency Ranges
+Type
+Frequency Range
+Applications
+Infrasonic
+Below 20 Hz
+Earthquake detection, elephant/whale communication
+Audible (Sonic)
+20 Hz – 20,000 Hz
+Human hearing range
+Ultrasonic
+Above 20,000 Hz (20 kHz)
+Medical sonography, SONAR, industrial cleaning, bat navigation
+★  Speed of sound in air at 0°C ≈ 332 m/s; at room temperature ≈ 343 m/s. Sound is a LONGITUDINAL, MECHANICAL wave — needs medium.
+
+5.3  Reflection and Refraction
+Laws of Reflection
+Law
+Statement
+1st Law
+Angle of incidence (i) = Angle of reflection (r). Both measured from the normal.
+2nd Law
+Incident ray, reflected ray, and normal at point of incidence all lie in the same plane.
+★  Laws of reflection apply to ALL waves (light, sound, water) and all mirror types. TIR also obeys laws of reflection.
+
+Refraction
+Refraction: Bending of light when it passes from one medium to another, due to change in speed.
+Direction
+Effect on speed
+Bending direction
+Rarer → Denser (e.g., air → glass)
+Speed decreases
+Bends TOWARDS normal (r < i)
+Denser → Rarer (e.g., glass → air)
+Speed increases
+Bends AWAY from normal (r > i)
+Ray hits surface at 90° (i = 0°)
+No change
+Passes straight through — no bending
+
+Snell's Law and Refractive Index
+μ = n = sin i / sin r = constant      (Snell's Law)
+μ₂₁ = sin i / sin r = v₁/v₂
+v₁, v₂ = speed of light in medium 1 and medium 2
+Medium
+Absolute Refractive Index
+Vacuum / Air
+1.0 (reference)
+Water
+1.33
+Ice
+1.31
+Glass (crown)
+1.52
+Glass (flint)
+1.62
+Diamond
+2.42 (highest among common materials)
+
+5.4  Total Internal Reflection (TIR)
+Total Internal Reflection (TIR): When light travels from denser to rarer medium and angle of incidence exceeds the critical angle, ALL light reflects back into the denser medium.
+Critical Angle (θc)
+sin θc = nᵣ/nᵢ      →      θc = sin⁻¹(nᵣ/nᵢ)
+nᵢ = refractive index of incident (denser) medium | nᵣ = refractive index of rarer medium
+Boundary
+Critical Angle
+Water → Air
+θc = sin⁻¹(1/1.33) ≈ 48.6°
+Crown glass → Air
+θc = sin⁻¹(1/1.52) ≈ 41.14°
+Diamond → Air
+θc = sin⁻¹(1/2.42) ≈ 24°  (smallest — most TIR)
+
+Necessary Conditions for TIR
+Condition
+Explanation
+1. Light must go from DENSER → RARER medium
+TIR does NOT occur from rarer to denser
+2. Angle of incidence > Critical angle (i > θc)
+At exactly θc: refracted ray travels along boundary
+
+Application of TIR
+Explanation
+Sparkling of diamonds
+Critical angle = 24° (very small). Most light undergoes TIR internally — exits only from top.
+Mirage in desert
+Hot air near ground is rarer. Light undergoes TIR — appears like water.
+Optical fibers
+Light bounces by repeated TIR inside the core — travels long distances.
+Endoscope (medical)
+TIR in fiber bundles allows viewing inside body without surgery.
+
+5.5  Optical Fiber
+Optical Fiber: Thin flexible strand of glass/quartz/plastic that transmits light over long distances using TIR.
+Part
+Description
+Key Point
+Core
+Central part — high refractive index (n₁)
+Light travels here by repeated TIR
+Cladding
+Surrounds core — lower refractive index (n₂)
+Essential condition: n₁ > n₂
+Outer Jacket
+Protective plastic coating
+Physical protection
+
+Condition: n₁ (core) > n₂ (cladding)     for TIR to occur at core-cladding boundary
+Numerical Aperture:  NA = √(n₁² − n₂²)
+NA = light-gathering capacity of fiber. Higher NA = accepts more light.
+
+Type
+Core Diameter
+Best for
+Single-mode step-index (most widely used)
+~8-10 μm
+Long-distance communication (internet, telephone)
+Multimode step-index
+~50-200 μm
+Short distances; more signal loss (dispersion)
+Multimode graded-index
+~50-200 μm
+Reduced dispersion — intermediate use
+
+Application
+Details
+Telecommunications
+Internet cables, fiber optic phone lines — much wider bandwidth than copper wire
+Medical (Endoscopy)
+View inside body (colonoscopy, bronchoscopy) without surgery
+Military/Defense
+Secure communications, intrusion sensors
+Signal loss due to
+Scattering and absorption inside fiber
+Estimated lifespan
+20–30 years
+
+5.6  LASER
+LASER: Light Amplification by Stimulated Emission of Radiation
+Feature
+Ordinary Light
+LASER
+Direction
+Spreads in ALL directions (divergent)
+ONE direction (non-divergent, unidirectional)
+Intensity vs Distance
+Decreases rapidly with distance
+Barely changes over long distances
+Wavelength
+Polychromatic (many wavelengths)
+Monochromatic (single wavelength)
+Phase
+Incoherent (different phases)
+Coherent (all photons same phase)
+Brightness
+Low intensity
+Very high intensity
+Focus
+Cannot be focused very precisely
+Can be focused to microscopic spot
+
+LASER Property
+Explanation
+Monochromatic
+Single frequency/wavelength — single color
+Coherent
+All photons in same phase or constant phase difference
+Directional
+Emitted as narrow beam in specific direction — very little divergence
+High Intensity
+Energy concentrated in narrow beam — very bright
+Parallel rays
+Rays in beam are parallel to each other
+Stimulated emission
+Produced by stimulated emission — NOT spontaneous
+
+Application of LASER
+Metal cutting and hole drilling (industrial manufacturing)
+Welding — precise and clean
+Medical: Eye surgery (LASIK), cancer treatment, kidney stone removal
+Barcode scanners in shops and warehouses
+CD/DVD read and write head
+Optical computer mouse
+Fiber optic communication (laser as light source)
+Surveying, remote sensing, LIDAR (distance measurement)
+Testing physical and chemical properties of materials
+
+5.7  Echo, Reverberation and Sabine's Formula
+Echo
+Echo: Repetition of sound heard after reflection from a hard surface. Source and reflected sound heard as separate sounds.
+Minimum distance for echo = v × t_min / 2 = 343 × 0.1 / 2 ≈ 17 m
+Minimum persistence of hearing = 1/10 s = 0.1 s. Speed of sound ≈ 343 m/s at room temp.
+
+Reverberation
+Reverberation: Persistence of sound in an enclosed space after source stops — due to multiple reflections from walls, ceiling, floor.
+Reverberation Time (RT): Time for sound intensity to fall to 10⁻⁶ of original value after source stops. Equivalently: time for 60 dB drop in sound level.
+Application
+Optimal Reverberation Time
+Speech/Lectures
+0.5 – 1.0 seconds
+Music (orchestral)
+1.5 – 2.5 seconds
+Too high RT effect
+Sounds blend, speech unclear, echoing
+Too low RT effect
+Sounds dead, flat, poor acoustics
+
+Sabine's Formula
+T = 0.161 × V / A
+T = reverberation time (s) | V = volume of room (m³) | A = total absorption (sabins)
+Total Absorption:  A = Σ(aᵢ × Sᵢ)
+aᵢ = absorption coefficient of ith surface | Sᵢ = area of ith surface (m²)
+Absorption Coefficient:  a = Sound energy absorbed / Sound energy incident
+Range: 0 (perfect reflection) to 1 (perfect absorption). 1 sabin = 1 m² of perfectly absorbing surface.
+
+Material
+Absorption Coefficient (a)
+Open window (reference)
+1.0 (perfect absorber)
+Thick curtains
+0.5 – 0.7
+Carpet
+0.2 – 0.5
+Audience (seated)
+0.4 – 0.5
+Wooden floor
+0.05 – 0.1
+Brick wall
+0.02 – 0.05
+Concrete
+0.01 – 0.02
+
+EXAMPLE: Sabine Formula Example
+Lecture hall: V = 3000 m³, total absorption A = 200 sabins
+Solution: T = 0.161 × 3000 / 200 = 483/200 = 2.415 s (too high for lectures; needs more absorbers to reach ~1 s)
+
+🔑 KEY FORMULAS TO REMEMBER
+	•	v = fλ | T = 1/f | ω = 2πf | y = A sin(ωt − kx) | I ∝ A²
+	•	Laws of reflection: i = r (angle of incidence = angle of reflection)
+	•	Snell's Law: sin i / sin r = μ = constant | μ = v₁/v₂
+	•	Critical angle: sin θc = n₂/n₁ | Diamond θc=24°, Glass θc≈41°, Water θc≈49°
+	•	TIR: light must go denser→rarer AND i > θc
+	•	Optical fiber: n₁(core) > n₂(cladding) | NA = √(n₁²−n₂²)
+	•	LASER = Light Amplification by Stimulated Emission of Radiation
+	•	Sabine: T = 0.161V/A | Echo: min. distance ≈ 17 m from reflecting surface
