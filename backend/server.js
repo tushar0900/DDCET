@@ -9,9 +9,15 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const SECRET_KEY = 'ddcet_secret_key'; 
+const SECRET_KEY = 'ddcet_secret_key';
 const DB_PATH = path.join(__dirname, 'database.sqlite');
 const USERS_JSON = path.join(__dirname, 'users.json');
+const USER_PROFILE_COLUMNS = [
+  { name: 'full_name', definition: 'TEXT' },
+  { name: 'phone', definition: 'TEXT' },
+  { name: 'department', definition: 'TEXT' }
+];
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,12 +28,56 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
   console.log('Connected to the SQLite database.');
 });
 
-// Create Table and Migrate Data if necessary
-db.serialize(() => {
+const normalizeEmail = (value = '') => value.trim().toLowerCase();
+const normalizeText = (value = '') => value.trim().replace(/\s+/g, ' ');
+const normalizePhone = (value = '') => value.replace(/\D/g, '').slice(0, 10);
+
+const validateSignupPayload = ({ fullName, phone, department, email, password }) => {
+  if (fullName.length < 2) return 'Please enter your full name.';
+  if (!EMAIL_PATTERN.test(email)) return 'Please enter a valid email address.';
+  if (!/^\d{10}$/.test(phone)) return 'Please enter a valid 10-digit mobile number.';
+  if (!department) return 'Please enter your department or branch.';
+  if (password.length < 6) return 'Password must be at least 6 characters long.';
+  return null;
+};
+
+const finalizeInitialization = (done) => {
+  db.get(`SELECT 1 AS ready`, (err) => {
+    if (err) {
+      console.error('Database initialization finalization failed:', err.message);
+    }
+    done();
+  });
+};
+
+const migrateUsersJson = (done) => {
+  if (fs.existsSync(USERS_JSON)) {
+    try {
+      const users = JSON.parse(fs.readFileSync(USERS_JSON, 'utf8'));
+      users.forEach((user) => {
+        db.run(
+          `INSERT OR IGNORE INTO users (email, password, progress) VALUES (?, ?, ?)`,
+          [normalizeEmail(user.email), user.password, JSON.stringify(user.progress || {})]
+        );
+      });
+      console.log('Migration from users.json completed.');
+    } catch (error) {
+      console.error('Migration failed:', error);
+    }
+  }
+
+  finalizeInitialization(done);
+};
+
+const initializeDatabase = (done) => {
+  db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT UNIQUE,
     password TEXT,
+    full_name TEXT,
+    phone TEXT,
+    department TEXT,
     progress TEXT DEFAULT '{}',
     current_session_id TEXT
   )`);
@@ -47,42 +97,82 @@ db.serialize(() => {
     value TEXT
   )`);
 
-  // Basic Migration from JSON to SQLite
-  if (fs.existsSync(USERS_JSON)) {
-    try {
-      const users = JSON.parse(fs.readFileSync(USERS_JSON));
-      users.forEach(u => {
-        db.run(`INSERT OR IGNORE INTO users (email, password, progress) VALUES (?, ?, ?)`, 
-          [u.email, u.password, JSON.stringify(u.progress || {})]);
+    db.all(`PRAGMA table_info(users)`, (err, columns) => {
+      if (err) {
+        console.error('Could not inspect users table:', err.message);
+        migrateUsersJson(done);
+        return;
+      }
+
+      const existingColumns = new Set(columns.map((column) => column.name));
+
+      USER_PROFILE_COLUMNS.forEach(({ name, definition }) => {
+        if (!existingColumns.has(name)) {
+          db.run(`ALTER TABLE users ADD COLUMN ${name} ${definition}`, (alterErr) => {
+            if (alterErr) {
+              console.error(`Could not add ${name} column:`, alterErr.message);
+            }
+          });
+        }
       });
-      console.log('Migration from users.json completed.');
-    } catch (e) {
-      console.error('Migration failed:', e);
-    }
-  }
-});
+
+      migrateUsersJson(done);
+    });
+  });
+};
 
 // Signup Route
 app.post('/api/signup', async (req, res) => {
-  const { email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  
-  db.run(`INSERT INTO users (email, password) VALUES (?, ?)`, [email, hashedPassword], function(err) {
-    if (err) {
-      if (err.message.includes('UNIQUE constraint failed')) {
-        return res.status(400).json({ message: 'User already exists' });
-      }
-      return res.status(500).json({ message: err.message });
-    }
-    res.status(201).json({ message: 'User created' });
+  const email = normalizeEmail(req.body.email);
+  const password = req.body.password || '';
+  const fullName = normalizeText(req.body.fullName);
+  const phone = normalizePhone(req.body.phone);
+  const department = normalizeText(req.body.department);
+
+  const validationMessage = validateSignupPayload({
+    fullName,
+    phone,
+    department,
+    email,
+    password
   });
+
+  if (validationMessage) {
+    return res.status(400).json({ message: validationMessage });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    db.run(
+      `INSERT INTO users (email, password, full_name, phone, department) VALUES (?, ?, ?, ?, ?)`,
+      [email, hashedPassword, fullName, phone, department],
+      function(err) {
+        if (err) {
+          if (err.message.includes('UNIQUE constraint failed')) {
+            return res.status(400).json({ message: 'User already exists' });
+          }
+          return res.status(500).json({ message: err.message });
+        }
+
+        return res.status(201).json({ message: 'User created' });
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: 'Unable to create user right now.' });
+  }
 });
 
 // Login Route
 app.post('/api/login', (req, res) => {
-  const { email, password } = req.body;
+  const email = normalizeEmail(req.body.email);
+  const password = req.body.password || '';
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const device = req.headers['user-agent'] || 'Unknown Device';
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
 
   db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
     if (err) return res.status(500).json({ message: err.message });
@@ -161,6 +251,8 @@ app.post('/api/get-progress', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+initializeDatabase(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
 });
