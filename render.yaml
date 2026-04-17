@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ddcet-hub-backend
+    runtime: node
+    rootDir: .
+    buildCommand: npm install
+    startCommand: cd backend && npm install && npm start
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://Tushar:Tushar@cluster0.xxdrret.mongodb.net/ddcet_hub
+      - key: SECRET_KEY
+        value: your-production-secret-key-12345
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        sync: true
+
+  - type: static_site
+    name: ddcet-hub-frontend
+    rootDir: .
+    buildCommand: echo "Frontend is static HTML"
+    publicPath: ./
+    routes:
+      - path: /api/*
+        destination: http://localhost:5001
