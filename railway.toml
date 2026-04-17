@@ -1,8 +1,6 @@
 [build]
-# Railway will run the build script
 builder = "nixpacks"
 
 [deploy]
-# Railway will run npm start from the root
-startCommand = "npm start"
+startCommand = "cd backend && npm install && npm start"
 restartPolicyMaxRetries = 5
