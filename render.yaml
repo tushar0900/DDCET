@@ -6,10 +6,12 @@ services:
     buildCommand: npm install
     startCommand: cd backend && npm install && npm start
     envVars:
+      # IMPORTANT: MongoDB connection string with URL-encoded password
+      # Password: Tushar123# (# is URL-encoded as %23)
       - key: MONGODB_URI
-        value: mongodb+srv://Tushar:Tushar@cluster0.xxdrret.mongodb.net/ddcet_hub
+        value: mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub
       - key: SECRET_KEY
-        value: your-production-secret-key-12345
+        value: your-production-secret-key-change-this-12345
       - key: NODE_ENV
         value: production
       - key: PORT
