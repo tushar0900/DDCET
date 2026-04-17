@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node backend/server.js",
-    "build": "echo 'Frontend is static HTML, no build needed'"
+    "build": "echo 'Frontend is static HTML, no build needed'",
+    "install:backend": "cd backend && npm install && cd .."
   },
   "keywords": [
     "ddcet",

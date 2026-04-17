@@ -9,8 +9,9 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const SECRET_KEY = 'ddcet_secret_key';
-const DB_PATH = path.join(__dirname, 'database.sqlite');
+const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
+// Use /tmp for Railway (ephemeral) or local directory for development
+const DB_PATH = process.env.DATABASE_URL || path.join(__dirname, 'database.sqlite');
 const USERS_JSON = path.join(__dirname, 'users.json');
 const USER_PROFILE_COLUMNS = [
   { name: 'full_name', definition: 'TEXT' },
@@ -24,8 +25,12 @@ app.use(bodyParser.json());
 
 // Initialize SQLite Database
 const db = new sqlite3.Database(DB_PATH, (err) => {
-  if (err) console.error(err.message);
-  console.log('Connected to the SQLite database.');
+  if (err) {
+    console.error('Failed to connect to SQLite database:', err.message);
+    console.error('Database path:', DB_PATH);
+  } else {
+    console.log('Connected to the SQLite database at:', DB_PATH);
+  }
 });
 
 const normalizeEmail = (value = '') => value.trim().toLowerCase();
@@ -253,6 +258,8 @@ app.post('/api/get-progress', (req, res) => {
 
 initializeDatabase(() => {
   app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`✓ Server running on http://localhost:${PORT}`);
+    console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`✓ Database: ${DB_PATH}`);
   });
 });
