@@ -1,37 +1,111 @@
+require('dotenv').config();
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3').verbose();
-const fs = require('fs');
-const path = require('path');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
-// Use /tmp for Railway (ephemeral) or local directory for development
-const DB_PATH = process.env.DATABASE_URL || path.join(__dirname, 'database.sqlite');
-const USERS_JSON = path.join(__dirname, 'users.json');
-const USER_PROFILE_COLUMNS = [
-  { name: 'full_name', definition: 'TEXT' },
-  { name: 'phone', definition: 'TEXT' },
-  { name: 'department', definition: 'TEXT' }
-];
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ddcet_hub';
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// Initialize SQLite Database
-const db = new sqlite3.Database(DB_PATH, (err) => {
-  if (err) {
-    console.error('Failed to connect to SQLite database:', err.message);
-    console.error('Database path:', DB_PATH);
-  } else {
-    console.log('Connected to the SQLite database at:', DB_PATH);
-  }
+// ==================== MONGOOSE SCHEMAS ====================
+
+// User Schema
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    match: EMAIL_PATTERN,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  full_name: {
+    type: String,
+    default: '',
+  },
+  phone: {
+    type: String,
+    default: '',
+  },
+  department: {
+    type: String,
+    default: '',
+  },
+  progress: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {},
+  },
+  current_session_id: {
+    type: String,
+    default: '',
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
+
+// Login Log Schema
+const loginLogSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  ip: {
+    type: String,
+    default: '',
+  },
+  device: {
+    type: String,
+    default: 'Unknown Device',
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// Settings Schema
+const settingSchema = new mongoose.Schema({
+  key: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  value: {
+    type: String,
+    default: '',
+  },
+});
+
+// ==================== MODELS ====================
+
+const User = mongoose.model('User', userSchema);
+const LoginLog = mongoose.model('LoginLog', loginLogSchema);
+const Setting = mongoose.model('Setting', settingSchema);
+
+// ==================== HELPER FUNCTIONS ====================
 
 const normalizeEmail = (value = '') => value.trim().toLowerCase();
 const normalizeText = (value = '') => value.trim().replace(/\s+/g, ' ');
@@ -46,141 +120,82 @@ const validateSignupPayload = ({ fullName, phone, department, email, password })
   return null;
 };
 
-const finalizeInitialization = (done) => {
-  db.get(`SELECT 1 AS ready`, (err) => {
-    if (err) {
-      console.error('Database initialization finalization failed:', err.message);
+const verifySession = async (decoded) => {
+  try {
+    const user = await User.findOne({ email: decoded.email });
+    if (!user || user.current_session_id !== decoded.sessionId) {
+      return false;
     }
-    done();
-  });
-};
-
-const migrateUsersJson = (done) => {
-  if (fs.existsSync(USERS_JSON)) {
-    try {
-      const users = JSON.parse(fs.readFileSync(USERS_JSON, 'utf8'));
-      users.forEach((user) => {
-        db.run(
-          `INSERT OR IGNORE INTO users (email, password, progress) VALUES (?, ?, ?)`,
-          [normalizeEmail(user.email), user.password, JSON.stringify(user.progress || {})]
-        );
-      });
-      console.log('Migration from users.json completed.');
-    } catch (error) {
-      console.error('Migration failed:', error);
-    }
+    return true;
+  } catch (error) {
+    console.error('Session verification error:', error);
+    return false;
   }
-
-  finalizeInitialization(done);
 };
 
-const initializeDatabase = (done) => {
-  db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE,
-    password TEXT,
-    full_name TEXT,
-    phone TEXT,
-    department TEXT,
-    progress TEXT DEFAULT '{}',
-    current_session_id TEXT
-  )`);
-
-  db.run(`CREATE TABLE IF NOT EXISTS login_logs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    email TEXT,
-    ip TEXT,
-    device TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(user_id) REFERENCES users(id)
-  )`);
-
-  db.run(`CREATE TABLE IF NOT EXISTS settings (
-    key TEXT PRIMARY KEY,
-    value TEXT
-  )`);
-
-    db.all(`PRAGMA table_info(users)`, (err, columns) => {
-      if (err) {
-        console.error('Could not inspect users table:', err.message);
-        migrateUsersJson(done);
-        return;
-      }
-
-      const existingColumns = new Set(columns.map((column) => column.name));
-
-      USER_PROFILE_COLUMNS.forEach(({ name, definition }) => {
-        if (!existingColumns.has(name)) {
-          db.run(`ALTER TABLE users ADD COLUMN ${name} ${definition}`, (alterErr) => {
-            if (alterErr) {
-              console.error(`Could not add ${name} column:`, alterErr.message);
-            }
-          });
-        }
-      });
-
-      migrateUsersJson(done);
-    });
-  });
-};
+// ==================== API ROUTES ====================
 
 // Signup Route
 app.post('/api/signup', async (req, res) => {
-  const email = normalizeEmail(req.body.email);
-  const password = req.body.password || '';
-  const fullName = normalizeText(req.body.fullName);
-  const phone = normalizePhone(req.body.phone);
-  const department = normalizeText(req.body.department);
-
-  const validationMessage = validateSignupPayload({
-    fullName,
-    phone,
-    department,
-    email,
-    password
-  });
-
-  if (validationMessage) {
-    return res.status(400).json({ message: validationMessage });
-  }
-
   try {
+    const email = normalizeEmail(req.body.email);
+    const password = req.body.password || '';
+    const fullName = normalizeText(req.body.fullName);
+    const phone = normalizePhone(req.body.phone);
+    const department = normalizeText(req.body.department);
+
+    const validationMessage = validateSignupPayload({
+      fullName,
+      phone,
+      department,
+      email,
+      password,
+    });
+
+    if (validationMessage) {
+      return res.status(400).json({ message: validationMessage });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    db.run(
-      `INSERT INTO users (email, password, full_name, phone, department) VALUES (?, ?, ?, ?, ?)`,
-      [email, hashedPassword, fullName, phone, department],
-      function(err) {
-        if (err) {
-          if (err.message.includes('UNIQUE constraint failed')) {
-            return res.status(400).json({ message: 'User already exists' });
-          }
-          return res.status(500).json({ message: err.message });
-        }
+    // Create new user
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      full_name: fullName,
+      phone,
+      department,
+    });
 
-        return res.status(201).json({ message: 'User created' });
-      }
-    );
+    await newUser.save();
+    return res.status(201).json({ message: 'User created' });
   } catch (error) {
+    console.error('Signup error:', error);
     return res.status(500).json({ message: 'Unable to create user right now.' });
   }
 });
 
 // Login Route
-app.post('/api/login', (req, res) => {
-  const email = normalizeEmail(req.body.email);
-  const password = req.body.password || '';
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  const device = req.headers['user-agent'] || 'Unknown Device';
+app.post('/api/login', async (req, res) => {
+  try {
+    const email = normalizeEmail(req.body.email);
+    const password = req.body.password || '';
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const device = req.headers['user-agent'] || 'Unknown Device';
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required.' });
-  }
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required.' });
+    }
 
-  db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
-    if (err) return res.status(500).json({ message: err.message });
+    // Find user
+    const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -188,78 +203,133 @@ app.post('/api/login', (req, res) => {
     // Generate a unique session ID for this specific login
     const sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
 
-    // Update user's current session and Log the login
-    db.run(`UPDATE users SET current_session_id = ? WHERE id = ?`, [sessionId, user.id]);
-    db.run(`INSERT INTO login_logs (user_id, email, ip, device) VALUES (?, ?, ?, ?)`, 
-      [user.id, email, ip, device]);
+    // Update user's current session
+    user.current_session_id = sessionId;
+    user.updated_at = new Date();
+    await user.save();
+
+    // Log the login
+    const loginLog = new LoginLog({
+      user_id: user._id,
+      email,
+      ip,
+      device,
+    });
+    await loginLog.save();
 
     // Include sessionId in the token
-    const token = jwt.sign({ email: user.email, sessionId: sessionId }, SECRET_KEY, { expiresIn: '24h' });
+    const token = jwt.sign({ email: user.email, sessionId }, SECRET_KEY, { expiresIn: '24h' });
     res.json({ token });
-  });
+  } catch (error) {
+    console.error('Login error:', error);
+    return res.status(500).json({ message: 'Login failed. Please try again.' });
+  }
 });
 
-// Helper to verify session validity
-const verifySession = (decoded, callback) => {
-  db.get(`SELECT current_session_id FROM users WHERE email = ?`, [decoded.email], (err, row) => {
-    if (err || !row || row.current_session_id !== decoded.sessionId) {
-      callback(false);
-    } else {
-      callback(true);
-    }
-  });
-};
-
 // Verify Token Route
-app.post('/api/verify', (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(401).json({ valid: false });
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) return res.status(401).json({ valid: false });
-    
-    verifySession(decoded, (isValid) => {
-      if (!isValid) return res.status(401).json({ valid: false, message: 'Session expired (logged in elsewhere)' });
+app.post('/api/verify', async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(401).json({ valid: false });
+
+    jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+      if (err) return res.status(401).json({ valid: false });
+
+      const isValid = await verifySession(decoded);
+      if (!isValid) {
+        return res.status(401).json({
+          valid: false,
+          message: 'Session expired (logged in elsewhere)',
+        });
+      }
+
       res.json({ valid: true, user: decoded });
     });
-  });
+  } catch (error) {
+    console.error('Verification error:', error);
+    return res.status(500).json({ valid: false });
+  }
 });
 
 // Save Progress Route
-app.post('/api/save-progress', (req, res) => {
-  const { token, progress } = req.body;
-  if (!token) return res.status(401).json({ message: 'Missing token' });
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) return res.status(401).json({ message: 'Invalid token' });
-    
-    verifySession(decoded, (isValid) => {
-      if (!isValid) return res.status(401).json({ message: 'Account logged in from another device' });
+app.post('/api/save-progress', async (req, res) => {
+  try {
+    const { token, progress } = req.body;
+    if (!token) return res.status(401).json({ message: 'Missing token' });
 
-      db.run(`UPDATE users SET progress = ? WHERE email = ?`, [JSON.stringify(progress), decoded.email], function(err) {
-        if (err) return res.status(500).json({ message: err.message });
-        res.json({ success: true });
-      });
+    jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+      if (err) return res.status(401).json({ message: 'Invalid token' });
+
+      const isValid = await verifySession(decoded);
+      if (!isValid) {
+        return res.status(401).json({ message: 'Account logged in from another device' });
+      }
+
+      const user = await User.findOne({ email: decoded.email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      user.progress = progress;
+      user.updated_at = new Date();
+      await user.save();
+
+      res.json({ success: true });
     });
-  });
+  } catch (error) {
+    console.error('Save progress error:', error);
+    return res.status(500).json({ message: error.message });
+  }
 });
 
 // Get Progress Route
-app.post('/api/get-progress', (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(401).json({ message: 'Missing token' });
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) return res.status(401).json({ message: 'Invalid token' });
-    db.get(`SELECT progress FROM users WHERE email = ?`, [decoded.email], (err, row) => {
-      if (err) return res.status(500).json({ message: err.message });
-      if (!row) return res.status(404).json({ message: 'User not found' });
-      res.json({ progress: JSON.parse(row.progress || '{}') });
+app.post('/api/get-progress', async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(401).json({ message: 'Missing token' });
+
+    jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+      if (err) return res.status(401).json({ message: 'Invalid token' });
+
+      const user = await User.findOne({ email: decoded.email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.json({ progress: user.progress || {} });
     });
-  });
+  } catch (error) {
+    console.error('Get progress error:', error);
+    return res.status(500).json({ message: error.message });
+  }
 });
 
-initializeDatabase(() => {
-  app.listen(PORT, () => {
-    console.log(`✓ Server running on http://localhost:${PORT}`);
-    console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`✓ Database: ${DB_PATH}`);
+// ==================== MONGOOSE CONNECTION ====================
+
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('✓ Connected to MongoDB Atlas');
+    console.log(`✓ Database: ${MONGODB_URI.split('/').pop()}`);
+
+    // Start server
+    app.listen(PORT, () => {
+      console.log(`✓ Server running on http://localhost:${PORT}`);
+      console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+  })
+  .catch((err) => {
+    console.error('✗ MongoDB connection failed:', err.message);
+    console.error('Please check your MONGODB_URI environment variable.');
+    process.exit(1);
   });
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('\nShutting down gracefully...');
+  await mongoose.connection.close();
+  process.exit(0);
 });
