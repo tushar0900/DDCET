@@ -651,6 +651,8 @@ app.post('/api/forgot-password', async (req, res) => {
        </a>
        <p>This link expires in 1 hour.</p>
        <p><strong>If you didn't request this, ignore this email.</strong></p>`
+    );
+
     return res.status(200).json({ 
       message: 'Password reset link has been sent to your email.',
       devResetLink: `/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`
