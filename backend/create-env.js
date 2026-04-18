@@ -13,19 +13,19 @@ if (fs.existsSync(envFile)) {
 const mongoUri = process.env.MONGODB_URI;
 const secretKey = process.env.SECRET_KEY;
 const port = process.env.PORT || '5001';
-const nodeEnv = process.env.NODE_ENV || 'development';
 
 // Warn if critical env vars are missing and we're in production
-if (!mongoUri && nodeEnv === 'production') {
+if (!mongoUri && process.env.NODE_ENV === 'production') {
   console.warn('⚠️  WARNING: MONGODB_URI not set in environment variables!');
   console.warn('   Set it in Render dashboard or add to .env file');
 }
 
-if (!secretKey && nodeEnv === 'production') {
+if (!secretKey && process.env.NODE_ENV === 'production') {
   console.warn('⚠️  WARNING: SECRET_KEY not set in environment variables!');
 }
 
 // Create .env with actual environment variables or defaults
+// NOTE: Do NOT write NODE_ENV into .env to avoid overwriting platform-provided runtime env.
 const env = `# MongoDB Connection String
 MONGODB_URI=${mongoUri || 'mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub'}
 
@@ -35,8 +35,6 @@ SECRET_KEY=${secretKey || 'your-development-secret-key-change-this-12345'}
 # Server Port
 PORT=${port}
 
-# Environment
-NODE_ENV=${nodeEnv}
 `;
 
 fs.writeFileSync(envFile, env, 'utf8');
