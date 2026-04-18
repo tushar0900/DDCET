@@ -2,9 +2,9 @@ services:
   - type: web
     name: ddcet-hub-backend
     runtime: node
-    rootDir: .
+    rootDir: backend
     buildCommand: npm install
-    startCommand: cd backend && npm install && npm start
+    startCommand: npm start
     envVars:
       # IMPORTANT: MongoDB connection string with URL-encoded password
       # Password: Tushar123# (# is URL-encoded as %23)
@@ -15,7 +15,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        sync: true
+        value: 5001
 
   - type: static_site
     name: ddcet-hub-frontend
