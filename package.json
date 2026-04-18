@@ -5,8 +5,7 @@
   "main": "api/index.js",
   "scripts": {
     "start": "cd backend && node server.js",
-    "dev": "cd backend && node server.js",
-    "build": "npm install"
+    "dev": "cd backend && node server.js"
   },
   "keywords": ["ddcet", "study", "notes", "students"],
   "author": "Tushar",
