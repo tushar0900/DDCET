@@ -1,26 +1,21 @@
-const path = require('path');
-const fs = require('fs');
-
-const envPath = path.join(__dirname, '..', 'backend', '.env');
-if (fs.existsSync(envPath)) {
-  require('dotenv').config({ path: envPath });
-}
-
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
+
 const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-app.use(cors());
-app.use(bodyParser.json());
+// ==================== MIDDLEWARE ====================
+
+app.use(cors({ origin: '*' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ==================== MONGOOSE SCHEMAS ====================
 
@@ -44,14 +39,8 @@ const loginLogSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
 });
 
-const settingSchema = new mongoose.Schema({
-  key: { type: String, required: true, unique: true },
-  value: { type: String, default: '' },
-});
-
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 const LoginLog = mongoose.models.LoginLog || mongoose.model('LoginLog', loginLogSchema);
-const Setting = mongoose.models.Setting || mongoose.model('Setting', settingSchema);
 
 // ==================== HELPERS ====================
 
@@ -92,20 +81,26 @@ const connectDB = async () => {
   isConnected = true;
 };
 
-// Middleware to ensure DB connection on every request
+// DB connection middleware — runs before every request
 app.use(async (req, res, next) => {
   try {
     await connectDB();
     next();
   } catch (err) {
     console.error('DB connection error:', err.message);
-    res.status(500).json({ message: 'Database connection failed.' });
+    res.status(500).json({ message: 'Database connection failed. Please try again later.' });
   }
 });
 
-// ==================== API ROUTES ====================
+// ==================== HEALTH CHECK ====================
 
-app.post('/api/signup', async (req, res) => {
+const handleHealth = (req, res) => res.json({ status: 'ok' });
+app.get('/api/health', handleHealth);
+app.get('/health', handleHealth);
+
+// ==================== SIGNUP ====================
+
+const handleSignup = async (req, res) => {
   try {
     const email = normalizeEmail(req.body.email);
     const password = req.body.password || '';
@@ -117,19 +112,23 @@ app.post('/api/signup', async (req, res) => {
     if (validationMessage) return res.status(400).json({ message: validationMessage });
 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: 'User already exists' });
+    if (existingUser) return res.status(400).json({ message: 'Email already registered. Please sign in.' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, password: hashedPassword, full_name: fullName, phone, department });
     await newUser.save();
-    return res.status(201).json({ message: 'User created' });
+    return res.status(201).json({ message: 'Account created successfully! Please sign in.' });
   } catch (error) {
     console.error('Signup error:', error);
-    return res.status(500).json({ message: 'Unable to create user right now.' });
+    return res.status(500).json({ message: 'Unable to create account right now. Please try again.' });
   }
-});
+};
+app.post('/api/signup', handleSignup);
+app.post('/signup', handleSignup);
 
-app.post('/api/login', async (req, res) => {
+// ==================== LOGIN ====================
+
+const handleLogin = async (req, res) => {
   try {
     const email = normalizeEmail(req.body.email);
     const password = req.body.password || '';
@@ -140,7 +139,7 @@ app.post('/api/login', async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
     const sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
@@ -148,18 +147,24 @@ app.post('/api/login', async (req, res) => {
     user.updated_at = new Date();
     await user.save();
 
-    const loginLog = new LoginLog({ user_id: user._id, email, ip, device });
-    await loginLog.save();
+    try {
+      const loginLog = new LoginLog({ user_id: user._id, email, ip, device });
+      await loginLog.save();
+    } catch (_) { /* non-critical */ }
 
     const token = jwt.sign({ email: user.email, sessionId }, SECRET_KEY, { expiresIn: '24h' });
-    res.json({ token });
+    return res.json({ token });
   } catch (error) {
     console.error('Login error:', error);
     return res.status(500).json({ message: 'Login failed. Please try again.' });
   }
-});
+};
+app.post('/api/login', handleLogin);
+app.post('/login', handleLogin);
 
-app.post('/api/verify', async (req, res) => {
+// ==================== VERIFY TOKEN ====================
+
+const handleVerify = (req, res) => {
   try {
     const { token } = req.body;
     if (!token) return res.status(401).json({ valid: false });
@@ -173,16 +178,19 @@ app.post('/api/verify', async (req, res) => {
   } catch (error) {
     return res.status(500).json({ valid: false });
   }
-});
+};
+app.post('/api/verify', handleVerify);
+app.post('/verify', handleVerify);
 
-app.post('/api/save-progress', async (req, res) => {
+// ==================== SAVE PROGRESS ====================
+
+const handleSaveProgress = (req, res) => {
   try {
     const { token, progress } = req.body;
     if (!token) return res.status(401).json({ message: 'Missing token' });
 
     jwt.verify(token, SECRET_KEY, async (err, decoded) => {
       if (err) return res.status(401).json({ message: 'Invalid token' });
-
       const isValid = await verifySession(decoded);
       if (!isValid) return res.status(401).json({ message: 'Account logged in from another device' });
 
@@ -197,9 +205,13 @@ app.post('/api/save-progress', async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-});
+};
+app.post('/api/save-progress', handleSaveProgress);
+app.post('/save-progress', handleSaveProgress);
 
-app.post('/api/get-progress', async (req, res) => {
+// ==================== GET PROGRESS ====================
+
+const handleGetProgress = (req, res) => {
   try {
     const { token } = req.body;
     if (!token) return res.status(401).json({ message: 'Missing token' });
@@ -215,6 +227,70 @@ app.post('/api/get-progress', async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-});
+};
+app.post('/api/get-progress', handleGetProgress);
+app.post('/get-progress', handleGetProgress);
+
+// ==================== FORGOT PASSWORD ====================
+
+const handleForgotPassword = async (req, res) => {
+  try {
+    const email = normalizeEmail(req.body.email);
+    if (!email) return res.status(400).json({ message: 'Email is required.' });
+
+    const user = await User.findOne({ email });
+    // Always return success to avoid exposing which emails exist
+    if (!user) return res.status(200).json({ message: 'If an account exists, a reset link has been sent.' });
+
+    const resetToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    user.password_reset_token = resetToken;
+    user.password_reset_expires = new Date(Date.now() + 60 * 60 * 1000);
+    await user.save();
+
+    console.log(`Password reset token for ${email}: ${resetToken}`);
+    return res.status(200).json({ message: 'Password reset link sent to your email.' });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    return res.status(500).json({ message: 'Failed to process request.' });
+  }
+};
+app.post('/api/forgot-password', handleForgotPassword);
+app.post('/forgot-password', handleForgotPassword);
+
+// ==================== RESET PASSWORD ====================
+
+const handleResetPassword = async (req, res) => {
+  try {
+    const { token, email, password } = req.body;
+    if (!token || !email || !password) {
+      return res.status(400).json({ message: 'Token, email, and new password are required.' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+    }
+
+    const user = await User.findOne({ email: normalizeEmail(email) });
+    if (!user || user.password_reset_token !== token) {
+      return res.status(401).json({ message: 'Invalid or expired reset token.' });
+    }
+    if (user.password_reset_expires && new Date() > user.password_reset_expires) {
+      return res.status(401).json({ message: 'Reset token has expired. Please request a new one.' });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+    user.password_reset_token = null;
+    user.password_reset_expires = null;
+    user.current_session_id = '';
+    user.updated_at = new Date();
+    await user.save();
+
+    return res.status(200).json({ message: 'Password reset successfully. Please sign in with your new password.' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    return res.status(500).json({ message: 'Failed to reset password.' });
+  }
+};
+app.post('/api/reset-password', handleResetPassword);
+app.post('/reset-password', handleResetPassword);
 
 module.exports = app;
