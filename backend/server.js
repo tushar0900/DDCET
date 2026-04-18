@@ -82,6 +82,16 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 app.use(cors());
 app.use(bodyParser.json());
 
+// ==================== HEALTH CHECK ====================
+// Render uses this to confirm the service is running; does not depend on DB
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'api_ok', timestamp: new Date().toISOString() });
+});
+
 // ==================== MONGOOSE SCHEMAS ====================
 
 // User Schema
