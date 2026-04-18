@@ -229,6 +229,114 @@
             text-decoration: underline;
         }
 
+        .forgot-password-container {
+            text-align: right;
+            margin-top: -12px;
+            margin-bottom: 16px;
+        }
+
+        .forgot-password-link {
+            font-size: 12px;
+            color: #c7d2fe;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .forgot-password-link:hover {
+            color: #e0e7ff;
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 60px -20px rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(14px);
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--text);
+        }
+
+        .modal-close-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .modal .header {
+            margin-bottom: 24px;
+        }
+
+        .modal .header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .modal .header p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .modal .form-group {
+            margin-bottom: 18px;
+        }
+
+        .modal .btn {
+            margin-top: 4px;
+        }
+
+        .modal .message {
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
         .message {
             margin-top: 16px;
             font-size: 13px;
@@ -429,6 +537,10 @@
 
             <p id="helper-text" class="helper-text">Use the password you created during registration.</p>
 
+            <div id="forgot-password-link" class="forgot-password-container">
+                <a href="#" id="forgot-password-btn" class="forgot-password-link">Forgot password?</a>
+            </div>
+
             <button type="submit" id="submit-btn" class="btn">Sign In</button>
         </form>
 
@@ -440,7 +552,34 @@
         </div>
     </div>
 
-    <script>
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close-btn">
+                <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="header">
+                <h2>Reset Password</h2>
+                <p>Enter your email address and we'll send you a link to reset your password.</p>
+            </div>
+
+            <form id="forgot-password-form" novalidate>
+                <div class="form-group">
+                    <label for="reset-email">Email Address</label>
+                    <input type="email" id="reset-email" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+
+                <button type="submit" class="btn" id="send-reset-btn">Send Reset Link</button>
+                <div id="reset-msg" class="message"></div>
+            </form>
+
+            <div class="toggle-text" style="margin-top: 20px;">
+                <span class="toggle-lead">Remember your password?</span>
+                <span id="back-to-login" role="button" tabindex="0" style="color: #c7d2fe; cursor: pointer; font-weight: 700;">Back to sign in</span>
+            </div>
+        </div>
+    </div>
         const form = document.getElementById('auth-form');
         const fullNameInput = document.getElementById('full-name');
         const phoneInput = document.getElementById('phone');
@@ -459,7 +598,7 @@
         const signupOnlyInputs = [fullNameInput, phoneInput, departmentInput, confirmPasswordInput];
         const passwordToggles = document.querySelectorAll('.password-toggle');
 
-        const API_URL = 'http://localhost:5001/api';
+        const API_URL = '/api';
         const eyeIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12s4.1-7 10.5-7 10.5 7 10.5 7-4.1 7-10.5 7S1.5 12 1.5 12Z"></path><circle cx="12" cy="12" r="3.25"></circle></svg>';
         const eyeOffIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.58 10.58A2 2 0 0 0 12 16a2 2 0 0 0 1.42-.58"></path><path d="M9.88 5.09A11 11 0 0 1 12 5c6.4 0 10.5 7 10.5 7a19.2 19.2 0 0 1-4.04 4.64"></path><path d="M6.61 6.61A19.05 19.05 0 0 0 1.5 12s4.1 7 10.5 7a10.8 10.8 0 0 0 5.02-1.2"></path></svg>';
 
@@ -645,6 +784,109 @@
         });
 
         updateFormMode();
+
+        // ==================== FORGOT PASSWORD LOGIC ====================
+        const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
+        const forgotPasswordForm = document.getElementById('forgot-password-form');
+        const resetEmailInput = document.getElementById('reset-email');
+        const sendResetBtn = document.getElementById('send-reset-btn');
+        const resetMsg = document.getElementById('reset-msg');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const backToLoginBtn = document.getElementById('back-to-login');
+
+        function openForgotPasswordModal() {
+            forgotPasswordModal.classList.add('active');
+            resetEmailInput.focus();
+        }
+
+        function closeForgotPasswordModal() {
+            forgotPasswordModal.classList.remove('active');
+            forgotPasswordForm.reset();
+            resetMsg.textContent = '';
+            resetMsg.className = 'message';
+        }
+
+        function showResetMessage(text, type) {
+            resetMsg.textContent = text;
+            resetMsg.className = `message ${type}`;
+        }
+
+        forgotPasswordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openForgotPasswordModal();
+        });
+
+        modalCloseBtn.addEventListener('click', closeForgotPasswordModal);
+        backToLoginBtn.addEventListener('click', closeForgotPasswordModal);
+        backToLoginBtn.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                closeForgotPasswordModal();
+            }
+        });
+
+        // Close modal when clicking outside of it
+        forgotPasswordModal.addEventListener('click', (e) => {
+            if (e.target === forgotPasswordModal) {
+                closeForgotPasswordModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && forgotPasswordModal.classList.contains('active')) {
+                closeForgotPasswordModal();
+            }
+        });
+
+        forgotPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            resetMsg.textContent = '';
+            resetMsg.className = 'message';
+
+            const resetEmail = resetEmailInput.value.trim().toLowerCase();
+
+            if (!resetEmail) {
+                showResetMessage('Please enter your email address.', 'error');
+                return;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(resetEmail)) {
+                showResetMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            sendResetBtn.disabled = true;
+            sendResetBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(API_URL + '/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: resetEmail })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showResetMessage(data.message || 'Failed to send reset link.', 'error');
+                    return;
+                }
+
+                showResetMessage('Check your email for a password reset link. It expires in 1 hour.', 'success');
+                setTimeout(() => {
+                    closeForgotPasswordModal();
+                }, 2500);
+            } catch (error) {
+                showResetMessage('Cannot connect to server. Make sure the backend is running.', 'error');
+                console.error('Forgot password error:', error);
+            } finally {
+                sendResetBtn.disabled = false;
+                sendResetBtn.textContent = 'Send Reset Link';
+            }
+        });
     </script>
 </body>
 </html>

@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ddcet_hub';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
