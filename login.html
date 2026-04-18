@@ -644,6 +644,11 @@
             toggleLead.textContent = isLogin ? 'New student?' : 'Already registered?';
             toggleBtn.textContent = isLogin ? 'Create one here' : 'Back to sign in';
 
+            const forgotPwdContainer = document.getElementById('forgot-password-link');
+            if (forgotPwdContainer) {
+                forgotPwdContainer.style.display = isLogin ? 'block' : 'none';
+            }
+
             signupOnlyBlocks.forEach((block) => {
                 block.classList.toggle('hidden', isLogin);
                 block.setAttribute('aria-hidden', String(isLogin));
