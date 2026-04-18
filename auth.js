@@ -1,6 +1,7 @@
 // auth.js - Client-side authentication logic
 
-const API_BASE_URL = '/api';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+const API_BASE_URL = isLocal ? 'http://localhost:5001/api' : '/api';
 
 /**
  * Check if the user is authenticated.

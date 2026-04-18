@@ -600,7 +600,8 @@
         const signupOnlyInputs = [fullNameInput, phoneInput, departmentInput, confirmPasswordInput];
         const passwordToggles = document.querySelectorAll('.password-toggle');
 
-        const API_URL = '/api';
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+        const API_URL = isLocal ? 'http://localhost:5001/api' : '/api';
         const eyeIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12s4.1-7 10.5-7 10.5 7 10.5 7-4.1 7-10.5 7S1.5 12 1.5 12Z"></path><circle cx="12" cy="12" r="3.25"></circle></svg>';
         const eyeOffIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.58 10.58A2 2 0 0 0 12 16a2 2 0 0 0 1.42-.58"></path><path d="M9.88 5.09A11 11 0 0 1 12 5c6.4 0 10.5 7 10.5 7a19.2 19.2 0 0 1-4.04 4.64"></path><path d="M6.61 6.61A19.05 19.05 0 0 0 1.5 12s4.1 7 10.5 7a10.8 10.8 0 0 0 5.02-1.2"></path></svg>';
 

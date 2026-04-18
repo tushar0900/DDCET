@@ -651,9 +651,10 @@ app.post('/api/forgot-password', async (req, res) => {
        </a>
        <p>This link expires in 1 hour.</p>
        <p><strong>If you didn't request this, ignore this email.</strong></p>`
-    );
-
-    return res.status(200).json({ message: 'Password reset link has been sent to your email.' });
+    return res.status(200).json({ 
+      message: 'Password reset link has been sent to your email.',
+      devResetLink: `/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`
+    });
   } catch (error) {
     console.error('Forgot password error:', error);
     return res.status(500).json({ message: 'Error processing forgot password request.' });
@@ -663,12 +664,12 @@ app.post('/api/forgot-password', async (req, res) => {
 // Reset Password Route (using token from email)
 app.post('/api/reset-password', async (req, res) => {
   try {
-    const { token, email, newPassword } = req.body;
-    if (!token || !email || !newPassword) {
+    const { token, email, password } = req.body;
+    if (!token || !email || !password) {
       return res.status(400).json({ message: 'Token, email, and new password are required.' });
     }
 
-    if (newPassword.length < 6) {
+    if (password.length < 6) {
       return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
     }
 
@@ -686,7 +687,7 @@ app.post('/api/reset-password', async (req, res) => {
     }
 
     // Hash new password and update
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
     user.password_reset_token = null;
     user.password_reset_expires = null;
