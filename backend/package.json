@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "postinstall": "node create-env.js",
     "start": "node server.js",
     "dev": "node server.js"
   },

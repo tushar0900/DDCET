@@ -5,9 +5,8 @@ services:
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
+    environmentSlug: node
     envVars:
-      # IMPORTANT: MongoDB connection string with URL-encoded password
-      # Password: Tushar123# (# is URL-encoded as %23)
       - key: MONGODB_URI
         value: mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub
       - key: SECRET_KEY
