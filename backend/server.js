@@ -8,6 +8,19 @@ const envPath = path.join(__dirname, '.env');
 console.log(`📁 .env file path: ${envPath}`);
 console.log(`📁 .env file exists: ${fs.existsSync(envPath)}`);
 
+// Ensure .env exists at runtime (helps when platform doesn't persist or provide .env)
+try {
+  const createEnvPath = path.join(__dirname, 'create-env.js');
+  if (fs.existsSync(createEnvPath)) {
+    require(createEnvPath);
+    console.log('✓ create-env executed (ensured .env exists)');
+  } else {
+    console.log('ℹ️ create-env.js not found; skipping .env generation');
+  }
+} catch (err) {
+  console.warn('⚠️ create-env execution failed:', err.message);
+}
+
 if (fs.existsSync(envPath)) {
   const envContent = fs.readFileSync(envPath, 'utf8');
   console.log(`📄 .env file size: ${envContent.length} bytes`);
@@ -30,7 +43,10 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 5001;
 const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ddcet_hub';
+// In production prefer Atlas; avoid falling back to localhost which causes ECONNREFUSED on deploy platforms
+const MONGODB_URI = process.env.MONGODB_URI || (process.env.NODE_ENV === 'production'
+  ? 'mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub'
+  : 'mongodb://localhost:27017/ddcet_hub');
 
 console.log('📝 Configuration loaded:');
 console.log(`   - PORT: ${PORT}`);

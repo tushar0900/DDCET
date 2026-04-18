@@ -13,8 +13,7 @@ services:
         value: your-production-secret-key-change-this-12345
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 5001
+      # Note: Do not hardcode PORT here; Render provides the runtime PORT variable.
 
   - type: static_site
     name: ddcet-hub-frontend
