@@ -186,6 +186,10 @@
             cursor: pointer;
             transition: transform 0.2s, filter 0.2s;
             margin-top: 4px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn:hover {
@@ -248,16 +252,132 @@
             display: block;
         }
 
-        @media (max-width: 540px) {
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
             .auth-container {
                 padding: 24px 20px;
+                border-radius: 16px;
+                max-width: 100%;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header p {
+                font-size: 13px;
             }
 
             .form-grid {
                 grid-template-columns: 1fr;
                 gap: 0;
             }
+
+            .form-group input {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+
+            .password-toggle {
+                width: 40px;
+                height: 40px;
+            }
+
+            .eyebrow {
+                font-size: 10px;
+                padding: 5px 10px;
+            }
         }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                min-height: 100dvh;
+            }
+
+            .auth-container {
+                padding: 20px 16px;
+                border-radius: 12px;
+                box-shadow: 0 10px 40px rgba(2, 6, 23, 0.7);
+            }
+
+            .header {
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .eyebrow {
+                font-size: 9px;
+                padding: 4px 8px;
+                margin-bottom: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .form-group input {
+                padding: 12px 14px;
+                font-size: 16px;
+                border-radius: 8px;
+            }
+
+            .input-shell input {
+                padding-right: 44px;
+            }
+
+            .password-toggle {
+                width: 44px;
+                height: 44px;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                min-height: 44px;
+                font-size: 14px;
+                margin-top: 2px;
+            }
+
+            .helper-text {
+                font-size: 11px;
+                margin-bottom: 12px;
+            }
+
+            .toggle-text {
+                margin-top: 16px;
+                font-size: 12px;
+            }
+
+            .message {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+        }
+
+        /* Force 100dvh on mobile for proper viewport */
+        @media (max-height: 600px) {
+            body {
+                min-height: 100dvh;
+            }
+        }
+    
     </style>
 </head>
 <body>

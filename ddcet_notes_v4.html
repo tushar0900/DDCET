@@ -202,7 +202,196 @@ input, button, .hub-card, .nav-item, .chip { cursor: pointer; touch-action: mani
 .concept h4{color:#c4b5fd;font-size:14px;font-weight:700;margin-bottom:10px}
 .concept p,.concept li{font-size:14px;color:#ddd6fe;line-height:1.75}
 .concept ul{padding-left:20px}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.mcq-opts,.g2,.g3{grid-template-columns:1fr}.ch-section{padding:16px}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);z-index:200;width:80vw;max-width:300px}
+  .main{margin-left:0}
+  .ch-section{padding:16px;max-width:100%}
+  .mcq-opts{grid-template-columns:1fr}
+  .g2,.g3{grid-template-columns:1fr;gap:12px}
+  .fcards.col2, .fcards.col3, .fcards.col4{grid-template-columns:1fr}
+  
+  .header{padding:16px 12px;margin-bottom:20px;gap:10px}
+  .logo-name{font-size:0.95rem}
+  .stats{gap:10px}
+  .stat-n{font-size:1rem}
+  .stat-l{font-size:9px}
+  
+  .hub-cards{gap:8px}
+  .hub-card{padding:12px;gap:10px;border-radius:12px}
+  .hub-card-icon{font-size:1.4rem;width:36px}
+  .hub-card-name{font-size:0.9rem;margin-bottom:1px}
+  .hub-card-sub{font-size:10px;margin-bottom:2px}
+  .hub-card-topics{font-size:10px}
+  .hub-card-arrow{font-size:1.1rem}
+  
+  .chip-hint{padding:10px 12px;font-size:11px;margin:14px auto 0}
+  
+  .ch-section{display:block !important;padding:14px}
+  .ch-banner{padding:20px 24px;margin-bottom:20px;border-radius:14px}
+  .ch-hero{padding:20px 24px;margin-bottom:24px}
+  .ch-banner::before{display:none}
+  .ch-banner::after{display:none}
+  .ch-tag{font-size:10px}
+  .ch-title{font-size:22px;margin:8px 0 4px}
+  .ch-desc{font-size:12px;margin-bottom:12px}
+  .ch-meta{gap:10px}
+  .ch-meta-item{gap:5px;font-size:11px;padding:5px 10px}
+  
+  .chips{gap:6px;margin-bottom:20px}
+  .chip{padding:5px 12px;font-size:11px;border-radius:18px}
+  
+  .sec-head{font-size:16px;margin:24px 0 14px;padding-bottom:10px;gap:8px}
+  .sec-head::before{height:20px}
+  .sec-sub{font-size:14px;margin:18px 0 10px;gap:6px}
+  
+  .card{padding:16px 18px;margin-bottom:12px;border-radius:12px}
+  .card h3{font-size:13px;margin-bottom:10px}
+  .card h4{font-size:12px;margin:12px 0 6px}
+  .card p{font-size:13px;margin-bottom:8px}
+  .card ul, .card ol{padding-left:18px}
+  .card ul li, .card ol li{font-size:13px;line-height:1.7}
+  
+  .fbox{padding:12px 14px;margin:10px 0;font-size:12px;border-radius:8px}
+  .frow{padding:5px 0;font-size:0.85rem;line-height:1.6}
+  .frow-lbl{font-size:9px;padding:0px 5px;margin-right:6px}
+  .fcards{margin-top:6px;gap:4px}
+  .fcard{padding:7px 10px;font-size:0.8rem}
+  .fcard .fc-hd{font-size:9px;margin-bottom:3px}
+  .fcard .fc-val{font-size:0.9rem}
+  .fcard .fc-desc{font-size:0.75rem}
+  
+  .sbox{padding:14px 16px;margin:10px 0;border-radius:10px}
+  .sbox .stitle{font-size:12px;margin-bottom:10px;padding-bottom:8px}
+  .step{gap:10px;margin-bottom:10px}
+  .sn{width:24px;height:24px;font-size:10px}
+  .sc{font-size:13px}
+  
+  .tip{padding:10px 14px;margin:10px 0;gap:10px;border-radius:8px}
+  .tip-i{font-size:16px;line-height:1.3}
+  .tip-c{font-size:12px}
+  
+  .mcq{padding:14px 16px;margin:10px 0;border-radius:10px}
+  .mcq-q{font-size:13px;margin-bottom:10px}
+  .mcq-opts{gap:6px;margin-bottom:10px}
+  .mcq-opt{font-size:12px;padding:7px 10px}
+  .mcq-ans{padding:8px 12px;font-size:12px}
+  
+  .tbl{font-size:12px;margin:10px 0}
+  .tbl th{padding:8px 10px;font-size:11px}
+  .tbl td{padding:7px 10px;font-size:12px}
+  
+  .svg-wrap{padding:14px;gap:12px}
+  .svg-cap{font-size:11px;margin-top:6px}
+  
+  .pyq-block{padding:14px 16px;margin:14px 0;border-radius:10px}
+  .pyq-title{font-size:12px;margin-bottom:10px}
+  .pyq-year{font-size:9px;padding:1px 6px}
+  
+  .concept{padding:10px 14px;margin:10px 0;border-radius:8px}
+  .concept h4{font-size:12px;margin-bottom:6px}
+  .concept p, .concept li{font-size:13px}
+  
+  .hl-box, .warn-box{padding:10px 14px;margin:8px 0;font-size:12px;border-radius:8px}
+}
+
+@media(max-width:600px){
+  body{font-size:14px}
+  .main{margin-left:0}
+  .ch-section{padding:12px;display:block !important}
+  .mcq-opts{grid-template-columns:1fr}
+  .g2,.g3{grid-template-columns:1fr}
+  .fcards.col2, .fcards.col3, .fcards.col4{grid-template-columns:1fr}
+  
+  #main-hub{padding:16px 12px 40px}
+  .header{padding:12px 8px;margin-bottom:14px;gap:8px}
+  .logo{gap:8px}
+  .logo-box{width:36px;height:36px;font-size:18px}
+  .logo-name{font-size:0.9rem}
+  .logo-sub{font-size:10px}
+  .stats{gap:8px;flex-wrap:wrap}
+  .stat-n{font-size:1rem}
+  .stat-l{font-size:8px}
+  
+  .divider{margin:0 auto 10px}
+  .dt{font-size:9px}
+  .dl{height:1px}
+  
+  .hub-cards{gap:6px}
+  .hub-card{padding:10px;gap:8px;border-radius:10px;min-height:48px}
+  .hub-card-icon{font-size:1.2rem;width:32px;text-align:center}
+  .hub-card-body{gap:1px}
+  .hub-card-name{font-size:0.85rem;margin-bottom:1px;line-height:1.2}
+  .hub-card-sub{font-size:9px;margin-bottom:1px}
+  .hub-card-topics{font-size:9px;line-height:1.3}
+  .hub-card-arrow{font-size:1rem}
+  
+  .chip-hint{padding:8px 10px;font-size:10px;margin:10px auto 0;border-radius:8px}
+  .hub-footer{margin:12px auto 0;font-size:10px}
+  
+  .ch-banner{padding:14px 16px;margin-bottom:14px;border-radius:10px}
+  .ch-tag{font-size:9px;gap:5px}
+  .ch-title{font-size:18px;margin:6px 0 3px;line-height:1.1}
+  .ch-desc{font-size:11px;margin-bottom:10px;line-height:1.5}
+  .ch-meta{gap:6px;margin-top:10px}
+  .ch-meta-item{gap:4px;font-size:10px;padding:4px 8px;border-radius:6px}
+  
+  .chips{gap:5px;margin-bottom:14px}
+  .chip{padding:4px 10px;font-size:10px;border-radius:16px;border:1px solid #1e2a3a}
+  
+  .sec-head{font-size:14px;margin:16px 0 10px;padding-bottom:8px;gap:6px}
+  .sec-head::before{width:4px;height:18px}
+  .sec-sub{font-size:12px;margin:12px 0 8px;gap:5px}
+  
+  .card{padding:12px 14px;margin-bottom:8px;border-radius:10px}
+  .card h3{font-size:12px;margin-bottom:8px;font-weight:700}
+  .card h4{font-size:11px;margin:10px 0 5px}
+  .card p{font-size:12px;margin-bottom:6px;line-height:1.6}
+  .card ul, .card ol{padding-left:16px;margin-bottom:6px}
+  .card ul li, .card ol li{font-size:12px;line-height:1.6;margin-bottom:3px}
+  
+  .fbox{padding:10px 12px;margin:8px 0;font-size:11px;border-radius:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .frow{padding:4px 0;line-height:1.5;font-size:0.8rem}
+  .frow-lbl{font-size:8px;padding:0px 4px;margin-right:4px}
+  .fcards{margin-top:4px;gap:3px}
+  .fcards.col2, .fcards.col3, .fcards.col4{grid-template-columns:1fr}
+  .fcard{padding:6px 9px;font-size:0.75rem;border-radius:5px}
+  .fcard .fc-hd{font-size:8px;margin-bottom:2px}
+  .fcard .fc-val{font-size:0.85rem}
+  .fcard .fc-desc{font-size:0.7rem}
+  
+  .sbox{padding:10px 12px;margin:8px 0;border-radius:8px}
+  .sbox .stitle{font-size:11px;margin-bottom:8px;padding-bottom:6px}
+  .step{gap:8px;margin-bottom:8px;align-items:flex-start}
+  .sn{width:22px;height:22px;font-size:9px;margin-top:0px}
+  .sc{font-size:12px;line-height:1.6}
+  
+  .tip{padding:8px 12px;margin:8px 0;gap:8px;border-radius:6px}
+  .tip-i{font-size:14px}
+  .tip-c{font-size:11px;line-height:1.6}
+  
+  .mcq{padding:12px 14px;margin:8px 0;border-radius:8px}
+  .mcq-q{font-size:12px;margin-bottom:8px;line-height:1.5}
+  .mcq-opts{gap:5px;margin-bottom:8px}
+  .mcq-opt{font-size:11px;padding:6px 9px;border-radius:5px}
+  .mcq-ans{padding:7px 10px;font-size:11px}
+  
+  .tbl{font-size:11px;margin:8px 0}
+  .tbl th{padding:6px 8px;font-size:10px;border-radius:0}
+  .tbl td{padding:5px 7px;font-size:11px}
+  
+  .svg-wrap{padding:10px;gap:8px;border-radius:8px;flex-direction:column}
+  .svg-cap{font-size:10px;margin-top:4px}
+  
+  .pyq-block{padding:12px 14px;margin:10px 0;border-radius:8px}
+  .pyq-title{font-size:11px;margin-bottom:8px}
+  .pyq-year{font-size:8px;padding:0px 5px;margin-right:4px}
+  
+  .concept{padding:8px 12px;margin:8px 0;border-radius:6px}
+  .concept h4{font-size:11px;margin-bottom:5px}
+  .concept p, .concept li{font-size:12px;line-height:1.6}
+  
+  .hl-box, .warn-box{padding:8px 12px;margin:6px 0;font-size:11px;border-radius:6px;line-height:1.6}
+}
 
 /* ═══════════════════════════════════════
    VISUAL MATRIX DISPLAY
