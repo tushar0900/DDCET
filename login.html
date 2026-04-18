@@ -875,10 +875,17 @@
                     return;
                 }
 
-                showResetMessage('Check your email for a password reset link. It expires in 1 hour.', 'success');
-                setTimeout(() => {
-                    closeForgotPasswordModal();
-                }, 2500);
+                if (data.devResetLink) {
+                    showResetMessage('Reset link generated! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.devResetLink;
+                    }, 1500);
+                } else {
+                    showResetMessage('Check your email for a password reset link. It expires in 1 hour.', 'success');
+                    setTimeout(() => {
+                        closeForgotPasswordModal();
+                    }, 2500);
+                }
             } catch (error) {
                 showResetMessage('Cannot connect to server. Make sure the backend is running.', 'error');
                 console.error('Forgot password error:', error);

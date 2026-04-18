@@ -248,7 +248,10 @@ const handleForgotPassword = async (req, res) => {
     await user.save();
 
     console.log(`Password reset token for ${email}: ${resetToken}`);
-    return res.status(200).json({ message: 'Password reset link sent to your email.' });
+    return res.status(200).json({ 
+      message: 'Password reset link generated.',
+      devResetLink: `reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`
+    });
   } catch (error) {
     console.error('Forgot password error:', error);
     return res.status(500).json({ message: 'Failed to process request.' });
