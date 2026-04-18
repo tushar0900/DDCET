@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 
 console.log('🔧 Initializing server...');
 console.log(`📁 Working directory: ${__dirname}`);
@@ -101,6 +102,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  email_verified: {
+    type: Boolean,
+    default: false,
+  },
+  email_verification_token: {
+    type: String,
+    default: null,
+  },
+  email_verification_expires: {
+    type: Date,
+    default: null,
+  },
+  password_reset_token: {
+    type: String,
+    default: null,
+  },
+  password_reset_expires: {
+    type: Date,
+    default: null,
+  },
   progress: {
     type: mongoose.Schema.Types.Mixed,
     default: {},
@@ -191,6 +212,47 @@ const verifySession = async (decoded) => {
   }
 };
 
+// ==================== EMAIL & TOKEN HELPERS ====================
+
+// Generate secure token for password reset and email verification
+const generateSecureToken = () => {
+  return crypto.randomBytes(32).toString('hex');
+};
+
+// Validate email format (basic + optional: Google domain only)
+const isValidGoogleEmail = (email) => {
+  // Accept any email with proper format
+  // Optional: restrict to Gmail only by checking: email.endsWith('@gmail.com')
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Send email (console logging for now; replace with Nodemailer for production)
+const sendEmail = async (to, subject, htmlBody) => {
+  try {
+    // For development: just log
+    console.log(`\n📧 EMAIL SENT:
+To: ${to}
+Subject: ${subject}
+Body: ${htmlBody}\n`);
+
+    // TODO: In production, integrate with Nodemailer or SendGrid
+    // const transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: process.env.GMAIL_USER,
+    //     pass: process.env.GMAIL_PASSWORD,
+    //   },
+    // });
+    // await transporter.sendMail({ from: 'noreply@ddcet.com', to, subject, html: htmlBody });
+
+    return true;
+  } catch (error) {
+    console.error('❌ Email send error:', error);
+    return false;
+  }
+};
+
 // ==================== API ROUTES ====================
 
 // Signup Route
@@ -214,14 +276,23 @@ app.post('/api/signup', async (req, res) => {
       return res.status(400).json({ message: validationMessage });
     }
 
+    // Validate email format (Google approved format or custom validation)
+    if (!isValidGoogleEmail(email)) {
+      return res.status(400).json({ message: 'Please use a valid email address.' });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'Email already registered. Please login or use forgot password.' });
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Generate email verification token
+    const verificationToken = generateSecureToken();
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
     // Create new user
     const newUser = new User({
@@ -230,10 +301,31 @@ app.post('/api/signup', async (req, res) => {
       full_name: fullName,
       phone,
       department,
+      email_verified: false,
+      email_verification_token: verificationToken,
+      email_verification_expires: verificationExpires,
     });
 
     await newUser.save();
-    return res.status(201).json({ message: 'User created' });
+
+    // Send verification email
+    const verificationLink = `${process.env.APP_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}&email=${email}`;
+    const emailSent = await sendEmail(
+      email,
+      '🔐 Verify Your DDCET Email',
+      `<h3>Welcome to DDCET Study Hub!</h3>
+       <p>Click the link below to verify your email:</p>
+       <a href="${verificationLink}" style="padding:10px 20px; background:#007bff; color:white; text-decoration:none; border-radius:5px;">
+         Verify Email
+       </a>
+       <p>Or use this code: <strong>${verificationToken}</strong></p>
+       <p>This link expires in 24 hours.</p>`
+    );
+
+    return res.status(201).json({
+      message: 'User registered successfully! Please check your email to verify your account.',
+      email_sent: emailSent,
+    });
   } catch (error) {
     console.error('Signup error:', error);
     return res.status(500).json({ message: 'Unable to create user right now.' });
@@ -359,6 +451,230 @@ app.post('/api/get-progress', async (req, res) => {
   } catch (error) {
     console.error('Get progress error:', error);
     return res.status(500).json({ message: error.message });
+  }
+});
+
+// ==================== EMAIL VERIFICATION ====================
+
+// Verify Email Route
+app.post('/api/verify-email', async (req, res) => {
+  try {
+    const { token, email } = req.body;
+    if (!token || !email) {
+      return res.status(400).json({ message: 'Token and email are required.' });
+    }
+
+    const user = await User.findOne({ email: normalizeEmail(email) });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (user.email_verified) {
+      return res.status(400).json({ message: 'Email already verified.' });
+    }
+
+    if (user.email_verification_token !== token) {
+      return res.status(400).json({ message: 'Invalid verification token.' });
+    }
+
+    if (new Date() > user.email_verification_expires) {
+      return res.status(400).json({ message: 'Verification token has expired. Please request a new one.' });
+    }
+
+    // Mark email as verified
+    user.email_verified = true;
+    user.email_verification_token = null;
+    user.email_verification_expires = null;
+    await user.save();
+
+    return res.status(200).json({ message: 'Email verified successfully! You can now login.' });
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return res.status(500).json({ message: 'Error verifying email.' });
+  }
+});
+
+// Resend Verification Email Route
+app.post('/api/resend-verification', async (req, res) => {
+  try {
+    const email = normalizeEmail(req.body.email);
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (user.email_verified) {
+      return res.status(400).json({ message: 'Email is already verified.' });
+    }
+
+    // Generate new verification token
+    const verificationToken = generateSecureToken();
+    user.email_verification_token = verificationToken;
+    user.email_verification_expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await user.save();
+
+    // Send verification email
+    const verificationLink = `${process.env.APP_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}&email=${email}`;
+    await sendEmail(
+      email,
+      '🔐 Verify Your DDCET Email (Resend)',
+      `<h3>Email Verification</h3>
+       <p>Click the link below to verify your email:</p>
+       <a href="${verificationLink}" style="padding:10px 20px; background:#007bff; color:white; text-decoration:none; border-radius:5px;">
+         Verify Email
+       </a>
+       <p>This link expires in 24 hours.</p>`
+    );
+
+    return res.status(200).json({ message: 'Verification email resent successfully!' });
+  } catch (error) {
+    console.error('Resend verification error:', error);
+    return res.status(500).json({ message: 'Error resending verification email.' });
+  }
+});
+
+// ==================== PASSWORD MANAGEMENT ====================
+
+// Forgot Password Route
+app.post('/api/forgot-password', async (req, res) => {
+  try {
+    const email = normalizeEmail(req.body.email);
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      // Don't reveal if email exists or not (security)
+      return res.status(200).json({ message: 'If email exists, password reset link has been sent.' });
+    }
+
+    // Generate password reset token
+    const resetToken = generateSecureToken();
+    user.password_reset_token = resetToken;
+    user.password_reset_expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    await user.save();
+
+    // Send reset email
+    const resetLink = `${process.env.APP_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}&email=${email}`;
+    await sendEmail(
+      email,
+      '🔐 Reset Your DDCET Password',
+      `<h3>Password Reset Request</h3>
+       <p>Click the link below to reset your password:</p>
+       <a href="${resetLink}" style="padding:10px 20px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
+         Reset Password
+       </a>
+       <p>This link expires in 1 hour.</p>
+       <p><strong>If you didn't request this, ignore this email.</strong></p>`
+    );
+
+    return res.status(200).json({ message: 'Password reset link has been sent to your email.' });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    return res.status(500).json({ message: 'Error processing forgot password request.' });
+  }
+});
+
+// Reset Password Route (using token from email)
+app.post('/api/reset-password', async (req, res) => {
+  try {
+    const { token, email, newPassword } = req.body;
+    if (!token || !email || !newPassword) {
+      return res.status(400).json({ message: 'Token, email, and new password are required.' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+    }
+
+    const user = await User.findOne({ email: normalizeEmail(email) });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (user.password_reset_token !== token) {
+      return res.status(400).json({ message: 'Invalid reset token.' });
+    }
+
+    if (new Date() > user.password_reset_expires) {
+      return res.status(400).json({ message: 'Reset token has expired. Please request a new one.' });
+    }
+
+    // Hash new password and update
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.password_reset_token = null;
+    user.password_reset_expires = null;
+    user.current_session_id = ''; // Invalidate current sessions
+    await user.save();
+
+    // Send confirmation email
+    await sendEmail(
+      email,
+      '✅ Your DDCET Password Has Been Changed',
+      `<h3>Password Changed Successfully</h3>
+       <p>Your password was changed at ${new Date().toLocaleString()}</p>
+       <p>If you didn't make this change, please contact support immediately.</p>`
+    );
+
+    return res.status(200).json({ message: 'Password has been reset successfully. Please login with your new password.' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    return res.status(500).json({ message: 'Error resetting password.' });
+  }
+});
+
+// Update Password Route (authenticated - for logged-in users)
+app.post('/api/update-password', async (req, res) => {
+  try {
+    const { token, currentPassword, newPassword } = req.body;
+    if (!token || !currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'Token, current password, and new password are required.' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters long.' });
+    }
+
+    // Verify JWT token
+    jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+      if (err) return res.status(401).json({ message: 'Invalid or expired token.' });
+
+      const user = await User.findOne({ email: decoded.email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+
+      // Verify current password
+      const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: 'Current password is incorrect.' });
+      }
+
+      // Prevent using same password
+      const isSamePassword = await bcrypt.compare(newPassword, user.password);
+      if (isSamePassword) {
+        return res.status(400).json({ message: 'New password must be different from current password.' });
+      }
+
+      // Update password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+      user.updated_at = new Date();
+      await user.save();
+
+      // Send confirmation email
+      await sendEmail(
+        user.email,
+        '✅ Your DDCET Password Has Been Updated',
+        `<h3>Password Updated Successfully</h3>
+         <p>Your password was changed at ${new Date().toLocaleString()}</p>
+         <p>If you didn't make this change, please reset your password immediately.</p>`
+      );
+
+      return res.status(200).json({ message: 'Password updated successfully!' });
+    });
+  } catch (error) {
+    console.error('Update password error:', error);
+    return res.status(500).json({ message: 'Error updating password.' });
   }
 });
 
