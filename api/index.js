@@ -27,6 +27,8 @@ const userSchema = new mongoose.Schema({
   department: { type: String, default: '' },
   progress: { type: mongoose.Schema.Types.Mixed, default: {} },
   current_session_id: { type: String, default: '' },
+  password_reset_token: { type: String, default: null },
+  password_reset_expires: { type: Date, default: null },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
 });
