@@ -73,7 +73,7 @@ if (process.env.NODE_ENV === 'production') {
   if (isLocal) {
     console.error('❌ FATAL: MONGODB_URI resolves to localhost in production.');
     console.error('   Set a real Atlas MONGODB_URI in your Render service environment variables or render.yaml envVars.');
-    process.exit(1);
+    console.error('   Continuing to start the server but the application will run in FALLBACK MODE.');
   }
 }
 
@@ -431,19 +431,22 @@ const connectDatabase = async (retryCount = 0, maxRetries = 3) => {
   }
 };
 
+// Start the HTTP server immediately so platform port checks succeed.
+const server = app.listen(PORT, () => {
+  console.log(`✓ Server running on http://localhost:${PORT}`);
+  console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
+});
+
+// Connect to the database in background. Do not block server start.
 connectDatabase().then((isConnected) => {
-  app.listen(PORT, () => {
-    console.log(`✓ Server running on http://localhost:${PORT}`);
-    console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
-    if (!isConnected) {
-      console.log('\n⚠️  WARNING: Running in FALLBACK MODE - Database not connected');
-      console.log('   Data will NOT persist between server restarts');
-      console.log('   To fix: Whitelist your IP in MongoDB Atlas Network Access\n');
-    }
-  });
+  if (!isConnected) {
+    console.log('\n⚠️  WARNING: Running in FALLBACK MODE - Database not connected');
+    console.log('   Data will NOT persist between server restarts');
+    console.log('   To fix: Whitelist your IP in MongoDB Atlas Network Access\n');
+  }
 }).catch((err) => {
-  console.error('✗ Fatal error:', err);
-  process.exit(1);
+  console.error('✗ Error connecting to DB (background):', err);
+  // Do not exit process - keep server available for read-only or fallback operations
 });
 
 // Graceful shutdown
