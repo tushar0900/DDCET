@@ -8,25 +8,7 @@ const envPath = path.join(__dirname, '.env');
 console.log(`📁 .env file path: ${envPath}`);
 console.log(`📁 .env file exists: ${fs.existsSync(envPath)}`);
 
-// Ensure .env exists at runtime (helps when platform doesn't persist or provide .env)
-try {
-  const createEnvPath = path.join(__dirname, 'create-env.js');
-  if (fs.existsSync(createEnvPath)) {
-    require(createEnvPath);
-    console.log('✓ create-env executed (ensured .env exists)');
-  } else {
-    console.log('ℹ️ create-env.js not found; skipping .env generation');
-  }
-} catch (err) {
-  console.warn('⚠️ create-env execution failed:', err.message);
-}
-
-if (fs.existsSync(envPath)) {
-  const envContent = fs.readFileSync(envPath, 'utf8');
-  console.log(`📄 .env file size: ${envContent.length} bytes`);
-  console.log(`📄 .env file content (first 200 chars): ${envContent.substring(0, 200)}`);
-}
-
+// Load .env file if it exists (postinstall hook creates it at build time)
 const dotenvResult = require('dotenv').config({ path: envPath });
 console.log(`📋 dotenv config result:`, dotenvResult.parsed ? 'SUCCESS' : 'FAILED');
 if (dotenvResult.error) {
