@@ -43,17 +43,39 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 5001;
 const SECRET_KEY = process.env.SECRET_KEY || 'ddcet_secret_key';
+
 // In production prefer Atlas; avoid falling back to localhost which causes ECONNREFUSED on deploy platforms
 const MONGODB_URI = process.env.MONGODB_URI || (process.env.NODE_ENV === 'production'
   ? 'mongodb+srv://Tushar:Tushar123%23@cluster0.xxdrret.mongodb.net/ddcet_hub'
   : 'mongodb://localhost:27017/ddcet_hub');
 
+// Security: in production do not log secrets; mask the connection string when displaying
+const maskConnectionString = (uri) => {
+  try {
+    if (!uri) return '';
+    // Replace password between : and @ if present
+    return uri.replace(/(:)([^@]+)(@)/, '$1***$3');
+  } catch (e) {
+    return '***';
+  }
+};
+
 console.log('📝 Configuration loaded:');
 console.log(`   - PORT: ${PORT}`);
-console.log(`   - SECRET_KEY: ${SECRET_KEY.substring(0, 20)}...`);
-console.log(`   - MONGODB_URI: ${MONGODB_URI}`);
+console.log(`   - SECRET_KEY: ${process.env.NODE_ENV === 'production' ? '***' : SECRET_KEY.substring(0, 20) + '...'}`);
+console.log(`   - MONGODB_URI: ${process.env.NODE_ENV === 'production' ? maskConnectionString(MONGODB_URI) : MONGODB_URI}`);
 console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'not set'}`);
 console.log(`   - All env vars: ${Object.keys(process.env).filter(k => k.includes('MONGO') || k.includes('PORT') || k.includes('SECRET')).join(', ')}`);
+
+// Fail-fast if running in production without a real remote DB configured
+if (process.env.NODE_ENV === 'production') {
+  const isLocal = /localhost|127\.0\.0\.1|::1/.test(MONGODB_URI);
+  if (isLocal) {
+    console.error('❌ FATAL: MONGODB_URI resolves to localhost in production.');
+    console.error('   Set a real Atlas MONGODB_URI in your Render service environment variables or render.yaml envVars.');
+    process.exit(1);
+  }
+}
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
