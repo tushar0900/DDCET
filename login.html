@@ -207,11 +207,41 @@
             transform: none;
         }
 
+        .btn.secondary {
+            background: rgba(148, 163, 184, 0.12);
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.24);
+        }
+
+        .btn.secondary:hover {
+            filter: none;
+            transform: translateY(-1px);
+            background: rgba(148, 163, 184, 0.18);
+        }
+
         .toggle-text {
             text-align: center;
             margin-top: 24px;
             font-size: 14px;
             color: var(--text-muted);
+        }
+
+        .quick-access {
+            margin-top: 14px;
+        }
+
+        .quick-access-note {
+            margin-top: 10px;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .quick-access-note.offline {
+            color: #fca5a5;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         .toggle-lead {
@@ -546,6 +576,12 @@
 
         <div id="msg" class="message"></div>
 
+        <div class="quick-access">
+            <button type="button" id="guest-access-btn" class="btn secondary">Open Study Hub Directly</button>
+            <button type="button" id="retry-connection-btn" class="btn secondary hidden" style="margin-top: 10px;">Retry Cloud Login</button>
+            <p id="backend-status" class="helper-text quick-access-note">You can always open the study hub directly without signing in.</p>
+        </div>
+
         <div class="toggle-text">
             <span id="toggle-lead" class="toggle-lead">New student?</span>
             <span id="toggle-form" role="button" tabindex="0">Create one here</span>
@@ -608,6 +644,9 @@
         const formDesc = document.getElementById('form-desc');
         const helperText = document.getElementById('helper-text');
         const msg = document.getElementById('msg');
+        const guestAccessBtn = document.getElementById('guest-access-btn');
+        const retryConnectionBtn = document.getElementById('retry-connection-btn');
+        const backendStatus = document.getElementById('backend-status');
         const signupOnlyBlocks = document.querySelectorAll('.signup-only');
         const signupOnlyInputs = [fullNameInput, phoneInput, departmentInput, confirmPasswordInput];
         const passwordToggles = document.querySelectorAll('.password-toggle');
@@ -616,6 +655,7 @@
         const eyeOffIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.58 10.58A2 2 0 0 0 12 16a2 2 0 0 0 1.42-.58"></path><path d="M9.88 5.09A11 11 0 0 1 12 5c6.4 0 10.5 7 10.5 7a19.2 19.2 0 0 1-4.04 4.64"></path><path d="M6.61 6.61A19.05 19.05 0 0 0 1.5 12s4.1 7 10.5 7a10.8 10.8 0 0 0 5.02-1.2"></path></svg>';
 
         let isLogin = true;
+        let backendAvailable = isLocal;
 
         function showMessage(text, type) {
             msg.textContent = text;
@@ -640,6 +680,55 @@
             button.innerHTML = isVisible ? eyeOffIcon : eyeIcon;
             button.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
             button.title = isVisible ? 'Hide password' : 'Show password';
+        }
+
+        function applyBackendAvailabilityState() {
+            const cloudOffline = !isLocal && !backendAvailable;
+            const forgotPasswordLink = document.getElementById('forgot-password-btn');
+
+            submitBtn.disabled = cloudOffline;
+            submitBtn.textContent = cloudOffline
+                ? 'Cloud Login Offline'
+                : (isLogin ? 'Sign In' : 'Create Account');
+
+            if (forgotPasswordLink) {
+                forgotPasswordLink.style.pointerEvents = cloudOffline ? 'none' : '';
+                forgotPasswordLink.style.opacity = cloudOffline ? '0.55' : '1';
+            }
+
+            retryConnectionBtn.classList.toggle('hidden', !cloudOffline);
+            backendStatus.classList.toggle('offline', cloudOffline);
+            backendStatus.textContent = cloudOffline
+                ? 'Cloud login is offline right now. You can still open the study hub directly.'
+                : 'You can always open the study hub directly without signing in.';
+        }
+
+        async function checkBackendAvailability() {
+            if (isLocal) {
+                backendAvailable = true;
+                applyBackendAvailabilityState();
+                return true;
+            }
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+            try {
+                const response = await fetch(`${API_URL}/health`, {
+                    method: 'GET',
+                    cache: 'no-store',
+                    signal: controller.signal
+                });
+
+                backendAvailable = response.ok;
+                return backendAvailable;
+            } catch (error) {
+                backendAvailable = false;
+                return false;
+            } finally {
+                clearTimeout(timeoutId);
+                applyBackendAvailabilityState();
+            }
         }
 
         function updateFormMode() {
@@ -671,6 +760,7 @@
             }
 
             hideMessage();
+            applyBackendAvailabilityState();
         }
 
         passwordToggles.forEach((button) => {
@@ -706,6 +796,11 @@
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             hideMessage();
+
+            if (!backendAvailable && !isLocal) {
+                showMessage('Cloud login is offline right now. Use "Open Study Hub Directly" and retry later.', 'error');
+                return;
+            }
 
             const email = emailInput.value.trim().toLowerCase();
             const password = passwordInput.value;
@@ -789,14 +884,34 @@
                 updateFormMode();
                 showMessage('Registration successful! Please sign in with your new account.', 'success');
             } catch (error) {
-                showMessage(serverErrorMessage, 'error');
+                if (!isLocal) {
+                    backendAvailable = false;
+                    applyBackendAvailabilityState();
+                    showMessage('Cloud login is unavailable right now. Use "Open Study Hub Directly" and retry later.', 'error');
+                } else {
+                    showMessage(serverErrorMessage, 'error');
+                }
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = isLogin ? 'Sign In' : 'Create Account';
+                applyBackendAvailabilityState();
             }
         });
 
         updateFormMode();
+        applyBackendAvailabilityState();
+        checkBackendAvailability();
+
+        guestAccessBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        retryConnectionBtn.addEventListener('click', async () => {
+            retryConnectionBtn.disabled = true;
+            backendStatus.classList.remove('offline');
+            backendStatus.textContent = 'Checking cloud login...';
+            await checkBackendAvailability();
+            retryConnectionBtn.disabled = false;
+        });
 
         // ==================== FORGOT PASSWORD LOGIC ====================
         const forgotPasswordBtn = document.getElementById('forgot-password-btn');
@@ -858,6 +973,11 @@
             resetMsg.textContent = '';
             resetMsg.className = 'message';
 
+            if (!backendAvailable && !isLocal) {
+                showResetMessage('Cloud login is offline right now. Open the study hub directly and retry later.', 'error');
+                return;
+            }
+
             const resetEmail = resetEmailInput.value.trim().toLowerCase();
 
             if (!resetEmail) {
@@ -893,7 +1013,13 @@
                     closeForgotPasswordModal();
                 }, 2500);
             } catch (error) {
-                showResetMessage(serverErrorMessage, 'error');
+                if (!isLocal) {
+                    backendAvailable = false;
+                    applyBackendAvailabilityState();
+                    showResetMessage('Cloud login is unavailable right now. Open the study hub directly and retry later.', 'error');
+                } else {
+                    showResetMessage(serverErrorMessage, 'error');
+                }
                 console.error('Forgot password error:', error);
             } finally {
                 sendResetBtn.disabled = false;
