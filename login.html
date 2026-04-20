@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DDCET Hub - Access Control</title>
+    <script src="api-config.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -623,9 +624,13 @@
             window.location.hostname === '127.0.0.1' ||
             window.location.hostname === '::1' ||
             window.location.protocol === 'file:';
-        const API_URL = isLocal
+        const fallbackApiUrl = isLocal
             ? 'http://localhost:5001/api'
             : 'https://ddcet-hub-backend.onrender.com/api';
+        const getApiUrl = () =>
+            window.DDCET_API_CONFIG
+                ? window.DDCET_API_CONFIG.getApiBaseUrl()
+                : fallbackApiUrl;
         const serverErrorMessage = isLocal
             ? 'Cannot connect to server. Make sure the backend is running.'
             : 'Cannot connect to server right now. Please try again.';
@@ -710,25 +715,48 @@
                 return true;
             }
 
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
-
             try {
-                const response = await fetch(`${API_URL}/health`, {
-                    method: 'GET',
-                    cache: 'no-store',
-                    signal: controller.signal
-                });
+                if (window.DDCET_API_CONFIG && window.DDCET_API_CONFIG.probeApiBase) {
+                    const probe = await window.DDCET_API_CONFIG.probeApiBase(getApiUrl(), 8000);
+                    backendAvailable = probe.ok;
+                } else {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-                backendAvailable = response.ok;
+                    try {
+                        const response = await fetch(`${getApiUrl()}/health`, {
+                            method: 'GET',
+                            cache: 'no-store',
+                            signal: controller.signal
+                        });
+
+                        backendAvailable = response.ok;
+                    } finally {
+                        clearTimeout(timeoutId);
+                    }
+                }
+
                 return backendAvailable;
             } catch (error) {
                 backendAvailable = false;
                 return false;
             } finally {
-                clearTimeout(timeoutId);
                 applyBackendAvailabilityState();
             }
+        }
+
+        async function verifyLoginSession(token) {
+            const response = await fetch(getApiUrl() + '/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+
+            const data = await response.json();
+            return {
+                ok: response.ok && data.valid,
+                data
+            };
         }
 
         function updateFormMode() {
@@ -857,7 +885,7 @@
             submitBtn.textContent = isLogin ? 'Signing In...' : 'Creating Account...';
 
             try {
-                const response = await fetch(API_URL + endpoint, {
+                const response = await fetch(getApiUrl() + endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -871,10 +899,27 @@
                 }
 
                 if (isLogin) {
+                    if (!data.token) {
+                        showMessage('Login failed because the server did not return a session token.', 'error');
+                        return;
+                    }
+
+                    submitBtn.textContent = 'Verifying Session...';
                     localStorage.setItem('ddcet_token', data.token);
+
+                    const verification = await verifyLoginSession(data.token);
+                    if (!verification.ok) {
+                        localStorage.removeItem('ddcet_token');
+                        showMessage(
+                            verification.data?.message || 'Login succeeded, but the server did not confirm the session.',
+                            'error'
+                        );
+                        return;
+                    }
+
                     showMessage('Login successful! Redirecting...', 'success');
                     setTimeout(() => {
-                        window.location.href = 'index.html';
+                        window.location.href = 'ddcet_notes_v4.html';
                     }, 900);
                     return;
                 }
@@ -902,7 +947,7 @@
         checkBackendAvailability();
 
         guestAccessBtn.addEventListener('click', () => {
-            window.location.href = 'index.html';
+            window.location.href = 'ddcet_notes_v4.html';
         });
 
         retryConnectionBtn.addEventListener('click', async () => {
@@ -995,7 +1040,7 @@
             sendResetBtn.textContent = 'Sending...';
 
             try {
-                const response = await fetch(API_URL + '/forgot-password', {
+                const response = await fetch(getApiUrl() + '/forgot-password', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: resetEmail })

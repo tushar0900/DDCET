@@ -5,9 +5,13 @@ const isLocal =
     window.location.hostname === '127.0.0.1' ||
     window.location.hostname === '::1' ||
     window.location.protocol === 'file:';
-const API_BASE_URL = isLocal
+const fallbackApiBaseUrl = isLocal
     ? 'http://localhost:5001/api'
     : 'https://ddcet-hub-backend.onrender.com/api';
+const getApiBaseUrl = () =>
+    window.DDCET_API_CONFIG
+        ? window.DDCET_API_CONFIG.getApiBaseUrl()
+        : fallbackApiBaseUrl;
 
 /**
  * Check if the user is authenticated.
@@ -22,7 +26,7 @@ async function checkAuth() {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/verify`, {
+        const response = await fetch(`${getApiBaseUrl()}/verify`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -129,7 +133,7 @@ async function syncProgress(progress) {
     if (!token) return;
 
     try {
-        await fetch(`${API_BASE_URL}/save-progress`, {
+        await fetch(`${getApiBaseUrl()}/save-progress`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, progress })
@@ -147,7 +151,7 @@ async function fetchProgress() {
     if (!token) return {};
 
     try {
-        const response = await fetch(`${API_BASE_URL}/get-progress`, {
+        const response = await fetch(`${getApiBaseUrl()}/get-progress`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token })
