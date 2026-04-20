@@ -2,7 +2,7 @@
   "name": "ddcet-study-hub",
   "version": "1.0.0",
   "description": "DDCET Study Hub - Student Portal for Notes and Progress Tracking",
-  "main": "api/index.js",
+  "main": "backend/server.js",
   "scripts": {
     "start": "cd backend && node server.js",
     "dev": "cd backend && node server.js"

@@ -1,7 +1,13 @@
 // auth.js - Client-side authentication logic
 
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
-const API_BASE_URL = isLocal ? 'http://localhost:5001/api' : '/api';
+const isLocal =
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname === '::1' ||
+    window.location.protocol === 'file:';
+const API_BASE_URL = isLocal
+    ? 'http://localhost:5001/api'
+    : 'https://ddcet-hub-backend.onrender.com/api';
 
 /**
  * Check if the user is authenticated.
@@ -11,7 +17,7 @@ async function checkAuth() {
     const token = localStorage.getItem('ddcet_token');
     
     if (!token) {
-        redirectToLogin();
+        updateUIForGuestUser();
         return;
     }
 
@@ -28,19 +34,14 @@ async function checkAuth() {
 
         if (!data.valid) {
             localStorage.removeItem('ddcet_token');
-            if (data.message && data.message.includes('elsewhere')) {
-                alert('Session expired: You have been logged in from another device.');
-            }
-            redirectToLogin();
+            updateUIForGuestUser();
         } else {
-            // User is valid, we can optionally show their email somewhere
             console.log('Authenticated as:', data.user.email);
             updateUIForAuthenticatedUser(data.user.email);
         }
     } catch (err) {
         console.error('Auth check failed:', err);
-        // If server is down, we might want to allow offline access or show a warning
-        // For now, let's just log it.
+        updateUIForGuestUser();
     }
 }
 
@@ -48,10 +49,7 @@ async function checkAuth() {
  * Redirect to login page
  */
 function redirectToLogin() {
-    const currentPage = window.location.pathname.split('/').pop();
-    if (currentPage !== 'login.html') {
-        window.location.href = 'login.html';
-    }
+    window.location.href = 'login.html';
 }
 
 /**
@@ -63,35 +61,64 @@ function logout() {
 }
 
 /**
- * Update UI with user info and logout button
+ * Shared auth badge mount point for guest/authenticated states
  */
-function updateUIForAuthenticatedUser(email) {
-    // Find a place to put the logout button or user info
-    // For DDCET Hub, we can add it to the header
+function mountAuthSection(content) {
     const header = document.querySelector('.header');
-    if (header && !document.getElementById('auth-section')) {
-        const authSection = document.createElement('div');
+    if (!header) {
+        return;
+    }
+
+    let authSection = document.getElementById('auth-section');
+    if (!authSection) {
+        authSection = document.createElement('div');
         authSection.id = 'auth-section';
         authSection.style.display = 'flex';
         authSection.style.gap = '10px';
         authSection.style.alignItems = 'center';
         authSection.style.fontSize = '12px';
-        
-        authSection.innerHTML = `
-            <span style="color: #94a3b8">${email}</span>
-            <button onclick="logout()" style="
-                background: rgba(239, 68, 68, 0.1);
-                color: #ef4444;
-                border: 1px solid rgba(239, 68, 68, 0.2);
-                padding: 4px 10px;
-                border-radius: 6px;
-                cursor: pointer;
-                font-size: 11px;
-                font-weight: 600;
-            ">Logout</button>
-        `;
         header.appendChild(authSection);
     }
+
+    authSection.innerHTML = content;
+}
+
+/**
+ * Update UI with user info and logout button
+ */
+function updateUIForAuthenticatedUser(email) {
+    mountAuthSection(`
+        <span style="color: #94a3b8">${email}</span>
+        <button onclick="logout()" style="
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        ">Logout</button>
+    `);
+}
+
+/**
+ * Update UI for guests when pages are opened directly from a public link
+ */
+function updateUIForGuestUser() {
+    mountAuthSection(`
+        <span style="color: #94a3b8">Guest mode</span>
+        <a href="login.html" style="
+            background: rgba(79, 70, 229, 0.12);
+            color: #c7d2fe;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        ">Sign In</a>
+    `);
 }
 
 /**

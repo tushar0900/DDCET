@@ -202,7 +202,7 @@ const validateSignupPayload = ({ fullName, phone, department, email, password })
 const verifySession = async (decoded) => {
   try {
     const user = await User.findOne({ email: decoded.email });
-    if (!user || user.current_session_id !== decoded.sessionId) {
+    if (!user) {
       return false;
     }
     return true;
@@ -350,11 +350,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Generate a unique session ID for this specific login
-    const sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-
-    // Update user's current session
-    user.current_session_id = sessionId;
     user.updated_at = new Date();
     await user.save();
 
@@ -367,8 +362,7 @@ app.post('/api/login', async (req, res) => {
     });
     await loginLog.save();
 
-    // Include sessionId in the token
-    const token = jwt.sign({ email: user.email, sessionId }, SECRET_KEY, { expiresIn: '24h' });
+    const token = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: '24h' });
     res.json({ token });
   } catch (error) {
     console.error('Login error:', error);
@@ -476,7 +470,7 @@ app.post('/api/verify', async (req, res) => {
       if (!isValid) {
         return res.status(401).json({
           valid: false,
-          message: 'Session expired (logged in elsewhere)',
+          message: 'Account no longer exists',
         });
       }
 
@@ -499,7 +493,7 @@ app.post('/api/save-progress', async (req, res) => {
 
       const isValid = await verifySession(decoded);
       if (!isValid) {
-        return res.status(401).json({ message: 'Account logged in from another device' });
+        return res.status(401).json({ message: 'User not found' });
       }
 
       const user = await User.findOne({ email: decoded.email });
