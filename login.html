@@ -451,6 +451,27 @@
             window.location.hostname === '127.0.0.1' || 
             window.location.hostname === '::1' ||
             window.location.protocol === 'file:';
+
+        // Auto-redirect if already logged in
+        (async function checkExistingAuth() {
+            const existingToken = localStorage.getItem('ddcet_token');
+            if (existingToken) {
+                try {
+                    const check_url = isLocal ? 'http://localhost:5001/api/verify' : 'https://ddcet-hub-backend.onrender.com/api/verify';
+                    const response = await fetch(check_url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ token: existingToken })
+                    });
+                    const data = await response.json();
+                    if (response.ok && data.valid) {
+                        window.location.href = 'ddcet_notes_v4.html';
+                    }
+                } catch (e) {
+                    console.log('Static auth check skipped or failed');
+                }
+            }
+        })();
         
         const API_URL = isLocal ? 'http://localhost:5001/api' : 'https://ddcet-hub-backend.onrender.com/api';
         const serverErrorMessage = 'Cannot connect to server. Please ensure the backend is running.';
