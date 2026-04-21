@@ -325,7 +325,7 @@ app.post('/api/signup', async (req, res) => {
     await newUser.save();
 
     // Send verification email
-    const verificationLink = `${process.env.APP_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}&email=${email}`;
+    const verificationLink = `${process.env.APP_URL || 'https://tushar0900.github.io/DDCET'}/login.html?verify=email&token=${verificationToken}&email=${email}`;
     const emailSent = await sendEmail(
       email,
       '🔐 Verify Your DDCET Email',
@@ -416,7 +416,7 @@ app.post('/api/forgot-password', async (req, res) => {
     await user.save();
 
     // Send reset email (for now just log it)
-    const resetLink = `${process.env.FRONTEND_URL || 'http://localhost'}/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`;
+    const resetLink = `${process.env.FRONTEND_URL || 'https://tushar0900.github.io/DDCET'}/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`;
     const htmlBody = `
       <h2>Password Reset Request</h2>
       <p>Click the link below to reset your password. This link expires in 1 hour.</p>

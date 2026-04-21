@@ -704,6 +704,33 @@
 
         updateFormMode();
 
+        // Handle Email Verification from URL
+        (async function handleEmailVerification() {
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get('token');
+            const email = params.get('email');
+            const verifyType = params.get('verify');
+
+            if (verifyType === 'email' && token && email) {
+                showMessage('Verifying your email...', 'success');
+                try {
+                    const response = await fetch(API_URL + '/verify-email', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ token, email })
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        showMessage('Email verified successfully! You can now sign in.', 'success');
+                    } else {
+                        showMessage(data.message || 'Verification failed.', 'error');
+                    }
+                } catch (e) {
+                    showMessage('Unable to connect to verification server.', 'error');
+                }
+            }
+        })();
+
         // Forgot Password Modal Logic
         const forgotPasswordBtn = document.getElementById('forgot-password-btn');
         const forgotPasswordModal = document.getElementById('forgot-password-modal');
