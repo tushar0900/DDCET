@@ -130,6 +130,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  last_login_at: {
+    type: Date,
+    default: null,
+  },
+  last_login_ip: {
+    type: String,
+    default: '',
+  },
+  last_login_device: {
+    type: String,
+    default: '',
+  },
+  login_count: {
+    type: Number,
+    default: 0,
+  },
   created_at: {
     type: Date,
     default: Date.now,
@@ -351,6 +367,10 @@ app.post('/api/login', async (req, res) => {
     }
 
     user.updated_at = new Date();
+    user.last_login_at = new Date();
+    user.last_login_ip = ip || '';
+    user.last_login_device = device;
+    user.login_count = (user.login_count || 0) + 1;
     await user.save();
 
     // Log the login
@@ -647,10 +667,7 @@ app.post('/api/forgot-password', async (req, res) => {
        <p><strong>If you didn't request this, ignore this email.</strong></p>`
     );
 
-    return res.status(200).json({ 
-      message: 'Password reset link has been sent to your email.',
-      devResetLink: `/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`
-    });
+    return res.status(200).json({ message: 'Password reset link has been sent to your email.' });
   } catch (error) {
     console.error('Forgot password error:', error);
     return res.status(500).json({ message: 'Error processing forgot password request.' });
@@ -660,12 +677,12 @@ app.post('/api/forgot-password', async (req, res) => {
 // Reset Password Route (using token from email)
 app.post('/api/reset-password', async (req, res) => {
   try {
-    const { token, email, password } = req.body;
-    if (!token || !email || !password) {
+    const { token, email, newPassword } = req.body;
+    if (!token || !email || !newPassword) {
       return res.status(400).json({ message: 'Token, email, and new password are required.' });
     }
 
-    if (password.length < 6) {
+    if (newPassword.length < 6) {
       return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
     }
 
@@ -683,7 +700,7 @@ app.post('/api/reset-password', async (req, res) => {
     }
 
     // Hash new password and update
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     user.password_reset_token = null;
     user.password_reset_expires = null;

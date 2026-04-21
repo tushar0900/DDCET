@@ -5,13 +5,7 @@ const isLocal =
     window.location.hostname === '127.0.0.1' ||
     window.location.hostname === '::1' ||
     window.location.protocol === 'file:';
-const fallbackApiBaseUrl = isLocal
-    ? 'http://localhost:5001/api'
-    : 'https://ddcet-hub-backend.onrender.com/api';
-const getApiBaseUrl = () =>
-    window.DDCET_API_CONFIG
-        ? window.DDCET_API_CONFIG.getApiBaseUrl()
-        : fallbackApiBaseUrl;
+const API_BASE_URL = isLocal ? 'http://localhost:5001/api' : '/api';
 
 /**
  * Check if the user is authenticated.
@@ -21,12 +15,12 @@ async function checkAuth() {
     const token = localStorage.getItem('ddcet_token');
     
     if (!token) {
-        updateUIForGuestUser();
+        redirectToLogin();
         return;
     }
 
     try {
-        const response = await fetch(`${getApiBaseUrl()}/verify`, {
+        const response = await fetch(`${API_BASE_URL}/verify`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -38,14 +32,13 @@ async function checkAuth() {
 
         if (!data.valid) {
             localStorage.removeItem('ddcet_token');
-            updateUIForGuestUser();
+            redirectToLogin();
         } else {
             console.log('Authenticated as:', data.user.email);
             updateUIForAuthenticatedUser(data.user.email);
         }
     } catch (err) {
         console.error('Auth check failed:', err);
-        updateUIForGuestUser();
     }
 }
 
@@ -107,25 +100,6 @@ function updateUIForAuthenticatedUser(email) {
 }
 
 /**
- * Update UI for guests when pages are opened directly from a public link
- */
-function updateUIForGuestUser() {
-    mountAuthSection(`
-        <span style="color: #94a3b8">Guest mode</span>
-        <a href="login.html" style="
-            background: rgba(79, 70, 229, 0.12);
-            color: #c7d2fe;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            padding: 4px 10px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 600;
-        ">Sign In</a>
-    `);
-}
-
-/**
  * Save user progress to the backend
  */
 async function syncProgress(progress) {
@@ -133,7 +107,7 @@ async function syncProgress(progress) {
     if (!token) return;
 
     try {
-        await fetch(`${getApiBaseUrl()}/save-progress`, {
+        await fetch(`${API_BASE_URL}/save-progress`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, progress })
@@ -151,7 +125,7 @@ async function fetchProgress() {
     if (!token) return {};
 
     try {
-        const response = await fetch(`${getApiBaseUrl()}/get-progress`, {
+        const response = await fetch(`${API_BASE_URL}/get-progress`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token })
