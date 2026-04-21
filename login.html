@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDCET Hub - Access Control</title>
+    <title>Login - DDCET Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -28,7 +28,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background:
+            background: 
                 radial-gradient(circle at top, var(--bg-accent), transparent 34%),
                 linear-gradient(160deg, #020617, #0f172a 48%, #111827);
             color: var(--text);
@@ -48,6 +48,12 @@
             padding: 32px;
             box-shadow: 0 25px 60px -20px rgba(2, 6, 23, 0.9);
             backdrop-filter: blur(14px);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header {
@@ -74,6 +80,9 @@
             font-size: 28px;
             font-weight: 800;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .header p {
@@ -82,22 +91,8 @@
             color: var(--text-muted);
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
         .form-group {
             margin-bottom: 18px;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group.hidden {
-            display: none;
         }
 
         .form-group label {
@@ -116,13 +111,33 @@
             padding: 12px 14px;
             color: var(--text);
             font-size: 15px;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            transition: all 0.2s;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .form-group input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         .input-shell {
@@ -148,7 +163,7 @@
             background: transparent;
             color: var(--text-muted);
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            transition: all 0.2s;
         }
 
         .password-toggle:hover {
@@ -166,14 +181,6 @@
             stroke-linejoin: round;
         }
 
-        .helper-text {
-            margin-top: 2px;
-            margin-bottom: 16px;
-            font-size: 12px;
-            line-height: 1.5;
-            color: var(--text-muted);
-        }
-
         .btn {
             width: 100%;
             background: linear-gradient(135deg, var(--primary), #6366f1);
@@ -184,17 +191,19 @@
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, filter 0.2s;
+            transition: all 0.2s;
             margin-top: 4px;
             min-height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         .btn:hover {
-            filter: brightness(1.06);
+            filter: brightness(1.1);
             transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
         }
 
         .btn:active {
@@ -203,138 +212,26 @@
 
         .btn:disabled {
             cursor: wait;
-            opacity: 0.75;
+            opacity: 0.7;
             transform: none;
-        }
-
-        .toggle-text {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .toggle-lead {
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        #toggle-form {
-            color: #c7d2fe;
-            cursor: pointer;
-            font-weight: 700;
-        }
-
-        #toggle-form:hover {
-            text-decoration: underline;
+            box-shadow: none;
         }
 
         .forgot-password-container {
             text-align: right;
-            margin-top: -12px;
-            margin-bottom: 16px;
+            margin: -10px 0 20px;
         }
 
         .forgot-password-link {
-            font-size: 12px;
-            color: #c7d2fe;
+            font-size: 13px;
+            color: var(--text-muted);
             text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
             transition: color 0.2s;
         }
 
         .forgot-password-link:hover {
-            color: #e0e7ff;
+            color: #c7d2fe;
             text-decoration: underline;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(2px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid rgba(148, 163, 184, 0.18);
-            border-radius: 20px;
-            padding: 32px;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 25px 60px -20px rgba(2, 6, 23, 0.9);
-            backdrop-filter: blur(14px);
-            position: relative;
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s;
-        }
-
-        .modal-close-btn:hover {
-            color: var(--text);
-        }
-
-        .modal-close-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .modal .header {
-            margin-bottom: 24px;
-        }
-
-        .modal .header h2 {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .modal .header p {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .modal .form-group {
-            margin-bottom: 18px;
-        }
-
-        .modal .btn {
-            margin-top: 4px;
-        }
-
-        .modal .message {
-            margin-top: 12px;
-            font-size: 12px;
         }
 
         .message {
@@ -360,132 +257,99 @@
             display: block;
         }
 
-        /* ===== MOBILE RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            body {
-                padding: 16px;
-            }
+        .toggle-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
 
-            .auth-container {
-                padding: 24px 20px;
-                border-radius: 16px;
-                max-width: 100%;
-            }
+        .toggle-text [role="button"] {
+            color: #c7d2fe;
+            font-weight: 700;
+            cursor: pointer;
+            margin-left: 4px;
+        }
 
-            .header h1 {
-                font-size: 24px;
-            }
+        .toggle-text [role="button"]:hover {
+            text-decoration: underline;
+        }
 
-            .header p {
-                font-size: 13px;
-            }
+        .helper-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: -12px 0 16px;
+            padding-left: 2px;
+        }
 
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
 
-            .form-group input {
-                padding: 14px 16px;
-                font-size: 16px;
-            }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-            .password-toggle {
-                width: 40px;
-                height: 40px;
-            }
+        .modal-content {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            padding: 32px;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
 
-            .eyebrow {
-                font-size: 10px;
-                padding: 5px 10px;
-            }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+
+        .modal-close-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 12px;
-                min-height: 100dvh;
-            }
-
-            .auth-container {
-                padding: 20px 16px;
-                border-radius: 12px;
-                box-shadow: 0 10px 40px rgba(2, 6, 23, 0.7);
-            }
-
-            .header {
-                margin-bottom: 20px;
-            }
-
-            .header h1 {
-                font-size: 20px;
-                margin-bottom: 8px;
-            }
-
-            .header p {
-                font-size: 12px;
-            }
-
-            .eyebrow {
-                font-size: 9px;
-                padding: 4px 8px;
-                margin-bottom: 12px;
-            }
-
-            .form-group {
-                margin-bottom: 14px;
-            }
-
-            .form-group label {
-                font-size: 12px;
-                margin-bottom: 6px;
-            }
-
-            .form-group input {
-                padding: 12px 14px;
-                font-size: 16px;
-                border-radius: 8px;
-            }
-
-            .input-shell input {
-                padding-right: 44px;
-            }
-
-            .password-toggle {
-                width: 44px;
-                height: 44px;
-            }
-
-            .btn {
-                padding: 12px 16px;
-                min-height: 44px;
-                font-size: 14px;
-                margin-top: 2px;
-            }
-
-            .helper-text {
-                font-size: 11px;
-                margin-bottom: 12px;
-            }
-
-            .toggle-text {
-                margin-top: 16px;
-                font-size: 12px;
-            }
-
-            .message {
-                font-size: 12px;
-                padding: 10px 12px;
-            }
+            .auth-container { padding: 24px 20px; }
+            .header h1 { font-size: 24px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
         }
-
-        /* Force 100dvh on mobile for proper viewport */
-        @media (max-height: 600px) {
-            body {
-                min-height: 100dvh;
-            }
-        }
-    
     </style>
 </head>
 <body>
@@ -556,7 +420,7 @@
     <div id="forgot-password-modal" class="modal">
         <div class="modal-content">
             <button class="modal-close-btn" id="modal-close-btn">
-                <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12"></path></svg>
             </button>
 
             <div class="header">
@@ -582,15 +446,14 @@
     </div>
 
     <script>
-        const isLocal =
-            window.location.hostname === 'localhost' ||
-            window.location.hostname === '127.0.0.1' ||
+        const isLocal = 
+            window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1' || 
             window.location.hostname === '::1' ||
             window.location.protocol === 'file:';
+        
         const API_URL = isLocal ? 'http://localhost:5001/api' : '/api';
-        const serverErrorMessage = isLocal
-            ? 'Cannot connect to server. Make sure the backend is running.'
-            : 'Cannot connect to server right now. Please try again.';
+        const serverErrorMessage = 'Cannot connect to server. Please ensure the backend is running.';
 
         const form = document.getElementById('auth-form');
         const fullNameInput = document.getElementById('full-name');
@@ -641,43 +504,44 @@
         }
 
         async function verifyLoginSession(token) {
-            const response = await fetch(API_URL + '/verify', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token })
-            });
+            try {
+                const response = await fetch(API_URL + '/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                });
 
-            const data = await response.json();
-            return {
-                ok: response.ok && data.valid,
-                data
-            };
+                const data = await response.json();
+                return { ok: response.ok && data.valid, data };
+            } catch (error) {
+                return { ok: false };
+            }
         }
 
         function updateFormMode() {
             formTitle.textContent = isLogin ? 'Welcome back' : 'Create your account';
-            formDesc.textContent = isLogin
-                ? 'Sign in to continue to your study dashboard.'
+            formDesc.textContent = isLogin 
+                ? 'Sign in to continue to your study dashboard.' 
                 : 'Register with your details to keep your study progress organised.';
-            helperText.textContent = isLogin
-                ? 'Use the password you created during registration.'
+            helperText.textContent = isLogin 
+                ? 'Use the password you created during registration.' 
                 : 'Use at least 6 characters and confirm the same password below.';
             submitBtn.textContent = isLogin ? 'Sign In' : 'Create Account';
             toggleLead.textContent = isLogin ? 'New student?' : 'Already registered?';
             toggleBtn.textContent = isLogin ? 'Create one here' : 'Back to sign in';
 
-            signupOnlyBlocks.forEach((block) => {
+            signupOnlyBlocks.forEach(block => {
                 block.classList.toggle('hidden', isLogin);
                 block.setAttribute('aria-hidden', String(isLogin));
             });
 
-            signupOnlyInputs.forEach((input) => {
+            signupOnlyInputs.forEach(input => {
                 input.disabled = isLogin;
                 input.required = !isLogin;
             });
 
             passwordInput.autocomplete = isLogin ? 'current-password' : 'new-password';
-
+            
             if (isLogin) {
                 confirmPasswordInput.value = '';
             }
@@ -685,7 +549,7 @@
             hideMessage();
         }
 
-        passwordToggles.forEach((button) => {
+        passwordToggles.forEach(button => {
             const input = document.getElementById(button.dataset.target);
             updatePasswordToggle(button, input);
 
@@ -708,13 +572,7 @@
         }
 
         toggleBtn.addEventListener('click', toggleMode);
-        toggleBtn.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                toggleMode();
-            }
-        });
-
+        
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             hideMessage();
@@ -760,7 +618,7 @@
                 }
 
                 if (password !== confirmPassword) {
-                    showMessage('Password and confirm password must match.', 'error');
+                    showMessage('Passwords do not match.', 'error');
                     confirmPasswordInput.focus();
                     return;
                 }
@@ -783,13 +641,13 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    showMessage(data.message || 'Something went wrong.', 'error');
+                    showMessage(data.message || 'Authentication failed.', 'error');
                     return;
                 }
 
                 if (isLogin) {
                     if (!data.token) {
-                        showMessage('Login failed because the server did not return a session token.', 'error');
+                        showMessage('Login failed: token missing derived from server.', 'error');
                         return;
                     }
 
@@ -799,24 +657,22 @@
                     const verification = await verifyLoginSession(data.token);
                     if (!verification.ok) {
                         localStorage.removeItem('ddcet_token');
-                        showMessage(
-                            verification.data?.message || 'Login succeeded, but the server did not confirm the session.',
-                            'error'
-                        );
+                        showMessage(verification.data?.message || 'Login succeeded, but session verification failed.', 'error');
                         return;
                     }
 
                     showMessage('Login successful! Redirecting...', 'success');
                     setTimeout(() => {
                         window.location.href = 'ddcet_notes_v4.html';
-                    }, 900);
+                    }, 800);
                     return;
                 }
 
+                // Signup success
                 form.reset();
                 isLogin = true;
                 updateFormMode();
-                showMessage('Registration successful! Please sign in with your new account.', 'success');
+                showMessage('Account created successfully! You can now sign in.', 'success');
             } catch (error) {
                 showMessage(serverErrorMessage, 'error');
             } finally {
@@ -827,7 +683,7 @@
 
         updateFormMode();
 
-        // ==================== FORGOT PASSWORD LOGIC ====================
+        // Forgot Password Modal Logic
         const forgotPasswordBtn = document.getElementById('forgot-password-btn');
         const forgotPasswordModal = document.getElementById('forgot-password-modal');
         const forgotPasswordForm = document.getElementById('forgot-password-form');
@@ -837,66 +693,33 @@
         const modalCloseBtn = document.getElementById('modal-close-btn');
         const backToLoginBtn = document.getElementById('back-to-login');
 
-        function openForgotPasswordModal() {
+        function openModal() {
             forgotPasswordModal.classList.add('active');
             resetEmailInput.focus();
         }
 
-        function closeForgotPasswordModal() {
+        function closeModal() {
             forgotPasswordModal.classList.remove('active');
             forgotPasswordForm.reset();
             resetMsg.textContent = '';
             resetMsg.className = 'message';
         }
 
-        function showResetMessage(text, type) {
-            resetMsg.textContent = text;
-            resetMsg.className = `message ${type}`;
-        }
-
         forgotPasswordBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openForgotPasswordModal();
+            openModal();
         });
 
-        modalCloseBtn.addEventListener('click', closeForgotPasswordModal);
-        backToLoginBtn.addEventListener('click', closeForgotPasswordModal);
-        backToLoginBtn.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                closeForgotPasswordModal();
-            }
-        });
-
-        // Close modal when clicking outside of it
-        forgotPasswordModal.addEventListener('click', (e) => {
-            if (e.target === forgotPasswordModal) {
-                closeForgotPasswordModal();
-            }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && forgotPasswordModal.classList.contains('active')) {
-                closeForgotPasswordModal();
-            }
-        });
+        modalCloseBtn.addEventListener('click', closeModal);
+        backToLoginBtn.addEventListener('click', closeModal);
 
         forgotPasswordForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            resetMsg.textContent = '';
-            resetMsg.className = 'message';
+            const email = resetEmailInput.value.trim().toLowerCase();
 
-            const resetEmail = resetEmailInput.value.trim().toLowerCase();
-
-            if (!resetEmail) {
-                showResetMessage('Please enter your email address.', 'error');
-                return;
-            }
-
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(resetEmail)) {
-                showResetMessage('Please enter a valid email address.', 'error');
+            if (!email) {
+                resetMsg.textContent = 'Please enter your email.';
+                resetMsg.className = 'message error';
                 return;
             }
 
@@ -907,23 +730,19 @@
                 const response = await fetch(API_URL + '/forgot-password', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: resetEmail })
+                    body: JSON.stringify({ email })
                 });
 
                 const data = await response.json();
-
-                if (!response.ok) {
-                    showResetMessage(data.message || 'Failed to send reset link.', 'error');
-                    return;
+                resetMsg.textContent = data.message || 'Check your email for reset instructions.';
+                resetMsg.className = `message ${response.ok ? 'success' : 'error'}`;
+                
+                if (response.ok) {
+                    setTimeout(closeModal, 2500);
                 }
-
-                showResetMessage('Check your email for a password reset link. It expires in 1 hour.', 'success');
-                setTimeout(() => {
-                    closeForgotPasswordModal();
-                }, 2500);
             } catch (error) {
-                showResetMessage(serverErrorMessage, 'error');
-                console.error('Forgot password error:', error);
+                resetMsg.textContent = serverErrorMessage;
+                resetMsg.className = 'message error';
             } finally {
                 sendResetBtn.disabled = false;
                 sendResetBtn.textContent = 'Send Reset Link';
