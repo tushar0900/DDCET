@@ -7,7 +7,7 @@ const isLocal =
     /^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(window.location.hostname) ||
     window.location.protocol === 'file:' ||
     window.location.hostname.endsWith('.local');
-const API_BASE_URL = isLocal ? 'http://localhost:5001/api' : 'https://ddcet-hub-backend.onrender.com/api';
+const API_BASE_URL = isLocal ? 'http://localhost:5001/api' : 'https://ddcet-z9r7.onrender.com/api';
 
 /**
  * Check if the user is authenticated.
