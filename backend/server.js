@@ -65,6 +65,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+  res.send('DDCET Backend is Running! 🚀');
+});
+
 // ==================== HEALTH CHECK ====================
 // Render uses this to confirm the service is running; does not depend on DB
 app.get('/health', (req, res) => {
