@@ -458,7 +458,7 @@
             const existingToken = localStorage.getItem('ddcet_token');
             if (existingToken) {
                 try {
-                    const check_url = isLocal ? 'http://localhost:5001/api/verify' : 'https://ddcet-hub-backend.onrender.com/api/verify';
+                    const check_url = isLocal ? 'http://localhost:5001/api/verify' : 'https://ddcet-z9r7.onrender.com/api/verify';
                     const response = await fetch(check_url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -474,7 +474,7 @@
             }
         })();
         
-        const API_URL = isLocal ? 'http://localhost:5001/api' : 'https://ddcet-hub-backend.onrender.com/api';
+        const API_URL = isLocal ? 'http://localhost:5001/api' : 'https://ddcet-z9r7.onrender.com/api';
         const serverErrorMessage = 'Cannot connect to server. Please ensure the backend is running.';
 
         const form = document.getElementById('auth-form');
