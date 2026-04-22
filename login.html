@@ -450,6 +450,7 @@
             window.location.hostname === 'localhost' || 
             window.location.hostname === '127.0.0.1' || 
             window.location.hostname === '::1' ||
+            /^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(window.location.hostname) ||
             window.location.protocol === 'file:';
 
         // Auto-redirect if already logged in
@@ -468,7 +469,7 @@
                         window.location.href = 'ddcet_notes_v4.html';
                     }
                 } catch (e) {
-                    console.log('Static auth check skipped or failed');
+                    console.log('Static auth check skipped or failed:', e.message);
                 }
             }
         })();
@@ -695,7 +696,8 @@
                 updateFormMode();
                 showMessage('Account created successfully! You can now sign in.', 'success');
             } catch (error) {
-                showMessage(serverErrorMessage, 'error');
+                console.error('Detailed connection error:', error);
+                showMessage(`${serverErrorMessage} (Details: ${error.message})`, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = isLogin ? 'Sign In' : 'Create Account';
