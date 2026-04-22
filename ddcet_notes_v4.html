@@ -2722,7 +2722,23 @@ ul.bullet-list li{margin-bottom:0.4rem;}
       <div><div class="stat-n">100%</div><div class="stat-l">DDCET</div></div>
     </div>
   </div>
+  
+  <div id="welcome-container" style="max-width:700px;margin:0 auto 15px;padding:0 4px;display:none;">
+    <div style="font-size:1.4rem;font-weight:800;color:#f1f5f9;margin-bottom:2px;">Welcome back, <span id="user-display-name" style="color:#818cf8;">Student</span>!</div>
+    <div style="font-size:12px;color:#64748b;font-weight:500;">Ready to continue your DDCET preparation?</div>
+  </div>
+
   <div class="divider"><div class="dl"></div><div class="dt">Select Subject</div><div class="dl"></div></div>
+  
+  <script>
+    (function initWelcome() {
+      const name = localStorage.getItem('ddcet_user_name');
+      if (name) {
+        document.getElementById('user-display-name').textContent = name;
+        document.getElementById('welcome-container').style.display = 'block';
+      }
+    })();
+  </script>
   <div class="hub-cards">
     <div class="hub-card" onclick="openSubject('math')" style="--c:#6366f1">
       <div class="hub-card-icon">&#x1F4D0;</div>

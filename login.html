@@ -675,6 +675,9 @@
 
                     submitBtn.textContent = 'Verifying Session...';
                     localStorage.setItem('ddcet_token', data.token);
+                    if (data.fullName) {
+                        localStorage.setItem('ddcet_user_name', data.fullName);
+                    }
 
                     const verification = await verifyLoginSession(data.token);
                     if (!verification.ok) {
