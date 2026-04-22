@@ -4,7 +4,9 @@ const isLocal =
     window.location.hostname === 'localhost' ||
     window.location.hostname === '127.0.0.1' ||
     window.location.hostname === '::1' ||
-    window.location.protocol === 'file:';
+    /^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(window.location.hostname) ||
+    window.location.protocol === 'file:' ||
+    window.location.hostname.endsWith('.local');
 const API_BASE_URL = isLocal ? 'http://localhost:5001/api' : 'https://ddcet-hub-backend.onrender.com/api';
 
 /**
