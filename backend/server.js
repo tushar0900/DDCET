@@ -387,7 +387,7 @@ app.post('/api/login', async (req, res) => {
     await loginLog.save();
 
     const token = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: '24h' });
-    res.json({ token });
+    res.json({ token, fullName: user.full_name });
   } catch (error) {
     console.error('Login error:', error);
     return res.status(500).json({ message: 'Login failed. Please try again.' });
