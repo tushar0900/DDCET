@@ -2722,20 +2722,81 @@ ul.bullet-list li{margin-bottom:0.4rem;}
     </div>
   </div>
   
-  <div id="welcome-container" style="max-width:700px;margin:0 auto 15px;padding:0 4px;display:none;">
-    <div style="font-size:1.4rem;font-weight:800;color:#f1f5f9;margin-bottom:2px;">Welcome back, <span id="user-display-name" style="color:#818cf8;">Student</span>!</div>
-    <div style="font-size:12px;color:#64748b;font-weight:500;">Ready to continue your DDCET preparation?</div>
+  <div id="welcome-container" style="max-width:700px;margin:0 auto 20px;padding:16px;background:#111827;border:1px solid #1e2a3a;border-radius:18px;display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
+      <div>
+        <div style="font-size:1.4rem;font-weight:800;color:#f1f5f9;margin-bottom:2px;">Welcome back, <span id="user-display-name" style="color:#818cf8;">Student</span>!</div>
+        <div style="font-size:12px;color:#64748b;font-weight:500;">Ready to continue your DDCET preparation?</div>
+      </div>
+      <div id="sync-indicator" title="Synced with Cloud" style="width:10px;height:10px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b98155;"></div>
+    </div>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:#0a0f1e;padding:12px;border-radius:12px;border:1px solid #1e2a3a;text-align:center;">
+        <div id="stat-opened" style="font-size:1.3rem;font-weight:800;color:#f1f5f9;">0</div>
+        <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Opened</div>
+      </div>
+      <div style="background:#0a0f1e;padding:12px;border-radius:12px;border:1px solid #1e2a3a;text-align:center;">
+        <div id="stat-studying" style="font-size:1.3rem;font-weight:800;color:#a78bfa;">0</div>
+        <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Studying</div>
+      </div>
+      <div style="background:#0a0f1e;padding:12px;border-radius:12px;border:1px solid #1e2a3a;text-align:center;">
+        <div id="stat-done" style="font-size:1.3rem;font-weight:800;color:#10b981;">0</div>
+        <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Completed</div>
+      </div>
+    </div>
+    
+    <div style="margin-top:16px;">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-bottom:6px;font-weight:700;">
+        <span>TOTAL PROGRESS</span>
+        <span id="progress-percent">0%</span>
+      </div>
+      <div style="height:6px;background:#0a0f1e;border-radius:3px;overflow:hidden;border:1px solid #1e2a3a;">
+        <div id="progress-fill" style="width:0%;height:100%;transition:width 0.8s cubic-bezier(0.4,0,0.2,1);background:linear-gradient(90deg,#6366f1,#8b5cf6);"></div>
+      </div>
+    </div>
   </div>
 
   <div class="divider"><div class="dl"></div><div class="dt">Select Subject</div><div class="dl"></div></div>
   
   <script>
-    (function initWelcome() {
+    (function initProgressUI() {
       const name = localStorage.getItem('ddcet_user_name');
       if (name) {
         document.getElementById('user-display-name').textContent = name;
         document.getElementById('welcome-container').style.display = 'block';
       }
+
+      function updateStats() {
+        try {
+          const states = JSON.parse(localStorage.getItem('ddcet-chip-states') || '{}');
+          let opened = 0, studying = 0, done = 0;
+          
+          Object.values(states).forEach(s => {
+            if (s === 'opened') opened++;
+            else if (s === 'active') studying++;
+            else if (s === 'done') done++;
+          });
+
+          document.getElementById('stat-opened').textContent = opened;
+          document.getElementById('stat-studying').textContent = studying;
+          document.getElementById('stat-done').textContent = done;
+
+          // Estimate total topics (roughly 100 for DDCET)
+          const total = 100; 
+          const percent = Math.min(100, Math.round((done / total) * 100));
+          document.getElementById('progress-percent').textContent = percent + '%';
+          document.getElementById('progress-fill').style.width = percent + '%';
+        } catch(e) {}
+      }
+
+      updateStats();
+      window.addEventListener('ddcet-progress-synced', updateStats);
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'ddcet-chip-states') updateStats();
+      });
+      // Poll a bit for internal changes
+      setInterval(updateStats, 2000);
     })();
   </script>
   <div class="hub-cards">
@@ -15545,6 +15606,73 @@ document.addEventListener('DOMContentLoaded',function(){
     Object.keys(subjectInits).forEach(function(k){ subjectInits[k](); });
   });
 })();
+</script>
+
+  // Global Progress Persistence Engine
+  (function initGlobalProgress() {
+    console.log('🚀 DDCET Progress Engine Initializing...');
+    
+    function getChipKey(chip) {
+      return (chip.dataset.target || chip.textContent || '').trim().replace(/[↗●✓]/g,'').trim();
+    }
+
+    function saveToCloud(key, state) {
+      try {
+        const states = JSON.parse(localStorage.getItem('ddcet-chip-states') || '{}');
+        if (state) {
+          states[key] = state;
+        } else {
+          delete states[key];
+        }
+        localStorage.setItem('ddcet-chip-states', JSON.stringify(states));
+        // auth.js patchLocalStorage will handle the syncProgress() call
+      } catch(e) { console.error('Progress save error:', e); }
+    }
+
+    function applySavedStates() {
+      try {
+        const states = JSON.parse(localStorage.getItem('ddcet-chip-states') || '{}');
+        document.querySelectorAll('.chip[data-target]').forEach(chip => {
+          const key = getChipKey(chip);
+          const state = states[key];
+          
+          chip.classList.remove('chip-active', 'chip-done');
+          if (state === 'active') chip.classList.add('chip-active');
+          if (state === 'done') chip.classList.add('chip-done');
+          // 'opened' is just the default or single-click, no specific class needed 
+          // unless we want to dim them? For now, we just track the count.
+        });
+      } catch(e) {}
+    }
+
+    // Intercept clicks on ALL chips across all subjects
+    document.addEventListener('click', function(e) {
+      const chip = e.target.closest('.chip[data-target]');
+      if (!chip) return;
+      
+      // We let the existing initChips handle the visual classes (c===1, 2, 3)
+      // but we add a small delay to capture the FINAL class state
+      setTimeout(() => {
+        const key = getChipKey(chip);
+        let state = null;
+        
+        if (chip.classList.contains('chip-done')) state = 'done';
+        else if (chip.classList.contains('chip-active')) state = 'active';
+        else state = 'opened'; // Every click counts as opened
+        
+        saveToCloud(key, state);
+      }, 300);
+    });
+
+    // Handle cloud-to-local sync event from auth.js
+    window.addEventListener('ddcet-progress-synced', () => {
+      console.log('☁️ Progress synced from cloud, updating UI...');
+      applySavedStates();
+    });
+
+    // Initial load
+    setTimeout(applySavedStates, 500);
+  })();
 </script>
 
 </body>
